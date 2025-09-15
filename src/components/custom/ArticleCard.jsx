@@ -49,7 +49,7 @@ export default function ArticleCard({ title, author, date, body, image }) {
       >
         {body}
       </Text>
-      <Button marginTop={4}>Read more</Button>
+      <Button marginTop={4}>Leia mais</Button>
     </Box>
   )
 }

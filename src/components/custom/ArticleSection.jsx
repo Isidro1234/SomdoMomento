@@ -28,7 +28,7 @@ export default function ArticleSection() {
             <VStack flex={1}>
                  {posts.map((item,index)=>{
                 return(
-                   <ArticleCard
+                   <ArticleCard key={index}
         title="The Future of AI in Music"
         author="Izy Skills"
         date="September 14, 2025"

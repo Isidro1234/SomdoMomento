@@ -2,7 +2,7 @@ import { Button, Heading, HStack, Image, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import AnimateNumber from './AnimateNumber';
-export default function Slide({ width, currentSlide }) {
+export default function Slide({ width, currentSlide , rank }) {
   const videoRef = useRef(null)
 
   useEffect(() => {
@@ -67,6 +67,10 @@ export default function Slide({ width, currentSlide }) {
         }}
         src="https://www.pexels.com/download/video/18069095/"
       />
+         <VStack alignItems={"center"} justifyContent={"center"} width={150} zIndex={10} padding={10} backgroundColor={"#7c18ffff"} position={"absolute"} right={0} top={"40%"}>
+              <Heading marginTop={2} color={"white"} fontSize={40}>{rank}#</Heading>
+              <Text textAlign={"center"} color={"white"} fontSize={10}>há 2 semanas</Text>
+           </VStack>
     </div>
   )
 }

@@ -13,7 +13,7 @@ export default function Aside({ posts }) {
       zIndex={5}
     >
       <Heading size="md" mb={4} color="gray.800">
-        Recent Posts
+        Postes Recentes
       </Heading>
 
       <VStack spacing={4} align="stretch">

@@ -1,5 +1,6 @@
 import { Button, CloseButton, Drawer, Portal } from "@chakra-ui/react"
 import * as Icon from 'react-bootstrap-icons';
+import { Link } from "react-router";
 const DrawerCustom = ({children}) => {
   return (
     <Drawer.Root>
@@ -17,11 +18,11 @@ const DrawerCustom = ({children}) => {
             </Drawer.Header>
             <Drawer.Body>
               <ul>
-                <li><Icon.HouseFill/> Paginal Inicial</li>
-                <li><Icon.MusicNote/>Musicas</li>
-                <li><Icon.Newspaper/>Noticias</li>
-                <li><Icon.MusicPlayer/>Destaques</li>
-                <li><Icon.Person/>Sobre nos</li>
+                <li><Link style={{display:"flex", alignItems:"center", gap:4}} to={"/"}><Icon.HouseFill/> Paginal Inicial</Link></li>
+                <li><Link style={{display:"flex", alignItems:"center", gap:4}} to={"/Music"}><Icon.MusicNote/>Musicas</Link></li>
+                <li><Link style={{display:"flex", alignItems:"center", gap:4}} to={"/Noticias"}><Icon.Newspaper/>Noticias</Link></li>
+                <li><Link style={{display:"flex", alignItems:"center", gap:4}} to={"/Destaque"}><Icon.MusicPlayer/>Destaques</Link></li>
+                <li><Link style={{display:"flex", alignItems:"center", gap:4}} to={"/Sobre"}><Icon.Person/>Sobre nos</Link></li>
               </ul>
             </Drawer.Body>
             <Drawer.CloseTrigger asChild>

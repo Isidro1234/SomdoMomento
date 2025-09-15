@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import * as Icon from "react-bootstrap-icons"
 export default function Footer() {
   return (
-    <Box backgroundColor={"white"} zIndex={10} display={"flex"} flexDirection={"column"} width={"100%"} padding={5} height={"35vh"}>
+    <Box  backgroundColor={"white"} zIndex={10} display={"flex"} flexDirection={"column"} width={"100%"} padding={5} height={"35vh"}>
       <Box display={"flex"} flex={1} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
         <VStack alignItems={"flex-start"}>
             <Heading>Thanks for visiting us</Heading>

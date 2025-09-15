@@ -10,6 +10,10 @@ import Dashboard from './Pages/EditorsOnly/Dashboard'
 import Home from './Pages/General/Home'
 import Article from './Pages/General/Article'
 import Login from './Pages/EditorsOnly/Login'
+import Sobre from './Pages/General/Sobre'
+import Noticias from './Pages/General/Noticias'
+import Music from './Pages/General/Music'
+import Destaques from './Pages/General/Destaques'
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
       </Route>
       <Route path='/' element={<Home/>}/>
       <Route path='/Article' element={<Article/>}/>
+      <Route path='/Destaque' element={<Destaques/>}/>
+      <Route path='/Music' element={<Music/>}/>
+      <Route path='/Noticias' element={<Noticias/>}/>
+      <Route path='/Sobre' element={<Sobre/>}/>
     </Routes>
   )
 }
