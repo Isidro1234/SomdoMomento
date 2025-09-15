@@ -1,7 +1,8 @@
-import { HStack } from '@chakra-ui/react'
+import { HStack, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Slide from './Slide'
 import Paginator from './Paginator'
+import AnimateNumber from './AnimateNumber'
 
 export default function Hero() {
   const [width, setWidth] = useState(window.innerWidth)
@@ -43,13 +44,12 @@ export default function Hero() {
           <Slide width={width} key={index} currentSlide={currentSlide === index} />
         ))}
       </HStack>
-
-      {/* Pagination dots */}
       <HStack zIndex={7} position="absolute" bottom={15} left={10}>
         {dataSlide.map((_, index) => (
           <Paginator key={index} current={currentSlide === index} />
         ))}
       </HStack>
+     
     </HStack>
   )
 }

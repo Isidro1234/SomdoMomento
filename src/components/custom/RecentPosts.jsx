@@ -1,23 +1,26 @@
 import React from 'react'
 import PostCard from './PostCard'
-import { Box, Heading, HStack } from '@chakra-ui/react'
+import { Box, Heading, Stack } from '@chakra-ui/react'
 
 export default function RecentPosts() {
-    const data = ["","",""]
+  const data = ["", "", ""]
+
   return (
-    <HStack g padding={10} gap={7}>
-        <Box display={"flex"} flexDirection={"column"} gap={5} marginTop={5}>
-            <Heading>Destaques da Banda</Heading>
-            <HStack flexWrap={"wrap"}>
-            {data.map((item,index)=>{
-                return(
-                    <PostCard key={index}/>
-                )
-                })} 
-            </HStack>
-        </Box>
-        
-        
-    </HStack>
+    <Box width="100%" p={4} paddingBottom={20}>
+      <Box width="100%" display="flex" flexDirection="column" gap={5} mt={5}>
+        <Heading>Destaques da Banda</Heading>
+        {/* Responsive layout: column on mobile, row on larger screens */}
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          width="100%"
+          gap={10}
+          align="stretch"
+        >
+          {data.map((item, index) => (
+            <PostCard key={index} />
+          ))}
+        </Stack>
+      </Box>
+    </Box>
   )
 }
