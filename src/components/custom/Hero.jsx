@@ -1,24 +1,74 @@
 import { Button, Heading, HStack, VStack } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Slide from './Slide'
+import Paginator from './Paginator'
 
 export default function Hero() {
+    const width = window.screen.width
+    const [currentSlide, setCurrentSlide] = useState(0)
+    const dataSlide = [{
+        video:"",
+        rank:1,
+        artist:{
+            name:"",
+        },
+        music:{
+            title:"",
+            image:"",
+            publishedDate:""
+        }
+    },{
+        video:"",
+        rank:1,
+        artist:{
+            name:"",
+        },
+        music:{
+            title:"",
+            image:"",
+            publishedDate:""
+        }
+    },{
+        video:"",
+        rank:1,
+        artist:{
+            name:"",
+        },
+        music:{
+            title:"",
+            image:"",
+            publishedDate:""
+        }
+    }]
+    console.log(width)
+    function nextSlide(){
+        setCurrentSlide((prev)=> prev === dataSlide.length - 1 ? 0 : prev + 1)
+    }
+     useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide()
+    }, 10000)
+
+    return () => clearInterval(interval) // cleanup
+  }, [dataSlide.length])
   return (
-    <HStack position={"relative"} height={"70vh"} width={"100%"} backgroundColor={"white"}>
-        <VStack paddingBottom={10}  background={"#0f0c0c3c"} width={"100%"} height={"100%"} paddingLeft={10} alignItems={'flex-start'} justifyContent={"flex-end"} zIndex={2}>
-            <Button  margin={0} backgroundColor={"#ffffff32"} borderRadius={50}>Hip Hop</Button>
-            <Heading color={"white"}>
-                Kendrick Lamar
-            </Heading>
-        </VStack>
-        
-       <video loop muted autoPlay={true} style={{width:"100%",height:"100%", objectFit:"cover", position:"absolute", borderRadius:0, overlay:'auto'}} src='https://www.pexels.com/download/video/18069095/'/>
-       <VStack zIndex={4} position={"absolute"} bottom={5} left={10}>
-        
-            <div style={{borderWidth:1,borderColor:"white",width:10, height:10, borderRadius:50,padding:1, display:"flex", alignItems:"center", justifyContent:"center"}}>
-                <div style={{ borderRadius:50, background:"white",width:"90%", height:"90%"}}/>
-            </div>
+    <HStack  position={"relative"} height={"70vh"} width={"100%"} backgroundColor={"white"}>
+        <HStack gap={0} transform={`translateX(-${currentSlide * width}px)`} transition="transform 0.5s ease"  width={`${width * dataSlide.length}`}  height={"100%"} position={"relative"}>
+        {dataSlide.map((item,index)=>{
+            return(
+              <Slide width={width} key={index} currentSlide={currentSlide == index && true}/>  
+            )
+        })}
+        </HStack>
+        <HStack zIndex={7} position={"absolute"} bottom={15} left={10}>
+            {dataSlide.map((item,index)=>{
+            return(
+              <Paginator key={index} current={currentSlide == index && true}/> 
+            )
+        })}
+        </HStack>
             
-       </VStack>
+       
     </HStack>
   )
 }

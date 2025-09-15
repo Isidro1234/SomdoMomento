@@ -7,9 +7,9 @@
 }
 ul {
  display: flex;
- flex-direction: row;
+ flex-direction: column;
  gap: 10px;
- color: rgb(255, 255, 255);
+ color: rgb(0, 0, 0);
 
 }
 
@@ -17,7 +17,7 @@ li{
   display: flex;
   align-items: center;
   gap: 5px;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 14px;
   cursor: pointer;
   transition: all ease-in-out 300ms;
