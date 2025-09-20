@@ -25,16 +25,31 @@ li{
 li:hover{
   color: rgb(173, 253, 54);
 }
-body::-webkit-scrollbar-thumb{
-  background-color: white;
-  color: aqua;
+::-webkit-scrollbar{
+ background-color: #1d1d2000;
+ width: 7px;
+}
+::-webkit-scrollbar-thumb{
+  background-color: rgb(175, 36, 255);
+  border-radius: 1px;
+}
+.controls {
+  display: flex;
+  border: 1px solid #ccc;
+  border-top: 0;
+  padding: 10px;
 }
 
-body::-webkit-scrollbar-track{
-  width: 5px;
-  background-color: white;
+.controls-right {
+  margin-left: auto;
 }
-body::-webkit-scrollbar-{
-  width: 2px;
-  background-color: rgb(0, 0, 0);
+
+.state {
+  margin: 10px 0;
+  font-family: monospace;
+}
+
+.state-title {
+  color: #999;
+  text-transform: uppercase;
 }

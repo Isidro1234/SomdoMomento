@@ -1,9 +1,14 @@
 import { Badge, Box, Card, Image, Stack } from '@chakra-ui/react'
 import React from 'react'
+import { useNavigate } from 'react-router'
 
-export default function PostCard() {
+export default function PostCard({to}) {
+  const navigate = useNavigate()
+  function goto(){
+    navigate({pathname:"/Article", data:"hello"})
+  }
   return (
-    <Card.Root
+    <Card.Root onClick={goto}
       width="100%"
       maxW={{ base: "100%", sm: "400px" }}
       overflow="hidden"

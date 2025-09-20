@@ -68,7 +68,7 @@ export default function Slide({ width, currentSlide , rank }) {
         src="https://www.pexels.com/download/video/18069095/"
       />
          <VStack alignItems={"center"} justifyContent={"center"} width={150} zIndex={10} padding={10} backgroundColor={"#7c18ffff"} position={"absolute"} right={0} top={"40%"}>
-              <Heading marginTop={2} color={"white"} fontSize={40}>{rank}#</Heading>
+              <Heading textAlign={"center"} marginTop={2} color={"white"} fontSize={30}>TOP {rank}#</Heading>
               <Text textAlign={"center"} color={"white"} fontSize={10}>há 2 semanas</Text>
            </VStack>
     </div>

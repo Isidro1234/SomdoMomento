@@ -1,7 +1,7 @@
 import { Box, Heading, Text, HStack, VStack, Avatar, Button } from "@chakra-ui/react"
 import React from "react"
 
-export default function ArticleCard({ title, author, date, body, image }) {
+export default function ArticleCard({ title, author, date, body, image, button, editPage, edit }) {
   return (
     <Box
       bg="white"
@@ -49,7 +49,8 @@ export default function ArticleCard({ title, author, date, body, image }) {
       >
         {body}
       </Text>
-      <Button marginTop={4}>Leia mais</Button>
+      {button && <Button marginTop={4}>Leia mais</Button>   }
+      
     </Box>
   )
 }

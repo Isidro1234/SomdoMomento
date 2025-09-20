@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Edit() {
+export default function Musicas() {
   return (
     <div>
-      Welcome back editor
+      
     </div>
   )
 }

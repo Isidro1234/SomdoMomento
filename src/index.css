@@ -6,3 +6,6 @@ body{
   margin: 0px;
   overflow-x: hidden;
 }
+#waveform{
+  flex: 1;
+}

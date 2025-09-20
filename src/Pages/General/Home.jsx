@@ -6,6 +6,7 @@ import RecentPosts from '../../components/custom/RecentPosts'
 import ArticleSection from '../../components/custom/ArticleSection'
 import Newslatter from '../../components/custom/Newslatter'
 import Footer from '../../components/custom/Footer'
+import MusicSection from '../../components/custom/MusicSection'
 export default function Home() {
   const [scrollPosition , setScrollPosition] = useState(0)
   useEffect(() => {
@@ -17,12 +18,12 @@ export default function Home() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
   return (
       <VStack gap={0} className='Home' width={"100%"}>
         <Nav position={"fixed"} background={scrollPosition > 40 ? "#252525c0" : "transparent"}/>
         <Hero/>
         <RecentPosts/>
+        <MusicSection/>
         <ArticleSection/>
         <Newslatter/>
         <Footer/>
