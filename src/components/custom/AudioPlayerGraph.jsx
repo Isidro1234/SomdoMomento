@@ -52,7 +52,7 @@ export default function AudioPlayerGraph({ isplaying, setplaying, onTimeUpdate})
   }, [isplaying]);
  
   return (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 2 }}>
       <div ref={waveContainerRef} id="waveform" />
     </div>
   );
