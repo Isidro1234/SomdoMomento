@@ -3,7 +3,9 @@ import React from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import AvatarCustom from './AvatarCustom';
 import { Link } from 'react-router';
+import { useAuthcontext } from '../../Context/AuthContextProvider';
 export default function SideBar() {
+    const {userdata}  = useAuthcontext()
   return (
     <VStack padding={4} alignItems={"flex-start"} flex={1} background={"#242424ff"}>
         <VStack flex={1} alignItems={"flex-start"}>
@@ -15,7 +17,7 @@ export default function SideBar() {
             <Link to={"/admin/Paginas"}><Button bg={"transparent"}><Icon.Globe/> Paginas</Button></Link>  
             <Link to={"/admin/Definicoes"}><Button bg={"transparent"}><Icon.Gear/>Definições</Button></Link>  
         </VStack>
-        <AvatarCustom name={"admin"}/>
+        <AvatarCustom name={userdata?.username || "Admin"}/>
     </VStack>
   )
 }

@@ -7,7 +7,7 @@ import MainArticle from '../../components/custom/MainArticle'
 
 export default function Article() {
   return (
-    <VStack height={"100%"}>
+    <VStack className='Article' height={"100%"}>
       <Nav background={"blue"}/>
       <HStack height={"100%"}>
         <MainArticle data={"f"}/>

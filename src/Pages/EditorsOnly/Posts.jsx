@@ -1,24 +1,30 @@
-import { Button, Card, Heading, HStack, Input, Textarea, VStack } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { Box, Button, Card, Heading, HStack, Input, Textarea, VStack } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom';
 import {Editor, EditorState, RichUtils} from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import MusicCard from '../../components/custom/MusicCard'
-import Article from '../General/Article'
 import ArticleCard from '../../components/custom/ArticleCard'
-import PostCard from '../../components/custom/PostCard'
-import * as Icon from 'react-bootstrap-icons';
+import TextEditor from '../../components/custom/TextEditor';
+import { useLogiState } from '../../states/useLogic';
 
 export default function Posts() {
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null)
-   const [range, setRange] = useState();
+  const [range, setRange] = useState();
   const [lastChange, setLastChange] = useState();
+  const getpost = useLogiState((state)=>state.getPosts)
+  const post = useLogiState((state)=>state.post)
   const [readOnly, setReadOnly] = useState(false);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  useEffect(()=>{
+    async function getpst(){
+      await getpost("postes")
+    }
+    getpst()
+  }, [])
  const toggleInlineStyle = (style) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));
   };
@@ -26,31 +32,19 @@ export default function Posts() {
   function getimage(){
 
   }
-  console.log(text)
+  console.log("this is an wrray" ,post)
   return (
     <VStack padding={5} background={"white"} alignItems={"flex-start"} justifyContent={"flex-start"} width={"100%"} height={"100%"}>
-      <VStack alignItems={"flex-start"}>
-        <Heading>Postes</Heading>
-        <HStack>
-           <ArticleCard title={"sdfsdfsdf"} date={'12 Sept'} body={"sdfsfsdfsdfdsffdsf"}/>
-           <ArticleCard title={"sdfsdfsdf"} date={'12 Sept'} body={"sdfsfsdfsdfdsffdsf"}/>
-           <ArticleCard title={"sdfsdfsdf"} date={'12 Sept'} body={"sdfsfsdfsdfdsffdsf"}/>
-           <ArticleCard title={"sdfsdfsdf"} date={'12 Sept'} body={"sdfsfsdfsdfdsffdsf"}/>
-        </HStack>
-        <div style={{width:"100%",height:200, borderWidth:1, padding:10}}>
-          <div style={{ marginBottom: 10 }}>
-        <button onClick={() => toggleInlineStyle("BOLD")}><b>B</b></button>
-        <button onClick={() => toggleInlineStyle("ITALIC")}><i>I</i></button>
-        <button onClick={() => toggleInlineStyle("UNDERLINE")}><u>U</u></button>
-      </div>
-          <Editor
-        editorState={editorState}
-        onChange={setEditorState}     
-        placeholder='Hello world'
-      />
-        </div>
-          
-      </VStack>
-    </VStack>
+          <VStack alignItems={"flex-start"}>
+            <Heading>Postes</Heading>
+            <HStack overflowX={"scroll"}>
+              {post?.map((item,index)=>{
+                return(<ArticleCard title={item.title} date={item.date} author={item.userdata.username} key={index} body={item.html}/>)
+              })}
+               
+            </HStack>
+          </VStack>
+         <TextEditor placeholder={"Digite o titulo do seu Artigo"} to={"postes"}/>
+        </VStack>
   )
 }

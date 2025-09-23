@@ -53,3 +53,51 @@ li:hover{
   color: #999;
   text-transform: uppercase;
 }
+.ql-container{
+  border: 1px solid #efefef;
+}
+.hide{
+opacity: 0;
+margin-right: -500px;
+transition: all ease-in-out 300ms;
+}
+.show{
+  opacity: 1;
+margin-right: 10px;
+transition: all ease-in-out 300ms;
+}
+@keyframes appearHero {
+  from{
+    opacity: 0;
+  } 
+  to{
+    opacity: 1;
+  }
+}
+@keyframes appearHeroContent {
+  from{
+    opacity: 0;
+    scale: 0;
+  } 
+  to{
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes appearMusic {
+  
+}
+@keyframes appearArtigos {
+  
+}
+@keyframes appearNewsletter {
+  
+}
+.hero{
+  animation: appearHero linear;
+  animation-duration: 300ms;
+}
+.contenthero{
+  animation: appearHeroContent  linear;
+  animation-duration: 700ms;
+}

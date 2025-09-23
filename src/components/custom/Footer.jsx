@@ -25,7 +25,7 @@ export default function Footer() {
         </VStack>
         <VStack alignItems={"flex-start"}>
             <Heading>For Developers</Heading>
-            <Link to={"#"}><p className='footerText'>Take a look at our github</p></Link>
+            <Link to={"/admin"}><p className='footerText'>pagina admin</p></Link>
             <Link to={"#"}><p className='footerText'>Learn about our public apis</p></Link>
             <Link to={"#"}><p className='footerText'>QA</p></Link>
         </VStack>

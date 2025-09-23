@@ -5,7 +5,7 @@ import Footer from '../../components/custom/Footer'
 
 export default function Sobre() {
   return (
-    <VStack>
+    <VStack className='sobre' width={"100%"}>
          <Nav position={"relative"} background={"blue"}/>
         <Footer/>
     </VStack>

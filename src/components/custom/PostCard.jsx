@@ -15,7 +15,7 @@ export default function PostCard({to}) {
     >
       {/* Stack switches between column (mobile) and row (desktop) */}
       <Stack direction={{ base: "column", md: "row" }} height="100%">
-        <Image
+        <Image alt='postcard'
           width={{ base: "100%", md: 150 }}
           height={{ base: 200, md: "100%" }}
           objectFit="cover"

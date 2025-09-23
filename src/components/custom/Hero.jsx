@@ -1,19 +1,10 @@
-import { Heading, HStack, VStack } from '@chakra-ui/react'
+import {HStack} from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import Slide from './Slide'
 import Paginator from './Paginator'
-import AnimateNumber from './AnimateNumber'
-
-export default function Hero() {
+import Slide from "./Slide"
+export default function Hero({dataSlide}) {
   const [width, setWidth] = useState(window.innerWidth)
   const [currentSlide, setCurrentSlide] = useState(0)
-
-  const dataSlide = [
-    { video: "", rank: 1, artist: { name: "" }, music: { title: "", image: "", publishedDate: "" } },
-    { video: "", rank: 2, artist: { name: "" }, music: { title: "", image: "", publishedDate: "" } },
-    { video: "", rank: 3, artist: { name: "" }, music: { title: "", image: "", publishedDate: "" } }
-  ]
-
   // Handle window resize
   useEffect(() => {
     function handleResize() {
@@ -32,7 +23,7 @@ export default function Hero() {
   }, [dataSlide.length])
 
   return (
-    <HStack position="relative" height="70vh" width="100%" overflow="hidden" backgroundColor="white">
+    <HStack className='hero' position="relative" height="70vh" width="100%" overflow="hidden" backgroundColor="white">
       <HStack
         gap={0}
         transform={`translateX(-${currentSlide * width}px)`}
@@ -40,9 +31,10 @@ export default function Hero() {
         width={`${width * dataSlide.length}px`}
         height="100%"
       >
-        {dataSlide.map((item, index) => (
+           {dataSlide.map((item, index) => (
           <Slide rank={item.rank} width={width} key={index} currentSlide={currentSlide === index} />
         ))}
+      
       </HStack>
       <HStack zIndex={7} position="absolute" bottom={15} left={10}>
         {dataSlide.map((_, index) => (

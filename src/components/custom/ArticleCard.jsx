@@ -1,7 +1,13 @@
 import { Box, Heading, Text, HStack, VStack, Avatar, Button } from "@chakra-ui/react"
 import React from "react"
+import DOMPurify from "dompurify"
 
 export default function ArticleCard({ title, author, date, body, image, button, editPage, edit }) {
+  const convertSeconds = date.seconds ? date?.seconds * 1000 : 1000
+  const dates = new Date(convertSeconds)
+  const format = Intl.DateTimeFormat("pt-Br", {
+    dateStyle:"medium"
+  })
   return (
     <Box
       bg="white"
@@ -27,7 +33,7 @@ export default function ArticleCard({ title, author, date, body, image, button, 
       <HStack spacing={3} mb={6}>
         <Avatar.Root size={"sm"}>
           {image ?
-          <Avatar.Image src={image}/>
+          <Avatar.Image alt="author picture" src={image}/>
         :
         <Avatar.Fallback name={author}/>
         }
@@ -38,17 +44,16 @@ export default function ArticleCard({ title, author, date, body, image, button, 
             {author}
           </Text>
           <Text lineBreak={.5} fontSize="xs" color="gray.500">
-            {date}
+            {format?.format(dates)}
           </Text>
         </VStack>
       </HStack>
 
       {/* Body */}
-      <Text
-      
-      >
-        {body}
-      </Text>
+      <div dangerouslySetInnerHTML={{__html:DOMPurify.sanitize(body, {
+        ADD_TAGS: ["iframe"],
+        ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling", "src"],
+      })}}></div>
       {button && <Button marginTop={4}>Leia mais</Button>   }
       
     </Box>

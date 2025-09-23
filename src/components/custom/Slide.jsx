@@ -25,7 +25,7 @@ export default function Slide({ width, currentSlide , rank }) {
       }}
     >
       {/* Overlay */}
-      <VStack
+      <VStack  
         paddingBottom={10}
         background={'#0f0c0c3e'}
         width={width}
@@ -35,18 +35,18 @@ export default function Slide({ width, currentSlide , rank }) {
         justifyContent={'flex-end'}
         zIndex={2}
       >
-        <Image style={{width:140, height:140, borderRadius:100, marginLeft:-5}} src='https://upload.wikimedia.org/wikipedia/en/6/6a/PartyNextDoor_and_Drake_-_Some_Sexy_Songs_4_U.png'/>
-        <Button
+        <Image className='contenthero' style={{width:140, height:140, borderRadius:100, marginLeft:-5}} src='https://upload.wikimedia.org/wikipedia/en/6/6a/PartyNextDoor_and_Drake_-_Some_Sexy_Songs_4_U.png'/>
+        <Button className='contenthero'
           margin={0}
           backgroundColor={'#ffffff32'}
           borderRadius={50}
         >
           Hip Hop
         </Button>
-        <Heading lineHeight={.5} color={'white'}>Kendrick Lamar</Heading>
-        <Text color={"white"}>Squablle up</Text>
+        <Heading className='contenthero' lineHeight={.5} color={'white'}>Kendrick Lamar</Heading>
+        <Text className='contenthero' color={"white"}>Squablle up</Text>
         <AnimateNumber target={10000} currentSlide={currentSlide}/>
-        <HStack alignItems={"center"} gap={2}>
+        <HStack className='contenthero' alignItems={"center"} gap={2}>
             <Icon.Spotify color='white'/>
             <Icon.AppleMusic color='white'/>
         </HStack>

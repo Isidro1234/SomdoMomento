@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import WaveSurfer from "wavesurfer.js";
-import audio from "../../audio/audio1.mp3";
 
-export default function AudioPlayerGraph({ isplaying, setplaying, onTimeUpdate}) {
+export default function AudioPlayerGraph({ audio, isplaying, setplaying, onTimeUpdate}) {
   const waveContainerRef = useRef(null);
   const wavesurferRef = useRef(null);
 
@@ -26,9 +25,9 @@ export default function AudioPlayerGraph({ isplaying, setplaying, onTimeUpdate})
     wavesurferRef.current.on("finish",()=>{
       onTimeUpdate(wavesurferRef.current.getCurrentTime())
     })
-    wavesurferRef.current.on("click", () => {
+        wavesurferRef.current.on("click", () => {
       wavesurferRef.current.play();
-      setplaying(true);
+      setplaying(true);  
     });
 
     return () => {
@@ -52,7 +51,7 @@ export default function AudioPlayerGraph({ isplaying, setplaying, onTimeUpdate})
   }, [isplaying]);
  
   return (
-    <div style={{ flex: 2 }}>
+    <div style={{ flex: 2 , minWidth:10}}>
       <div ref={waveContainerRef} id="waveform" />
     </div>
   );
