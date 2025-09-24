@@ -1,8 +1,8 @@
-import { Badge, Box, Card, Image, Stack } from '@chakra-ui/react'
+import { Badge, Box, Button, Card, HStack, Image, Stack } from '@chakra-ui/react'
 import React from 'react'
 import { useNavigate } from 'react-router'
-
-export default function PostCard({to}) {
+import * as Icon from "react-bootstrap-icons"
+export default function PostCard({to, editmode}) {
   const navigate = useNavigate()
   function goto(){
     navigate({pathname:"/Article", data:"hello"})
@@ -22,7 +22,10 @@ export default function PostCard({to}) {
           src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg"
         />
         <Box flex="1" p={5}>
-          <Card.Title mb="2">The perfect latte</Card.Title>
+          <HStack>
+            <Card.Title mb="2" flex={1}>The perfect latte</Card.Title>
+          </HStack>
+          
           <Card.Description>
             Caffè latte is a coffee beverage of Italian origin made with espresso
             and steamed milk.

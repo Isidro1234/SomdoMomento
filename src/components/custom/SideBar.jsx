@@ -4,7 +4,7 @@ import * as Icon from 'react-bootstrap-icons';
 import AvatarCustom from './AvatarCustom';
 import { Link } from 'react-router';
 import { useAuthcontext } from '../../Context/AuthContextProvider';
-export default function SideBar() {
+export default function SideBar({onclicks,states}) {
     const {userdata}  = useAuthcontext()
   return (
     <VStack padding={4} alignItems={"flex-start"} flex={1} background={"#242424ff"}>

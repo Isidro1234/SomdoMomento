@@ -16,6 +16,25 @@ export default function MusicCard({audio,editmode, image, artist, title, songtim
     async function deleteMusic(){
       await deletingmusic(id)
     }
+    async function download(url){
+      try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = `${title}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // cleanup
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (err) {
+    console.error("Download failed:", err);
+  }
+    }
   return (
     <Card.Root borderWidth={noborder || 1.5} width={"100%"} borderRadius={20} minWidth={10}>
         <Card.Body minWidth={10} >
@@ -35,7 +54,7 @@ export default function MusicCard({audio,editmode, image, artist, title, songtim
             isplaying={playStop}
             setplaying={setPlayStop}
           />
-            <Icon.Download/>
+            <Icon.Download onClick={()=>download(audio)}/>
             {editmode &&
             <HStack alignItems={"center"} gap={1}>
              <Button onClick={deleteMusic} bg={"transparent"} color={"red"}><Icon.TrashFill/></Button>

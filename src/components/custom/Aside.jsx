@@ -17,7 +17,7 @@ export default function Aside({ posts }) {
       </Heading>
 
       <VStack spacing={4} align="stretch">
-        {posts.map((post, index) => (
+        {posts?.map((post, index) => (
           <HStack
             key={index}
             spacing={3}
@@ -28,8 +28,8 @@ export default function Aside({ posts }) {
             borderRadius="md"
           >
             <Image
-              src={post.image}
-              alt={post.title}
+              src={post?.imagecover}
+              alt={post?.title}
               boxSize="60px"
               objectFit="cover"
               borderRadius="md"
@@ -37,10 +37,10 @@ export default function Aside({ posts }) {
             />
             <Box>
               <Text fontSize="sm" fontWeight="semibold" color="gray.700">
-                {post.title}
+                {post?.title}
               </Text>
               <Text fontSize="xs" color="gray.500">
-                {post.date}
+                d
               </Text>
             </Box>
           </HStack>

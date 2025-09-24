@@ -12,7 +12,7 @@ const MusicSection = React.lazy(()=> import("../../components/custom/MusicSectio
 
 export default function Home() {
   const [scrollPosition , setScrollPosition] = useState(0)
-  const [hide, setHide] = useState(false)
+  const [hide, setHide] = useState(true)
   const dataSlide = [
     { video: "", rank: 1, artist: { name: "" }, music: { title: "", image: "", publishedDate: "" } },
     { video: "", rank: 2, artist: { name: "" }, music: { title: "", image: "", publishedDate: "" } },

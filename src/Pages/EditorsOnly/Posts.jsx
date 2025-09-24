@@ -13,6 +13,7 @@ export default function Posts() {
   const [image, setImage] = useState(null)
   const [range, setRange] = useState();
   const [lastChange, setLastChange] = useState();
+  const widthT = window.screen.width;
   const getpost = useLogiState((state)=>state.getPosts)
   const post = useLogiState((state)=>state.post)
   const [readOnly, setReadOnly] = useState(false);
@@ -34,17 +35,15 @@ export default function Posts() {
   }
   console.log("this is an wrray" ,post)
   return (
-    <VStack padding={5} background={"white"} alignItems={"flex-start"} justifyContent={"flex-start"} width={"100%"} height={"100%"}>
-          <VStack alignItems={"flex-start"}>
-            <Heading>Postes</Heading>
-            <HStack overflowX={"scroll"}>
-              {post?.map((item,index)=>{
-                return(<ArticleCard title={item.title} date={item.date} author={item.userdata.username} key={index} body={item.html}/>)
-              })}
-               
-            </HStack>
-          </VStack>
+    <VStack height={"100%"} width={"100%"} overflowY={"auto"} padding={5} background={"white"} alignItems={"flex-start"} justifyContent={"flex-start"}>
+        <Heading>Postes</Heading>
+        <HStack style={{flexWrap:"wrap", width:"100%"}}>
+                {post?.map((item,index)=>{
+                    return(<ArticleCard edimode={true} title={item.title} date={item.date} author={item.userdata.username} key={index} body={item.html}/>)
+                 })}
+          
+        </HStack> 
          <TextEditor placeholder={"Digite o titulo do seu Artigo"} to={"postes"}/>
-        </VStack>
+    </VStack>
   )
 }

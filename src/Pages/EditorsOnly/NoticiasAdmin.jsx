@@ -10,7 +10,7 @@ import TextEditor from '../../components/custom/TextEditor'
 import { useLogiState } from '../../states/useLogic'
 export default function NoticiasAdmin() {
   const getNoticias = useLogiState((state)=>state.getPosts)
-  const noticias = useLogiState((state)=>state.post)
+  const noticias = useLogiState((state)=>state.noticias)
   useEffect(()=>{
       async function getpst(){
         await getNoticias("noticias")

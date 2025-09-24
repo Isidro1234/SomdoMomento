@@ -4,6 +4,7 @@ import { Outlet, redirect, useNavigate } from 'react-router'
 import { useAuthcontext } from '../Context/AuthContextProvider'
 import { useLogiState } from '../states/useLogic'
 import { useAuthState } from '../states/useAuthState'
+import {Toaster, toaster} from "../components/ui/toaster"
 
 export default function ProtectedRoute() {
   const {isAuthenticated, setAuthenticated, setUserData} = useAuthcontext()
@@ -31,6 +32,21 @@ export default function ProtectedRoute() {
     if(result.res){
       setAuthenticated(true);
       setUserData(result.user)
+      toaster.create({
+        title:"Cadastro feito com sucesso",
+        type:"success",
+        duration:4000
+      })
+    }else{
+      toaster.create({
+        title:"Aviso erro de cadastro",
+        description:`Verifique as informcoes enviadas. Este erro tambem pode ser causado por falta de coneccao ou indisponibilidade dos nossos servidores,
+        caso isso continue, contacte-nos: somdomomentotroubleshoot@gmail.com`,
+        type:"error",
+        duration:4000
+      })
+      setLoad(false)
+      return;
     }
     if(isAuthenticated){
       navigate("/Dashboard")
@@ -77,6 +93,7 @@ export default function ProtectedRoute() {
         :
         <Outlet/>
     }
+    <Toaster/>
     </>
   )
 }

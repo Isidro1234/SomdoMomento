@@ -12,7 +12,7 @@ export default function AnimateNumber({ target, currentSlide }) {
     // reset to 0 whenever slide changes
     count.set(0)
 
-    const controls = animate(count, target, { duration: 2 })
+    const controls = animate(count, Number(target), { duration: 2 })
     return controls.stop
   }, [currentSlide, target, count])
 

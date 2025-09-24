@@ -10,7 +10,7 @@ import TextEditor from '../../components/custom/TextEditor'
 import { useLogiState } from '../../states/useLogic'
 export default function DestaquesAdmin() {
   const getDestaques = useLogiState((state)=>state.getPosts)
-  const destaques = useLogiState((state)=>state.post)
+  const destaques = useLogiState((state)=>state.destaques)
   useEffect(()=>{
       async function getpst(){
         await getDestaques("destaques")

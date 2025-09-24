@@ -1,4 +1,4 @@
-import { lazy, Suspense} from 'react'
+import { lazy, Suspense, useState} from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router'
 import { HStack, Spinner, VStack } from '@chakra-ui/react'
@@ -25,10 +25,11 @@ const ProtectedRoute = lazy(()=>import("./secure/ProtectedRoute"));
 
 function App() {
   const {isAuthenticated} = useAuthcontext()
+  const [sidebar, setSidebar] = useState(false)
   return (
-    <HStack  height={"-webkit-fill-available"} alignItems={"flex-start"} justifyContent={"flex-start"} gap={0} padding={0} width={"100vw"}>
-      <VStack flex={.3}  height={"100vh"} alignItems={"flex-start"} justifyContent={"flex-start"} gap={0} padding={0}>
-        {isAuthenticated  && <SideBar/>}
+    <HStack  height={"100%"} alignItems={"flex-start"}  gap={0} padding={0} width={"100vw"}>
+      <VStack hidden={sidebar ? true : false} flex={.3}  height={"100%"} alignItems={"flex-start"} justifyContent={"flex-start"} gap={0} padding={0}>
+        {isAuthenticated  && <SideBar states={sidebar} onclicks={(e)=>{setSidebar(e)}}/>}
       </VStack>
     <Suspense fallback={<VStack alignItems={"center"} justifyContent={"center"} width={"100vw"} height={"100vh"}><Spinner size={"lg"} color={"black"}/></VStack>}>
         <Routes>
