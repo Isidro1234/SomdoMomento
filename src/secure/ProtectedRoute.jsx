@@ -22,10 +22,29 @@ export default function ProtectedRoute() {
     setLoad(true)
     let result =""
     if(showing == "login"){
-      if( !password || !email) return;
+      if( !password || !email){
+        setLoad(false)
+        toaster.create({
+        title:"Aviso erro de cadastro",
+        description:`Porfavor preencha o email e o password`,
+        type:"error",
+        duration:4000
+      })
+        return;
+        
+      } 
       result = await login(email,password);
     }else{
-      if(!username || !password || !email || !codigo) return;
+      if(!username || !password || !email || !codigo){
+         setLoad(false)
+         toaster.create({
+        title:"Aviso erro de cadastro",
+        description:`Porfavor preencha os dados`,
+        type:"error",
+        duration:4000
+      })
+         return;
+      } 
       result = await register(username,email,password, codigo);
     }
     

@@ -1,5 +1,7 @@
 import {create} from "zustand"
 import DOMPurify from "dompurify"
+import { collection, getDocs } from "firebase/firestore"
+import { db } from "./config/firebase"
 export const useLogiState = create((set,get)=>({
     posts:[],
     noticias:[],
@@ -30,40 +32,21 @@ export const useLogiState = create((set,get)=>({
         }
         
     }, getPosts :async(to)=>{
-        try {
-            console.log(to)
-             const post = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/db/get",{
-                method:"POST",
-                headers:{
-                    "Content-type":"application/json"
-                },
-                body:JSON.stringify({to})
-            }) 
-            const res =  await post;
-            const data = await res.json()
-            if(data.success){
-              switch(to){
-                case "postes":
-                  set({post:data.data})
-                  break;
-                case "destaques":
-                    set({destaques:data.data})
-                    break;
-                case "noticias":
-                    set({noticias:data.data})
-                    break;
-              }
-              return;
+         try {
+                const doref = collection(db,to);
+                if(!doref.id){
+                    return false
+                }
+                const getting = await getDocs(doref);
+                const data = []
+                getting.forEach((docs)=>{
+                data.push(docs.data()) 
+                })
+                set({posts:data})
+            } catch (error) {
+                console.log(error.message) 
+                console.log(error.message)
             }
-            set({post:[]})
-            set({destaques:[]})
-            set({noticias:[]})
-        } catch (error) {
-            set({post:[]})
-            set({destaques:[]})
-            set({noticias:[]})
-            console.log(error.message)
-        }
     },
     subscribeToNewsLetter:async(email)=>{
          try {
@@ -109,21 +92,19 @@ export const useLogiState = create((set,get)=>({
 
     },getSlides:async()=>{
         console.log("hello")
-        try {
-            const news = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/pages/get") 
-            const res =  await news;
-            const data = await res.json()
-            if(data.success){
-                console.log(data.data)
-              set({slides:data.data.reverse()})
-              return true
-            }
-            return false
-        } catch (error) {
-            console.log(error.message)
-            return false
-            
-        }
+         try {
+    const docref = collection(db,"slides");
+    const getting = await getDocs(docref);
+    if(!getting.empty){
+        const data = [];
+        getting.forEach((doc)=>{
+            data.push(doc.data())
+        })
+        set({slides:data.reverse()})
+    }
+    } catch (error) {
+        console.log(error)
+    }  
     },addmusic:async(artistname,artistSongTitle,artistpic, artistSong)=>{
         try {
              const news = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/musica/add",{
@@ -167,18 +148,19 @@ export const useLogiState = create((set,get)=>({
         }
     },getMusic:async()=>{
        try {
-            const news =  await fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/musica/get") 
-            const data = await news.json()
-            if(data.success){
-              console.log(data.datas)
-              set({musicas:data.datas})
-              return true
-            }
-            return false
-        } catch (error) {
-            console.log(error.message)
-            return false
-            
-        } 
+      const docref = collection(db,"musicas")
+      const getting = await getDocs(docref);
+      if(!getting.empty){
+        const data = []
+        getting.forEach((doc)=>{
+            data.push(doc.data())
+        })
+        set({musicas:data})
+      }else{
+        return set({musicas:[]})
+      }
+    } catch (error) {
+        console.log(error.message)        
+    }  
     }
 }))

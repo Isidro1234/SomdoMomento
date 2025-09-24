@@ -6,7 +6,7 @@ import { useLogiState } from '../../states/useLogic'
 
  function ArticleSection() {
      const getpost = useLogiState((state)=>state.getPosts)
-     const posts = useLogiState((state)=>state.post)
+     const posts = useLogiState((state)=>state.posts)
  
   useEffect(()=>{
     async function getpst(){
