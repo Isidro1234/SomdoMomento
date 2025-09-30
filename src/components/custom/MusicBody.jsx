@@ -9,6 +9,9 @@ import Nav from './Nav'
 import MusicSide from './MusicSide'
 import MusicNav from './MusicNav'
 import MusicBodyMusic from './MusicBodyMusic'
+import MusicSideshow from './MusicSideshow'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 export default function MusicBody() {
   const gettingmusic = useLogiState((state)=>state.getMusic)
@@ -21,17 +24,29 @@ export default function MusicBody() {
     }
     gett()
   },[])
-  console.log(playsong)
+  useGSAP(()=>{
+      gsap.to('.anim',{
+        yoyo:true,
+            margin:0,
+            duration:3,
+            ease:"bounce",
+            marginRight:0
+      })
+  },[])
   return (
-    <VStack background={"black"} gap={1} padding={1} display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(300px,100%), 1fr))"} width={"100%"} height={"100%"}>
+    <VStack background={"black"}  gap={1} padding={1} display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(300px,100%), 1fr))"} width={"100%"}>
       
-      <HStack className='first' background={"black"} display={"grid"} gridAutoFlow={"row"} gridTemplateColumns={"minmax(200px, 300px) minmax(300px, 1fr)"}  width={"100%"} height={"100%"}>
+      <HStack className='first' background={"black"}  display={"grid"} gridTemplateColumns={"minmax(200px, 300px) minmax(300px, 1fr)"}  width={"100%"} height={"100vh"}>
         <MusicSide/>
-        <VStack minW={100}  height={"100%"} >
+        <VStack className='anim' marginLeft={-200} minW={100}  height={"100%"} >
           <MusicNav/>
           <MusicBodyMusic/>
         </VStack>
       </HStack>
+      <HStack className='showingit' width={"100%"} height={"100%"} padding={1}>
+        <MusicSideshow/>
+      </HStack>
+      
       <HStack minW={100} display={"none"} width={"100%"}>
         <FixedPlayer position={"relative"}/>
       </HStack>
