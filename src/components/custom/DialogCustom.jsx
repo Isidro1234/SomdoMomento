@@ -12,6 +12,7 @@ export default function DialogCustom({icon}) {
   const [artistpic, setartistipic] = useState(null)
   const submitsong = useLogiState((state)=>state.addmusic)
   const [artistSong, setArtistSong] = useState(null)
+  const [genre, setgenre]= useState("")
   async function handleArtistPic(f){
     const file = new FileReader()
     file.readAsDataURL(f);
@@ -59,7 +60,7 @@ export default function DialogCustom({icon}) {
     setArtistSong(geturl)
   }
   async function submitMusic(){
-    if(!artistSong || !artistSongTitle || !artistpic || !artistSong){
+    if(!artistSong || !artistSongTitle || !artistpic || !artistSong || !genre){
        toaster.create({
             title:"lacunas em branco",
             description:"porfavor preencha todas as lacunas",
@@ -67,7 +68,7 @@ export default function DialogCustom({icon}) {
             duration:2000
         }) 
     }
-    const result = await submitsong(artistname,artistSongTitle,artistpic, artistSong);
+    const result = await submitsong(artistname,artistSongTitle,artistpic, artistSong, genre);
     if(result){
         toaster.create({
             title:"musica enviada",
@@ -94,6 +95,7 @@ export default function DialogCustom({icon}) {
                     </Dialog.Header>
                     <Dialog.Body>
                     <HStack margin={4} marginLeft={0} gap={2} alignItems={"center"}>
+                        <Input onChange={(e)=>setgenre(e.target.value)}  placeholder='Genre'/>
                         <Input value={artistname} onChange={(e)=>setArtistName(e.target.value)} placeholder='Nome do Artista'/>
                         <Input value={artistSongTitle} onChange={(e)=>setArtistSongTitle(e.target.value)} placeholder='Titulo da musica'/>
                         <Input  onChange={(ev)=>handleArtistPic(ev.target.files[0])} accept={"image/*"} ref={imageref} type='file' hidden/>

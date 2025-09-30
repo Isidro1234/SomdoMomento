@@ -17,11 +17,11 @@ export default function AnimateNumber({ target, currentSlide }) {
   }, [currentSlide, target, count])
 
   return (
-    <HStack gap={1} m={0} mt={-2} alignItems="center">
-      <motion.h1 style={{ color: "white", fontSize: 15, fontWeight: 300 }}>
+    <HStack  p={0} borderRadius={10} gap={1} m={0} mt={-2} alignItems="center">
+      <motion.h1 style={{ fontSize: 15, fontWeight: 200, color:"white" }}>
         {rounded}
       </motion.h1>
-      <Text color="white" fontSize={10} fontWeight={300}>
+      <Text color={"white"}  fontSize={10} fontWeight={100}>
         plays
       </Text>
     </HStack>

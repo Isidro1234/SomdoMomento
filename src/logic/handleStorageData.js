@@ -2,7 +2,7 @@ export const storemedia = async(file)=>{
     try {
        const formData = new FormData()
   formData.append("file", file)
-  const savefile  = fetch("http://localhost:7000/som_do_momento/api/storage/store",{
+  const savefile  = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/storage/store",{
     method:"POST",
     body:formData
   })

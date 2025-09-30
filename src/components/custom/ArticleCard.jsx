@@ -3,8 +3,12 @@ import React, { useRef } from "react"
 import DOMPurify from "dompurify"
 import * as Icon from "react-bootstrap-icons"
 import AvatarCustom from "./AvatarCustom";
+import { useLogiState } from "../../states/useLogic";
+import {Toaster, toaster} from "../ui/toaster"
 
 export default function ArticleCard({
+  id,
+  to,
   title,
   author,
   edimode,
@@ -15,15 +19,25 @@ export default function ArticleCard({
 }) {
   const convertSeconds = date?.seconds ? date.seconds * 1000 : 1000;
   const dates = new Date(convertSeconds);
-
+  const deleteposts = useLogiState((state)=>state.delePost)
   const format = Intl.DateTimeFormat("pt-BR", {
     dateStyle: "medium",
   });
   const once = useRef({
     ref:body
   })
+  async function deletep(){
+    const result = await deleteposts(to,id);
+    if(result){
+      toaster.create({
+        title:"Poste deletado com sucess",
+        duration:5000,
+        type:"success"
+      })
+    }
+  }
   return (
-    <Box
+    <Box className="contpics"
       width={edimode ? "fit-content" : "100%"}
       bg="white"
       borderWidth={1}
@@ -46,7 +60,7 @@ export default function ArticleCard({
         </Heading>
         {edimode && (
           <HStack spacing={2} display={{ base: "none", sm: "flex" }}>
-            <Button variant="ghost" color="red.500">
+            <Button onClick={deletep} variant="ghost" color="red.500">
               <Icon.Trash />
             </Button>
             <Button variant="ghost" color="black">
@@ -59,7 +73,7 @@ export default function ArticleCard({
       {/* Author + Date */}
       <HStack spacing={3} mb={6}>
         <AvatarCustom size="sm" src={image} name={author} />
-        <VStack spacing={0} align="flex-start">
+        <VStack gap={0} spacing={0} align="flex-start">
           <Text fontWeight="semibold" fontSize="sm" color="gray.700">
             {author}
           </Text>
@@ -91,6 +105,7 @@ export default function ArticleCard({
           Leia mais
         </Button>
       )}
+      <Toaster/>
     </Box>
   );
 }

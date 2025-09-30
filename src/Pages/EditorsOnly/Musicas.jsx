@@ -30,7 +30,7 @@ export default function Musicas() {
       <Table.Body>
         {musicas?.map((item, index) => (
           <Table.Row key={index}>
-            <Table.Cell><MusicCard id={item?.id} image={item?.artistpic} title={item?.artistSongTitle} audio={item?.artistSong} artist={item?.artistname}  editmode={true} noborder={0.3} padding={5} /></Table.Cell>
+            <Table.Cell><MusicCard id={item?.id} date={item?.date} genre={item?.genre} image={item?.artistpic} title={item?.artistSongTitle} audio={item?.artistSong} artist={item?.artistname}  editmode={true} noborder={0.3} padding={5} /></Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

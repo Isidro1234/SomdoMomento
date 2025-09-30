@@ -8,7 +8,7 @@ import { useLogiState } from '../../states/useLogic';
 
 
 
-export default function MusicCard({audio,editmode, image, artist, title, songtime, padding, noborder, notime, id}) {
+export default function MusicCard({audio,editmode, image, artist,genre,date, title, songtime, padding, noborder, notime, id}) {
     const audioRef =useRef(null);
     const [playStop , setPlayStop] = useState(false)
     const [playtime, setPlayTime] = useState(0)

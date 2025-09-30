@@ -6,10 +6,8 @@ import MusicBody from '../../components/custom/MusicBody'
 
 export default function Music() {
   return (
-    <VStack className='music' height={"100%"} width={"100%"}>
-        <Nav position={"relative"} background={"blue"}/>
+    <VStack className='music' height={"100%"} background={"gray"} width={"100%"}>
         <MusicBody/>
-        <Footer/>
     </VStack>
   )
 }

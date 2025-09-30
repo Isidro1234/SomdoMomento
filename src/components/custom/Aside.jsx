@@ -2,6 +2,14 @@ import { Box, Heading, VStack, HStack, Image, Text } from "@chakra-ui/react"
 import React from "react"
 
 export default function Aside({ posts }) {
+  function handledate(date){
+    const dats = date.seconds * 1000;
+    const newdate = new Date(dats);
+    const formater = Intl.DateTimeFormat("pt-Br",{
+      dateStyle:"medium"
+    })
+    return(formater.format(newdate))
+  }
   return (
     <Box
       as="aside"
@@ -40,7 +48,7 @@ export default function Aside({ posts }) {
                 {post?.title}
               </Text>
               <Text fontSize="xs" color="gray.500">
-                d
+                {handledate(post?.date)}
               </Text>
             </Box>
           </HStack>

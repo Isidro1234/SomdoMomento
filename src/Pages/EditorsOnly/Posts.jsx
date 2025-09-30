@@ -15,7 +15,7 @@ export default function Posts() {
   const [lastChange, setLastChange] = useState();
   const widthT = window.screen.width;
   const getpost = useLogiState((state)=>state.getPosts)
-  const post = useLogiState((state)=>state.post)
+  const post = useLogiState((state)=>state.posts)
   const [readOnly, setReadOnly] = useState(false);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -39,7 +39,7 @@ export default function Posts() {
         <Heading>Postes</Heading>
         <HStack style={{flexWrap:"wrap", width:"100%"}}>
                 {post?.map((item,index)=>{
-                    return(<ArticleCard edimode={true} title={item.title} date={item.date} author={item.userdata.username} key={index} body={item.html}/>)
+                    return(<ArticleCard to={"postes"} id={item?.id} edimode={true} title={item.title} date={item.date} author={item.userdata.username} key={index} body={item.html}/>)
                  })}
           
         </HStack> 

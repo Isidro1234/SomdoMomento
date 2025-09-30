@@ -6,21 +6,8 @@ export default function RecentPosts() {
   const data = ["", "", ""]
 
   return (
-    <Box className='destaquesection' width="100%" p={4} paddingBottom={20}>
-      <Box width="100%" display="flex" flexDirection="column" gap={5} mt={5}>
-        <Heading>Destaques da Banda</Heading>
-        {/* Responsive layout: column on mobile, row on larger screens */}
-        <Stack
-          direction={{ base: "column", md: "row" }}
-          width="100%"
-          gap={10}
-          align="stretch"
-        >
-          {data.map((item, index) => (
-            <PostCard key={index} />
-          ))}
-        </Stack>
-      </Box>
+    <Box className='destaquesection' width="100%" p={4} height={"30vh"} paddingBottom={20}>
+     
     </Box>
   )
 }

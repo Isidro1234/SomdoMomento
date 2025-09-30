@@ -21,7 +21,7 @@ import { useLogiState } from '../../states/useLogic'
             <VStack flex={1}>
                  {posts?.map((item,index)=>{
                 return(
-                   index <= 5 &&
+                   index < 4 &&
                    <ArticleCard key={index}
                     title={item.title} 
                     date={item.date} 

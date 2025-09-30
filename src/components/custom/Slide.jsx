@@ -4,7 +4,7 @@ import * as Icon from 'react-bootstrap-icons';
 import AnimateNumber from './AnimateNumber';
 export default function Slide({ width, currentSlide , rank ,category, artistname, streams, musictitle, videourl, artistpic, socialLinks, publishedate }) {
   const videoRef = useRef(null)
-  const convdata = publishedate * 1000;
+  const convdata = publishedate.seconds * 1000;
   function timeSince(dateString) {
   const now = new Date();
   const past = new Date(dateString);
@@ -57,10 +57,11 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
         paddingLeft={10}
         alignItems={'flex-start'}
         justifyContent={'flex-end'}
+        position={"relative"}
         zIndex={2}
       >
-        <Image className='contenthero' style={{width:140, height:140, borderRadius:100, marginLeft:-5}} src={artistpic || ""}/>
-        <Button className='contenthero'
+        <Image src={artistpic} height={150} width={150} borderRadius={30}/>
+                <Button className='contenthero'
           margin={0}
           backgroundColor={'#ffffff32'}
           borderRadius={50}
@@ -68,9 +69,9 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
           {category}
         </Button>
         <Heading className='contenthero' lineHeight={.5} color={'white'}>{artistname}</Heading>
-        <Text className='contenthero' color={"white"}>{musictitle}</Text>
+        <Text className='contenthero' color={"white"} zIndex={100} fontWeight={300}>{musictitle}</Text>
         <AnimateNumber target={streams || 0} currentSlide={currentSlide}/>
-        <HStack className='contenthero' alignItems={"center"} gap={2}>
+        <HStack className='contenthero' alignItems={"center"} gap={2} zIndex={100}>
             <Icon.Spotify color='white'/>
             <Icon.AppleMusic color='white'/>
         </HStack>
@@ -99,9 +100,9 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
           position: 'absolute',
           borderRadius: 0,
         }}/>}
-         <VStack alignItems={"center"} justifyContent={"center"} width={150} zIndex={10} padding={10} backgroundColor={"#7c18ffff"} position={"absolute"} right={0} top={"40%"}>
-              <Heading textAlign={"center"} marginTop={2} color={"white"} fontSize={30}>TOP {rank}#</Heading>
-              <Text textAlign={"center"} color={"white"} fontSize={10}>{timeSince(convdata)}</Text>
+         <VStack alignItems={"center"} gap={5} justifyContent={"center"} height={"100%"} width={"100%"} zIndex={10} padding={10} backgroundColor={"#060606ff"} position={"absolute"} right={0} top={"0"}>
+              <Heading textAlign={"center"} marginTop={2} color={"white"} fontSize={45}>TOP {rank}#</Heading>
+              <Text fontWeight={300} textAlign={"center"} color={"white"} fontSize={17}>ha {timeSince(convdata)}</Text>
            </VStack>
     </div>
   )

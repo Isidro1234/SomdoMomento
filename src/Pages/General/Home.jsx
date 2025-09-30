@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { Button, HStack, Spinner, VStack } from '@chakra-ui/react'
 import * as Icon from "react-bootstrap-icons" 
 import MessageCard from '../../components/custom/MessageCard'
+import SearchResults from '../../components/custom/SearchResults'
 const Hero = React.lazy(()=> import("../../components/custom/Hero"))
 const Nav = React.lazy(()=> import("../../components/custom/Nav"))
 const RecentPosts = React.lazy(()=> import("../../components/custom/RecentPosts"))
@@ -31,7 +32,7 @@ export default function Home() {
   return (
       <VStack gap={0} className='Home' width={"100%"}>
         <Suspense fallback={<VStack justifyContent={"center"} alignItems={"center"} width={"100vw"} height={"100vh"}><Spinner size={"lg"} color={'black'}/></VStack>}>
-          <Nav position={"fixed"} background={scrollPosition > 40 ? "#3f45f5c0" : "transparent"}/>
+          <Nav position={"fixed"} background={scrollPosition > 40 ? "#111111c0" : "transparent"}/>
           <Hero dataSlide={dataSlide}/>
           <RecentPosts/>
           <MusicSection/>
@@ -39,6 +40,7 @@ export default function Home() {
           <Newslatter/>
           <Footer/>
         </Suspense>
+        <SearchResults/>
         <MessageCard hide={hide}/>
         <Button onClick={()=>hide ? setHide(false) : setHide(true)} bg={"blue"} height={50} w={50} padding={10} position={"fixed"} zIndex={150} borderRadius={50} bottom={10} right={5}><Icon.ChatFill size={30}/></Button>
       </VStack>
