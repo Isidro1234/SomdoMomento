@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import WaveSurfer from "wavesurfer.js";
 
-export default function AudioPlayerGraph({ audio, isplaying, setplaying, onTimeUpdate }) {
+export default function AudioPlayerGraph({ audio, isplaying, setplaying, onTimeUpdate , from }) {
   const waveContainerRef = useRef(null);
   const wavesurferRef = useRef(null);
 
@@ -14,7 +14,6 @@ export default function AudioPlayerGraph({ audio, isplaying, setplaying, onTimeU
       wavesurferRef.current.destroy();
       wavesurferRef.current = null;
     }
-
     // Create new instance
     wavesurferRef.current = WaveSurfer.create({
       container: waveContainerRef.current,
@@ -47,7 +46,6 @@ export default function AudioPlayerGraph({ audio, isplaying, setplaying, onTimeU
   // React to play/pause state
   useEffect(() => {
     if (!wavesurferRef.current) return;
-
     if (isplaying) {
       wavesurferRef.current.play();
     } else {

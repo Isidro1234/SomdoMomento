@@ -15,7 +15,7 @@ import { useLogiState } from '../../states/useLogic'
     getpst()
   }, [])
   return (
-    <VStack  padding={4} gap={4} justifyContent={"flex-start"} alignItems={"center"} background={"#fefdfdff"}  width={"100%"}>
+    <VStack  padding={0} gap={4} justifyContent={"flex-start"} alignItems={"center"} background={"#fefdfdff"}  width={"100%"}>
         <VStack className='mediaSmallScreen' alignItems={"flex-start"} justifyContent={"flex-start"} width={"100%"} maxWidth={"70%"}>
         <VStack alignSelf={"center"} padding={5}>
           <Heading >Artigos</Heading>

@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PostCard from './PostCard'
 import { Box, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import MusicBoxCard from './MusicBoxCard'
+import { useLogiState } from '../../states/useLogic'
 
 export default function RecentPosts() {
   const data = ["", "", ""]
-
+  const gettingmusic = useLogiState((state)=>state.getMusic)
+  const musicas = useLogiState((state)=>state.musicas);
+  useEffect(()=>{
+      async function getting(){
+        await gettingmusic()
+      }
+      getting()
+  }, [])
   return (
     <Box className='destaquesection' width="100%" p={4}  display={"flex"} paddingTop={20} justifyContent={"center"} paddingBottom={20}>
      <VStack className='mediaSmallScreen' maxWidth={"70%"}  width={"100%"}>
@@ -17,10 +25,13 @@ export default function RecentPosts() {
                            </HStack>
                            
                            <HStack width={"100%"} display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(200px, 100%), 1fr))"}>
-                             <MusicBoxCard color={"gray"}/>
-                             <MusicBoxCard color={"gray"}/>
-                             <MusicBoxCard color={"gray"}/>
-                             <MusicBoxCard color={"gray"}/>
+                             {musicas.map((item,index)=>{
+                             
+                              return( 
+                                index <= 3 &&
+                                <MusicBoxCard name={item?.artistname} title={item?.artistSongTitle} image={item?.artistpic} music={item?.artistSong} key={index} color={"gray"}/>
+                              )
+                             })}
                            </HStack>
                    </VStack>
     </Box>

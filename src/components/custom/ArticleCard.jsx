@@ -1,10 +1,11 @@
 import { Box, Heading, Text, HStack, VStack, Avatar, Button, Input } from "@chakra-ui/react"
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import DOMPurify from "dompurify"
 import * as Icon from "react-bootstrap-icons"
 import AvatarCustom from "./AvatarCustom";
 import { useLogiState } from "../../states/useLogic";
 import {Toaster, toaster} from "../ui/toaster"
+import Modal from "./Modal";
 
 export default function ArticleCard({
   id,
@@ -20,6 +21,7 @@ export default function ArticleCard({
   const convertSeconds = date?.seconds ? date.seconds * 1000 : 1000;
   const dates = new Date(convertSeconds);
   const deleteposts = useLogiState((state)=>state.delePost)
+  const [showcomment, setComment] = useState(false)
   const format = Intl.DateTimeFormat("pt-BR", {
     dateStyle: "medium",
   });
@@ -114,10 +116,24 @@ export default function ArticleCard({
         </Button>
       )}
       <Toaster/>
-      <HStack marginTop={5}>
-        <Input  borderRadius={30} placeholder="Comenta aqui"/>
+      <HStack marginLeft={-3} marginTop={5} alignItems={"center"}>
+        <Button bg={"transparent"}><Icon.Heart color="black"/></Button>
+        <Modal/>
+        <Button bg={"transparent"}><Icon.Share color="black"/></Button>
+      </HStack>
+      <HStack marginTop={2}>
+        <Input onBlur={()=>setComment(false)} onFocus={()=>setComment(true)} borderRadius={30} placeholder="Comenta aqui"/>
         <Button background={"transparent"} borderRadius={50}><Icon.Send color="black"/></Button>
       </HStack>
+      <VStack  marginTop={5} padding={0} paddingTop={0} alignItems={"flex-start"} display={showcomment ? "flex" : "none"}>
+        <Box  display={"flex"} alignItems={"center"} gap={2} padding={2} borderRadius={10}  borderWidth={1} >
+            <AvatarCustom name={"Anonymous"}/>
+            <VStack flex={1} gap={1} alignItems={"flex-start"} justifyContent={"center"}>
+              <Text fontWeight={500} lineHeight={1} fontSize={12} color={"black"}>Anonimo</Text>
+              <Text lineHeight={1} fontSize={10} color={"gray"}>dsdfsdf</Text>
+            </VStack>
+        </Box>
+      </VStack>
     </Box>
   );
 }

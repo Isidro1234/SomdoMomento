@@ -14,7 +14,7 @@ export default function Aside({ posts }) {
     <Box
       as="aside"
       borderWidth={1}
-      width={{ base: "100%", md: "400px" }}
+      width={{ base: "100%", md: "340px" }}
 
       bg="white"
       borderRadius="lg"

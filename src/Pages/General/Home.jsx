@@ -4,6 +4,8 @@ import * as Icon from "react-bootstrap-icons"
 import MessageCard from '../../components/custom/MessageCard'
 import SearchResults from '../../components/custom/SearchResults'
 import NewsPreview from '../../components/custom/NewsPreview'
+import FixedPlayer from '../../components/custom/FixedPlayer'
+import { useLogiState } from '../../states/useLogic'
 const Hero = React.lazy(()=> import("../../components/custom/Hero"))
 const Nav = React.lazy(()=> import("../../components/custom/Nav"))
 const RecentPosts = React.lazy(()=> import("../../components/custom/RecentPosts"))
@@ -15,6 +17,7 @@ const MusicSection = React.lazy(()=> import("../../components/custom/MusicSectio
 export default function Home() {
   const [scrollPosition , setScrollPosition] = useState(0)
   const [hide, setHide] = useState(true)
+  const playaudio = useLogiState((state)=>state. audioplaying)
   const dataSlide = [
     { video: "", rank: 1, artist: { name: "" }, music: { title: "", image: "", publishedDate: "" } },
     { video: "", rank: 2, artist: { name: "" }, music: { title: "", image: "", publishedDate: "" } },
@@ -44,6 +47,8 @@ export default function Home() {
         <SearchResults/>
         <MessageCard hide={hide}/>
         <Button onClick={()=>hide ? setHide(false) : setHide(true)} bg={"blue"} height={50} w={50} padding={10} position={"fixed"} zIndex={150} borderRadius={50} bottom={10} right={5}><Icon.ChatFill size={30}/></Button>
+        [audio, image, artistname, title, isplaying]
+      <FixedPlayer isplaying={!playaudio?.[4]} audio={playaudio?.[0]} artistname={playaudio?.[2]} title={playaudio?.[3]} image={playaudio?.[1]}  hide={playaudio?.[4]} position={"fixed"}/>
       </VStack>
   )
 }

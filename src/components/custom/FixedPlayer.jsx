@@ -4,7 +4,9 @@ import AvatarCustom from './AvatarCustom'
 import AudioPlayerGraph from './AudioPlayerGraph'
 import * as Icon from "react-bootstrap-icons"
 import { useLogiState } from '../../states/useLogic'
-export default function FixedPlayer({audio, image, artistname, title, isplaying, position}) {
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+export default function FixedPlayer({audio, image, artistname, title, isplaying, position , hide}) {
   const audioRef =useRef(null);
     const [playStop , setPlayStop] = useState(isplaying)
     const [playtime, setPlayTime] = useState(0)
@@ -31,12 +33,21 @@ export default function FixedPlayer({audio, image, artistname, title, isplaying,
     console.error("Download failed:", err);
   }
     }
+    useGSAP(()=>{
+        gsap.to('.fixeplayer', {
+          marginBottom:hide ? -200 : 0,
+          yoyo:true,
+          ease:"elastic.inOut",
+          duration:1.5
+        })
+
+    }, [hide])
   return (
-    <HStack height={20} alignItems={"center"} bottom={0} position={position} left={0} zIndex={100} width={"100%"} padding={5} borderRadius={0} backgroundColor={"#0f0f0fbb"}>
+    <HStack className='fixeplayer'  marginBottom={- 200 } height={20} alignItems={"center"} bottom={0} position={position} left={0} zIndex={100} width={"100%"} padding={5} borderRadius={0} backgroundColor={"#0f0f0fbb"}>
        <HStack>
         <AvatarCustom image={image}/>
-        <VStack justifyContent={"center"} alignItems={"flex-start"} gap={0}>
-            <Text p={0} lineHeight={.7}>{title}</Text>
+        <VStack justifyContent={"center"} alignItems={"flex-start"} gap={1}>
+            <Text p={0} lineHeight={.7} color={"white"}>{title}</Text>
             <Text paddingLeft={.5} fontSize={10} color={"gray"}>{artistname}</Text>
         </VStack>
        </HStack>
@@ -50,6 +61,7 @@ export default function FixedPlayer({audio, image, artistname, title, isplaying,
             <Text color='gray'>{Math.floor(playtime / 60)} : {Math.floor(playtime % 60).toString().padStart(2, "0")}</Text>
             <HStack height={10} padding={2} flex={1}>
                 <AudioPlayerGraph 
+                from={"fixed"}
             audio={audio}
             onTimeUpdate={(e) => setPlayTime(e)}
             isplaying={isplaying}
