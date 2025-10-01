@@ -1,4 +1,4 @@
-import { Box, Heading, Text, HStack, VStack, Avatar, Button } from "@chakra-ui/react"
+import { Box, Heading, Text, HStack, VStack, Avatar, Button, Input } from "@chakra-ui/react"
 import React, { useRef } from "react"
 import DOMPurify from "dompurify"
 import * as Icon from "react-bootstrap-icons"
@@ -39,25 +39,17 @@ export default function ArticleCard({
   return (
     <Box className="contpics"
       width={edimode ? "fit-content" : "100%"}
-      bg="white"
+      bg="#ffffffff"
       borderWidth={1}
       borderRadius="xl"
+      maxW={700}
       p={{ base: 5, md: 6 }}
       flex={1}
-      mx="auto"
       alignSelf="flex-start"
     >
       {/* Title */}
       <HStack flexWrap="wrap" justify="space-between" mb={4}>
-        <Heading
-          as="h1"
-          size="xl"
-          color="gray.800"
-          fontWeight="bold"
-          flex={1}
-        >
-          {title}
-        </Heading>
+        
         {edimode && (
           <HStack spacing={2} display={{ base: "none", sm: "flex" }}>
             <Button onClick={deletep} variant="ghost" color="red.500">
@@ -72,19 +64,35 @@ export default function ArticleCard({
 
       {/* Author + Date */}
       <HStack spacing={3} mb={6}>
-        <AvatarCustom size="sm" src={image} name={author} />
+        <AvatarCustom size="xl" src={image} name={author} />
         <VStack gap={0} spacing={0} align="flex-start">
-          <Text fontWeight="semibold" fontSize="sm" color="gray.700">
+          <Text lineHeight={1} fontWeight="semibold" fontSize="sm" color="gray.700">
             {author}
           </Text>
           <Text fontSize="xs" color="gray.500">
-            {format.format(dates)}
+            Autor
           </Text>
         </VStack>
       </HStack>
-
+      <VStack alignItems={"flex-start"} justifyContent={"center"}>
+        <Heading
+          fontSize={29}
+          color="gray.800"
+          fontWeight="bold"
+          flex={1}
+          marginTop={-4}
+        >
+          {title}
+        </Heading>
+        <HStack alignItems={"center"}>
+          <Text fontSize={10} color={"red"}>Sports</Text>
+          <Text fontSize={10} color={"gray"}> | </Text>
+          <Text fontSize={10} color={"gray"}>6 minutes</Text>
+        </HStack>
+      </VStack>
+      
       {/* Body */}
-      <Box
+      <Box 
         className="quill-body"
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(once.current.ref, {
@@ -106,6 +114,10 @@ export default function ArticleCard({
         </Button>
       )}
       <Toaster/>
+      <HStack marginTop={5}>
+        <Input  borderRadius={30} placeholder="Comenta aqui"/>
+        <Button background={"transparent"} borderRadius={50}><Icon.Send color="black"/></Button>
+      </HStack>
     </Box>
   );
 }

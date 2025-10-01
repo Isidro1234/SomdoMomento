@@ -49,33 +49,38 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
       }}
     >
       {/* Overlay */}
-      <VStack  
-        paddingBottom={10}
-        background={'#0f0c0c3e'}
-        width={width}
-        height={'100%'}
-        paddingLeft={10}
-        alignItems={'flex-start'}
-        justifyContent={'flex-end'}
-        position={"relative"}
-        zIndex={2}
-      >
-        <Image src={artistpic} height={150} width={150} borderRadius={30}/>
-                <Button className='contenthero'
-          margin={0}
-          backgroundColor={'#ffffff32'}
-          borderRadius={50}
-        >
-          {category}
-        </Button>
-        <Heading className='contenthero' lineHeight={.5} color={'white'}>{artistname}</Heading>
-        <Text className='contenthero' color={"white"} zIndex={100} fontWeight={300}>{musictitle}</Text>
-        <AnimateNumber target={streams || 0} currentSlide={currentSlide}/>
-        <HStack className='contenthero' alignItems={"center"} gap={2} zIndex={100}>
-            <Icon.Spotify color='white'/>
-            <Icon.AppleMusic color='white'/>
-        </HStack>
+      <VStack width={"100%"} >
+        <VStack  
+            className='mediaSmallScreenHero'
+            maxWidth={"70%"}
+            paddingBottom={10}
+            width={width}
+            height={'100%'}
+            paddingLeft={10}
+            alignItems={'flex-start'}
+            justifyContent={'flex-end'}
+            position={"relative"}
+            zIndex={2}
+          >
+            <Image  marginLeft={-5} marginBottom={7} src={artistpic} height={150} width={150} borderRadius={90}/>
+                    <Button className='contenthero'
+              margin={0}
+              backgroundColor={'#ffffff32'}
+              borderRadius={50}
+            
+            >
+              {category}
+            </Button>
+            <Heading className='contenthero' lineHeight={.5} color={'white'}>{artistname}</Heading>
+            <Text className='contenthero' color={"white"} zIndex={100} fontWeight={300}>{musictitle}</Text>
+            <AnimateNumber target={streams || 0} currentSlide={currentSlide}/>
+            <HStack className='contenthero' alignItems={"center"} gap={2} zIndex={100}>
+                <Icon.Spotify color='white'/>
+                <Icon.AppleMusic color='white'/>
+            </HStack>
+          </VStack>
       </VStack>
+      
 
       {/* Video */}
       {videourl && 
@@ -100,10 +105,17 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
           position: 'absolute',
           borderRadius: 0,
         }}/>}
-         <VStack alignItems={"center"} gap={5} justifyContent={"center"} height={"100%"} width={"100%"} zIndex={10} padding={10} backgroundColor={"#060606ff"} position={"absolute"} right={0} top={"0"}>
-              <Heading textAlign={"center"} marginTop={2} color={"white"} fontSize={45}>TOP {rank}#</Heading>
-              <Text fontWeight={300} textAlign={"center"} color={"white"} fontSize={17}>ha {timeSince(convdata)}</Text>
-           </VStack>
+        <VStack position={"absolute"}  height={"100%"} justifyContent={"center"} alignItems={"center"} width={"100%"} zIndex={200}>
+          <VStack className='mediaSmallScreenHero' width={"100%"} height={"100%"} zIndex={100} maxW={"70%"} justifyContent={"center"} alignItems={"flex-end"}>
+             <VStack alignItems={"center"} gap={5} justifyContent={"flex-end"}  height={"30%"}  borderBottomLeftRadius={0} borderTopLeftRadius={0} zIndex={10} padding={10} backgroundColor={"#4f4cfdff"}  >
+                        <Heading textAlign={"center"} marginTop={2} color={"white"} fontSize={40}>TOP {rank}</Heading>
+                        <Text fontWeight={300} textAlign={"center"} color={"white"} fontSize={17}>ha {timeSince(convdata)}</Text>
+                  </VStack>
+          </VStack>
+         
+
+        </VStack>
+        
     </div>
   )
 }

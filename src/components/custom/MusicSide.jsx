@@ -3,8 +3,8 @@ import React from 'react'
 import * as Icon from 'react-bootstrap-icons';
 export default function MusicSide() {
   return (
-    <VStack  className='oneOnly'  gap={2} alignItems={"flex-start"}  height={"100vh"} borderRadius={10} transitionDuration={"fast"} transition={"ease-in-out"}   justifyContent={"flex-start"} >
-              <VStack height={"100%"} alignItems={"flex-start"} padding={2} paddingTop={4} borderRadius={10}  width={"100%"} background={"#191919ff"}>
+    <VStack  className='oneOnly'  gap={2}  position={"relative"} alignItems={"flex-start"}  height={"100%"} borderRadius={10} transitionDuration={"fast"} transition={"ease-in-out"}   justifyContent={"flex-start"} >
+              <VStack position={"relative"} height={"100%"} alignItems={"flex-start"} padding={2} paddingTop={4} borderRadius={10}  width={"100%"} background={"#191919ff"}>
                 <Button display={"flex"} flexDirection={"row"} alignItems={"center"} bg={"transparent"} color={"gray"} fontWeight={300}><Icon.MusicNoteList/><Text>Catalogo de Musicas</Text></Button>
                 <Box width={"100%"}>
                     <Image alt='piccover' src='https://images.pexels.com/photos/894156/pexels-photo-894156.jpeg' borderRadius={10} style={{width:"100%", height:100}}/>

@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react'
+import { HStack, VStack } from '@chakra-ui/react'
 import React from 'react'
 import Nav from '../../components/custom/Nav'
 import Footer from '../../components/custom/Footer'
@@ -8,7 +8,10 @@ export default function Noticias() {
   return (
     <VStack className='noticias' width={"100%"} gap={0}>
          <Nav position={"fixed"}  background={"black"}/>
-         <NoticiasCustom/>
+         <HStack className='mediaSmallScreen'  maxWidth={"70%"} width={"100%"} paddingTop={50}>
+            <NoticiasCustom/>
+         </HStack>
+         
         <Footer/>
     </VStack>
   )

@@ -3,12 +3,12 @@ import React from 'react'
 
 export default function AvatarCustom({image, name, size, fontSize}) {
   return (
-    <Avatar.Root size={!size ? "md" : size}>
+    <Avatar.Root borderRadius={10} size={!size ? "md" : size}>
         {image &&
-        <Avatar.Image alt='user avatar' src={image}/>
+        <Avatar.Image borderRadius={10} alt='user avatar' src={image}/>
         }
         {name && 
-        <Avatar.Fallback fontSize={fontSize} name={name}/>
+        <Avatar.Fallback borderRadius={10} fontSize={fontSize} name={name}/>
         }
     </Avatar.Root>
   )

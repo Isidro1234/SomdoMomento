@@ -36,7 +36,7 @@ export default function MusicBody() {
   return (
     <VStack background={"black"}  gap={1} padding={1} display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(300px,100%), 1fr))"} width={"100%"}>
       
-      <HStack className='first' background={"black"}  display={"grid"} gridTemplateColumns={"minmax(200px, 300px) minmax(300px, 1fr)"}  width={"100%"} height={"100vh"}>
+      <HStack className='first' background={"black"}  display={"grid"} gridTemplateColumns={"minmax(200px, 300px) minmax(300px, 1fr)"}  width={"100%"} >
         <MusicSide/>
         <VStack className='anim' marginLeft={-200} minW={100}  height={"100%"} >
           <MusicNav/>

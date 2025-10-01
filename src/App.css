@@ -189,6 +189,22 @@ iframe{
   }
  
 }
+@media screen and (max-width:800px){
+  div .destaqueflex{
+      grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width:1200px){
+  div .mediaSmallScreen{
+      max-width: 90%;
+  }
+}
+@media screen and (max-width:500px){
+  div .mediaSmallScreenHero{
+      max-width: 100%;
+  }
+}
+
 .css-cmrykl{
 height: 100%;
 }

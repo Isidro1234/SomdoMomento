@@ -32,6 +32,7 @@ export default function Hero() {
 
   return (
     <HStack className='hero' position="relative" height="70vh" width="100%" overflow="hidden" backgroundColor="white">
+      
       <HStack
         gap={0}
         transform={`translateX(-${currentSlide * width}px)`}
@@ -44,10 +45,13 @@ export default function Hero() {
         ))}
       
       </HStack>
-      <HStack zIndex={7} position="absolute" bottom={15} left={10}>
-        {slides.map((_, index) => (
+      <HStack justifyContent={"center"} alignContent={"center"}   width={"100%"} zIndex={7} position="absolute" bottom={15} left={0}>
+        <HStack className='mediaSmallScreenHero' paddingLeft={10} alignItems={"center"} maxWidth={"70%"} width={"100%"}>
+          {slides.map((_, index) => (
           <Paginator key={index} current={currentSlide === index} />
         ))}
+        </HStack>
+        
       </HStack>
     </HStack>
   )

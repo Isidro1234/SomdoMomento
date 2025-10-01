@@ -9,7 +9,7 @@ export default function Article() {
   return (
     <VStack className='Article' height={"100%"}>
       <Nav background={"blue"}/>
-      <HStack height={"100%"}>
+      <HStack width={"100%"}  height={"100%"}>
         <MainArticle data={"f"}/>
       </HStack>
       <Footer/>

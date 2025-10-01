@@ -13,13 +13,16 @@ export default function MusicSection() {
          getmus()
      }, [])
   return (
-    <VStack paddingBottom={10} gap={3} paddingLeft={4} paddingRight={4} justifyContent={"flex-start"} alignItems={"flex-start"} width={"100%"}  backgroundColor={"#ffffffcb"}>
-      <Heading>Musicas</Heading>
+    <VStack paddingBottom={10} gap={3} paddingLeft={4} paddingRight={4} justifyContent={"flex-start"} alignItems={"center"} width={"100%"}  backgroundColor={"#ffffffcb"}>
+      <VStack className='mediaSmallScreen' maxWidth={"70%"} width={"100%"} alignItems={"flex-start"}>
+        <Heading>Musicas</Heading>
       {musicas?.map((item,index)=>{
         return(
           <MusicCard key={index} id={item?.id} image={item?.artistpic} title={item?.artistSongTitle} audio={item?.artistSong} artist={item?.artistname}/>
         )
       })}
+      
+      </VStack>
       
     </VStack>
   )

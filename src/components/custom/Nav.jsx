@@ -8,7 +8,8 @@ export default function Nav({position, background, searchbarColor, serchiconColo
     const [activeMenu, setActiveMenu] = useState("menu");
     const navigate = useNavigate()
   return (
-    <HStack   background={background} zIndex={74} alignItems={"center"} position={position}  padding={7} borderRadius={0}  width={"100%"} left={0}  justifyContent={"space-between"}>
+    <HStack zIndex={100} justifyContent={"center"} background={background} position={position} width={"100%"}>
+      <HStack className='mediaSmallScreenHero'  maxW={"70%"}  zIndex={74} alignItems={"center"} position={"relative"}  padding={7} borderRadius={0}  width={"100%"} left={0}  justifyContent={"space-between"}>
         <HStack onClick={()=>navigate("/")}>
             <Icon.MusicNote color='white' size={30}/>
             <Heading marginLeft={-2} color={"white"}>
@@ -28,5 +29,7 @@ export default function Nav({position, background, searchbarColor, serchiconColo
             <Icon.List color='white' size={50}/>
         </DrawerCustom>
     </HStack>
+    </HStack>
+    
   )
 }

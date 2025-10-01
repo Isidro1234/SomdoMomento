@@ -4,7 +4,7 @@ import Nav from './Nav'
 import * as Icon from 'react-bootstrap-icons';
 export default function MusicNav() {
   return (
-    <VStack className='first'  position={"relative"} padding={1}  gap={5} flex={1.5} justifyContent={"flex-start"} width={"100%"}>
+    <VStack className='first'  position={"relative"} minHeight={500} padding={1}  gap={5} flex={1.5} justifyContent={"flex-start"} width={"100%"}>
                <Nav color={"white"} serchiconColor={"gray"}  searchbarColor={"#242424b9"} background={"transparent"}/>
                <HStack left={0} borderRadius={10} position={"absolute"}  width={"100%"} height={"100%"}>
                   <Image minW={100} borderRadius={10} height={"100%"} width={"100%"} objectFit={"cover"} src='https://images.pexels.com/photos/894156/pexels-photo-894156.jpeg'/>
