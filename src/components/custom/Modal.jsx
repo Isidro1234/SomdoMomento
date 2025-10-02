@@ -1,9 +1,7 @@
 import { Button, Menu, Portal } from "@chakra-ui/react"
-import e from "cors"
 import { useState } from "react"
 import * as Icon from "react-bootstrap-icons"
 const Modal = ({emojiset}) => {
-    const [emoji, setEmoji] = useState(null)
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
