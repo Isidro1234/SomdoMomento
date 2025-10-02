@@ -46,7 +46,7 @@ export default function Home() {
         </Suspense>
         <SearchResults/>
         <MessageCard hide={hide}/>
-        <Button onClick={()=>hide ? setHide(false) : setHide(true)} bg={"blue"} height={50} w={50} padding={10} position={"fixed"} zIndex={150} borderRadius={50} bottom={10} right={5}><Icon.ChatFill size={30}/></Button>
+        <Button onClick={()=>hide ? setHide(false) : setHide(true)} bg={"blue"} height={50} w={50} padding={10} position={"fixed"} zIndex={150} borderRadius={50} bottom={87} right={5}><Icon.ChatFill size={30}/></Button>
         [audio, image, artistname, title, isplaying]
       <FixedPlayer isplaying={!playaudio?.[4]} audio={playaudio?.[0]} artistname={playaudio?.[2]} title={playaudio?.[3]} image={playaudio?.[1]}  hide={playaudio?.[4]} position={"fixed"}/>
       </VStack>

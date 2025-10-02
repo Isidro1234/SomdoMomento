@@ -1,7 +1,11 @@
 import { Box, Button, Heading, HStack, Image, Text, VStack } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Icon from 'react-bootstrap-icons';
+import { useLogiState } from '../../states/useLogic';
+import PlayListCard from './PlayListCard';
 export default function MusicSide() {
+    const musicas = useLogiState((state)=>state.musicas);
+
   return (
     <VStack  className='oneOnly'  gap={2}  position={"relative"} alignItems={"flex-start"}  height={"100%"} borderRadius={10} transitionDuration={"fast"} transition={"ease-in-out"}   justifyContent={"flex-start"} >
               <VStack position={"relative"} height={"100%"} alignItems={"flex-start"} padding={2} paddingTop={4} borderRadius={10}  width={"100%"} background={"#191919ff"}>
@@ -15,14 +19,10 @@ export default function MusicSide() {
                   <Text transition={{_hover:"all ease-in-out 500ms"}} _hover={{background:"#9b9b9bff"}} cursor={"pointer"} color={"#b5b5b5ff"} borderRadius={50} padding={1.5} background={"#5252526a"} fontSize={8}>recentes</Text>
                   <Text transition={{_hover:"all ease-in-out 500ms"}} _hover={{background:"#9b9b9bff"}} cursor={"pointer"} color={"#b5b5b5ff"} borderRadius={50} padding={1.5} background={"#5252526a"} fontSize={8}>popular</Text>
                 </HStack>
-                <Box   width={"100%"} borderRadius={10} padding={2}  transition={{_hover:"all ease-in-out 500ms"}} _hover={{backgroundColor:"#f6f6f648"}} display={"flex"} gap={2} alignItems={"center"}>
-                  <Image alt='piccover' src='https://images.pexels.com/photos/894156/pexels-photo-894156.jpeg' borderRadius={10} style={{width:50, height:50}}/>
-                  <VStack alignItems={"flex-start"} gap={1} flex={1}>
-                    <Heading color={"white"} lineHeight={1} fontSize={14}>Drake</Heading>
-                    <Text color={"gray"} fontSize={10}>One Dance</Text>
-                  </VStack>
-                  <Button bg={"transparent"}><Icon.Heart/></Button>
-                </Box>
+                {musicas.map((item,index)=>{
+                    return(<PlayListCard title={item?.artistSongTitle} name={item?.artistname} image={item?.artistpic} key={index}/>)
+                })}
+                
               </VStack>
             </VStack>
   )

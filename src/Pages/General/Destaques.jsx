@@ -11,9 +11,19 @@ import MusicBoxCard from '../../components/custom/MusicBoxCard'
 import MainNews from '../../components/custom/MainNews'
 import MusicBox from '../../components/custom/MusicBox'
 import ArticleSection from '../../components/custom/ArticleSection'
+import StatusComp from '../../components/custom/StatusComp'
+import FixedPlayer from '../../components/custom/FixedPlayer'
 
 export default function Destaques() {
-   
+   const gettingmusic = useLogiState((state)=>state.getMusic)
+    const playaudio = useLogiState((state)=>state. audioplaying)
+     const musics = useLogiState((state)=>state.musicas)
+     useEffect(()=>{
+       async function gett(){
+         await gettingmusic()
+       }
+       gett()
+     },[])
   return (
     <VStack className='Destaques' width={"100%"}>
       <Nav background={"black"}/>
@@ -22,10 +32,10 @@ export default function Destaques() {
            
            
             <HStack justifyContent={"flex-start"} alignItems={"center"} margin={0}  borderRadius={10}  padding={0}>
-             <Image width={20} height={20} borderRadius={50} src='https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg'/>
+             <StatusComp icon={<Image width={20} height={20} borderRadius={50} src='https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg'/>}/>
             </HStack>
             <HStack justifyContent={"flex-start"} alignItems={"center"} margin={0} marginTop={0} borderRadius={10}  padding={0}>
-             <Box  width={"100%"} height={250}>
+             <Box  width={"100%"} height={220}>
              <video loop  autoPlay muted style={{width:"100%", height:"100%", objectFit:"cover", borderRadius:30}}  borderRadius={30} src='https://www.pexels.com/download/video/2795749/'></video>
              </Box> 
             </HStack>
@@ -39,10 +49,12 @@ export default function Destaques() {
                       </HStack>
                       
                       <HStack width={"100%"} display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(200px, 100%), 1fr))"}>
-                        <MusicBoxCard/>
-                        <MusicBoxCard/>
-                        <MusicBoxCard/>
-                        <MusicBoxCard/>
+                        {musics.map((item,index)=>{                       
+                            return( 
+                              index <= 3 &&
+                              <MusicBoxCard name={item?.artistname} title={item?.artistSongTitle} image={item?.artistpic} music={item?.artistSong} key={index} color={"gray"}/>
+                          )
+                        })}
                       </HStack>
               </VStack>
               
@@ -74,7 +86,7 @@ export default function Destaques() {
         </HStack>
         </HStack>
         <ArticleSection/>
-        
+          <FixedPlayer isplaying={playaudio?.[4]} audio={playaudio?.[0]} artistname={playaudio?.[2]} title={playaudio?.[3]} image={playaudio?.[1]}  hide={!playaudio?.[4]} position={"fixed"}/>
         <Footer/>
     </VStack>
   )

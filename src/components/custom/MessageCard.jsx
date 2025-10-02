@@ -6,7 +6,7 @@ export default function MessageCard({hide}) {
   return (
     <VStack gap={0} className={hide ? "hide" : "show"}  width={"min(400px, 90%)"}  position={"fixed"} zIndex={100}  right={5}  bottom={40} height={440} backgroundColor={"#4a82fcff"} borderRadius={10}>
         <Box borderRadius={10} borderBottomRightRadius={0} borderBottomLeftRadius={0}  p={4} width={"100%"} bg={"blue"}>
-            <Heading textAlign={"center"} color={"white"}>Messaging</Heading>
+            <Heading textAlign={"center"} color={"white"}>Mensagem</Heading>
         </Box>
         <Box overflowY={"auto"} padding={5} width={"100%"} flex={1} bg={"#f6f6f6"}>
             <Message message={"hello"} author={"json"}/>

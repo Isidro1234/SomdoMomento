@@ -7,41 +7,46 @@ export default function AudioPlayerGraph({ audio, isplaying, setplaying, onTimeU
 
   // Recreate wavesurfer when audio changes
   useEffect(() => {
-    if (!waveContainerRef.current || !audio) return;
+  if (!waveContainerRef.current || !audio) return;
 
-    // Clean up previous instance
+  // cleanup
+  if (wavesurferRef.current) {
+    wavesurferRef.current.destroy();
+    wavesurferRef.current = null;
+  }
+
+  wavesurferRef.current = WaveSurfer.create({
+    container: waveContainerRef.current,
+    cursorColor: "transparent",
+    waveColor: "#cacacaff",
+    height: 30,
+    progressColor: "#781fedff",
+    url: audio,
+  });
+
+  wavesurferRef.current.on("audioprocess", () => {
+    onTimeUpdate(wavesurferRef.current.getCurrentTime());
+  });
+  wavesurferRef.current.on("seek", () => {
+    onTimeUpdate(wavesurferRef.current.getCurrentTime());
+  });
+  wavesurferRef.current.on("finish", () => {
+    onTimeUpdate(wavesurferRef.current.getCurrentTime());
+    setplaying(false);
+  });
+
+  // ✅ auto play new audio if currently playing
+  if (isplaying) {
+    wavesurferRef.current.play();
+  }
+
+  return () => {
     if (wavesurferRef.current) {
       wavesurferRef.current.destroy();
       wavesurferRef.current = null;
     }
-    // Create new instance
-    wavesurferRef.current = WaveSurfer.create({
-      container: waveContainerRef.current,
-      cursorColor: "transparent",
-      waveColor: "#cacacaff",
-      height:30,
-      progressColor: "#781fedff",
-      url: audio,
-    });
-
-    wavesurferRef.current.on("audioprocess", () => {
-      onTimeUpdate(wavesurferRef.current.getCurrentTime());
-    });
-    wavesurferRef.current.on("seek", () => {
-      onTimeUpdate(wavesurferRef.current.getCurrentTime());
-    });
-    wavesurferRef.current.on("finish", () => {
-      onTimeUpdate(wavesurferRef.current.getCurrentTime());
-      setplaying(false); // auto stop when finished
-    });
-
-    return () => {
-      if (wavesurferRef.current) {
-        wavesurferRef.current.destroy();
-        wavesurferRef.current = null;
-      }
-    };
-  }, [audio]); // <--- watch audio changes
+  };
+}, [audio]);  // <--- watch audio changes
 
   // React to play/pause state
   useEffect(() => {

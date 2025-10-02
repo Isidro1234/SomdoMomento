@@ -6,6 +6,9 @@ import AvatarCustom from "./AvatarCustom";
 import { useLogiState } from "../../states/useLogic";
 import {Toaster, toaster} from "../ui/toaster"
 import Modal from "./Modal";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import {FacebookMessengerIcon, FacebookShareButton, FacebookShareCount} from "react-share"
 
 export default function ArticleCard({
   id,
@@ -20,8 +23,10 @@ export default function ArticleCard({
 }) {
   const convertSeconds = date?.seconds ? date.seconds * 1000 : 1000;
   const dates = new Date(convertSeconds);
+  const [emoji, setemoji] = useState("")
   const deleteposts = useLogiState((state)=>state.delePost)
   const [showcomment, setComment] = useState(false)
+  const [activeHeart, setHeart] = useState(false)
   const format = Intl.DateTimeFormat("pt-BR", {
     dateStyle: "medium",
   });
@@ -38,6 +43,46 @@ export default function ArticleCard({
       })
     }
   }
+  useGSAP(()=>{
+    if(activeHeart){
+      gsap.fromTo('.heart',{
+        scale: 0,
+      }, 
+      { scale: 1,
+        duration:.7,
+        ease:"elastic.inOut"
+      }
+    )
+    }else{
+      gsap.to('.heart',{
+        scale: 0,
+        duration:.7,
+        ease:"elastic.inOut"
+      }, 
+    )
+    }
+      
+  }, [activeHeart])
+  useGSAP(()=>{
+    if(emoji){
+      gsap.fromTo('.emoji',{
+        scale: 0,
+      }, 
+      { scale: 1,
+        duration:.7,
+        ease:"elastic.inOut"
+      }
+    )
+    }else{
+      gsap.to('.emoji',{
+        scale: 0,
+        duration:.7,
+        ease:"elastic.inOut"
+      }, 
+    )
+    }
+      
+  }, [emoji])
   return (
     <Box className="contpics"
       width={edimode ? "fit-content" : "100%"}
@@ -116,10 +161,15 @@ export default function ArticleCard({
         </Button>
       )}
       <Toaster/>
-      <HStack marginLeft={-3} marginTop={5} alignItems={"center"}>
-        <Button bg={"transparent"}><Icon.Heart color="black"/></Button>
-        <Modal/>
-        <Button bg={"transparent"}><Icon.Share color="black"/></Button>
+      <HStack height={"fit-content"} >
+       <Text className="emoji" fontSize={10}>{emoji}</Text> 
+      </HStack>
+      <HStack marginLeft={-3} marginTop={0} alignItems={"center"}>
+        <Button bg={"transparent"} onClick={()=>{activeHeart ? setHeart(false) : setHeart(true)}}>{activeHeart ?<Icon.HeartFill className="heart" color="red"/>  : <Icon.Heart  color="black"/>}  </Button>
+        <Modal emojiset={(e)=>{setemoji(e)}}/>
+        <Button bg={"transparent"}>
+          <Icon.Share color="black"/>
+        </Button>
       </HStack>
       <HStack marginTop={2}>
         <Input onBlur={()=>setComment(false)} onFocus={()=>setComment(true)} borderRadius={30} placeholder="Comenta aqui"/>

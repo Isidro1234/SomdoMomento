@@ -11,10 +11,11 @@ export default function MusicBoxCard({color, music , name,title, image}) {
         if(!music) return;
         await downloadmusic(url, title)
     }
-    async function setplayer(){
-        isplaying ? setPlaying(false) : setPlaying(true) 
-        await settingplayer(music, image, name, title, isplaying)
-    }
+    async function setplayer() {
+  const newState = !isplaying;    
+  setPlaying(newState);              
+  await settingplayer(music, image, name, title, newState); 
+}
   return (
     <Box width={"100%"} position={"relative"}  onMouseLeave={()=>setHidden(true)} onMouseOver={()=>setHidden(false)} minHeight={0} borderRadius={10} padding={2} transition={{_hover:"all ease-in-out 300ms"}}  _hover={{backgroundColor:"#8989896d"}} display={"flex"} flexDirection={"column"} alignItems={"center"}>
                         <Image borderRadius={10} minHeight={200} width={"100%"} height={120} src={image}/>

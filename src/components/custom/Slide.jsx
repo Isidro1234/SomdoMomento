@@ -108,8 +108,8 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
         <VStack position={"absolute"}  height={"100%"} justifyContent={"center"} alignItems={"center"} width={"100%"} zIndex={200}>
           <VStack className='mediaSmallScreenHero' width={"100%"} height={"100%"} zIndex={100} maxW={"70%"} justifyContent={"center"} alignItems={"flex-end"}>
              <VStack alignItems={"center"} gap={5} justifyContent={"center"}  height={"30%"}  borderBottomLeftRadius={0} borderTopLeftRadius={0} zIndex={10} padding={10} backgroundColor={"#4f4cfdff"}  >
-                        <Heading textAlign={"center"} marginTop={2} color={"white"} fontSize={40}>TOP {rank}</Heading>
-                        <Text fontWeight={300} textAlign={"center"} color={"white"} fontSize={17}>ha {timeSince(convdata)}</Text>
+                        <Heading textAlign={"center"} marginTop={2} color={"white"} fontSize={30}>TOP {rank}</Heading>
+                        <Text fontWeight={300} textAlign={"center"} color={"white"} fontSize={10}>ha {timeSince(convdata)}</Text>
                   </VStack>
           </VStack>
          
