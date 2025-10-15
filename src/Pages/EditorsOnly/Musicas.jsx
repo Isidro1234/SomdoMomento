@@ -1,10 +1,12 @@
-import { Button, Heading, HStack, Table, VStack } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react/heading'
+import {Table} from '@chakra-ui/react/table'
+import {VStack , HStack } from '@chakra-ui/react/stack'
 import React, { useEffect } from 'react'
 import MusicCard from '../../components/custom/MusicCard'
 import DialogCustom from '../../components/custom/DialogCustom'
 import { useLogiState } from '../../states/useLogic'
 
-export default function Musicas() {
+function Musicas() {
     const musicas = useLogiState((state)=>state.musicas)
     const getmusic = useLogiState((state)=>state.getMusic)
     useEffect(()=>{
@@ -39,3 +41,4 @@ export default function Musicas() {
      
   )
 }
+export default React.memo(Musicas)

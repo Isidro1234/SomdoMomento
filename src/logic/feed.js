@@ -23,7 +23,6 @@ export const handlefeed = (data)=>{
                 finalresult.push(it)
             }
         })
-        console.log(finalresult);
         return finalresult
     }
     

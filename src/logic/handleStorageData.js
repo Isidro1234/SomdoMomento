@@ -14,7 +14,6 @@ export const storemedia = async(file)=>{
   }
   return false 
     } catch (error) {
-        console.log(error.message)
         return false
     }
   

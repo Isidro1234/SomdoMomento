@@ -4,34 +4,32 @@ import {gsap} from "gsap"
 import {useGSAP} from "@gsap/react"
 import SidebarNews from './SidebarNews'
 import * as Icon from "react-bootstrap-icons"
-export default function MainNews() {
-    useGSAP(()=>{
-        gsap.from(".animate",{
-            rotateX:50,
-            duration:2,
-            ease:"bounce",
-            yoyo:true
-        })
-    },[])
+import { useNavigate } from 'react-router'
+import AvatarCustom from './AvatarCustom'
+export default function MainNews({data, isNotLink, title, image, author, name, category, userimage, edit, html}) {
+    const navigate = useNavigate()
   return (
-    <VStack className='animate' flex={1} alignItems={"flex-start"}  padding={0}  height={"100%"}>
+    <VStack className='animate' flex={1} onClick={()=>{!isNotLink && navigate(`/Article/News/${title}`)}} alignItems={"flex-start"}  padding={0}  height={edit ?"fit-content" :  "100%"}>
                     <HStack alignItems={"center"} justifyContent={"flex-start"}>
-                        <Image borderRadius={10} height={10} width={10} src='https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg'/>
+                        <AvatarCustom name={data?.username}/>
                         <VStack gap={1} alignItems={"flex-start"}>
-                            <Text fontSize={14} lineHeight={.5} fontWeight={500}>Name</Text>
+                            <Text fontSize={14} lineHeight={.5} fontWeight={500}>{data?.username}</Text>
                             <Text color={"gray"} fontSize={10}>Autor</Text>
                         </VStack>
                         
                     </HStack>
                     <VStack alignItems={"flex-start"}>
-                      <Heading fontSize={29}>Woman's Baskeball team</Heading>  
+                      <Heading fontSize={29}>{title}</Heading>  
                       <HStack alignItems={"center"}>
-                        <Text fontSize={12} color={"red"}>Sports</Text>
+                        <Text fontSize={12} color={"red"}>{category}</Text>
                         <Text fontSize={12} color={"gray"}> | </Text>
                         <Text fontSize={12} color={"gray"}>6 minutes</Text>
                       </HStack>
                     </VStack>
-                    <Image borderRadius={10} minW={200} width={"100%"} height={300} src='https://images.pexels.com/photos/3425993/pexels-photo-3425993.jpeg'/>
+                    <Image borderRadius={10} minW={200} width={"100%"} height={300} src={image}/>
+                    {isNotLink && <div dangerouslySetInnerHTML={{__html:html}}>
+
+                    </div>} 
     </VStack>
   )
 }

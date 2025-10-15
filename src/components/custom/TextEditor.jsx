@@ -13,6 +13,7 @@ import { useLogiState } from "../../states/useLogic";
 import { Toaster, toaster } from "../ui/toaster";
 import { storemedia } from "../../logic/handleStorageData";
 import { useAuthcontext } from "../../Context/AuthContextProvider";
+import SelectItem from "./SelectItem";
 
 const MAX_SIZE = 490000;
 
@@ -40,10 +41,11 @@ export default function TextEditor({ placeholder, to }) {
   const [title, setTitle] = useState("");
   const [loader, setLoader] = useState(false);
   const [imageCover, setImageCover] = useState(null);
-
+  const [select, setSelect] = useState("")
   const picref = useRef(null);
   const quillRef = useRef(null);
   const postar = useLogiState((state) => state.setPosts);
+  const [category , setCategory] = useState("")
 
   // 🟢 Stable handler for image upload inside Quill
   const quillImage = useCallback(() => {
@@ -152,7 +154,7 @@ export default function TextEditor({ placeholder, to }) {
 
   async function post() {
     setLoader(true);
-    if (!title || !imageCover || !value || !to) {
+    if (!title || !imageCover || !value || !to ) {
       toaster.create({
         title: "Aviso Preencha tudo",
         description: `Preencha tudo: imagem, título e artigo`,
@@ -162,8 +164,24 @@ export default function TextEditor({ placeholder, to }) {
       setLoader(false);
       return;
     }
-
-    const result = await postar(title, imageCover, value, to, userdata);
+    if(to == "noticias"){
+      if(!select && !category){
+        toaster.create({
+        title: "Aviso tipo de noticia",
+        description: `Porfavor indique qual tipo de noticia e`,
+        type: "warning",
+        duration: 5000,
+      });
+      setLoader(false);
+      return;
+      }
+    }
+    let result = ""
+    if(to == "noticias"){
+      result = await postar(title, imageCover, value, to, userdata, select, category);
+    }else{
+       result = await postar(title, imageCover, value, to, userdata);
+    }
     if (result) {
       setLoader(false);
       setValue("");
@@ -188,8 +206,8 @@ export default function TextEditor({ placeholder, to }) {
   }
 
   return (
-    <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-      <HStack>
+    <div style={{ width: "100%", display: "flex", flexDirection: "column" , justifyContent:"center"}}>      
+      <HStack alignItems={"center"}>
         <Input
           value={title}
           onChange={(e) => setTitle(e.currentTarget.value)}
@@ -218,6 +236,14 @@ export default function TextEditor({ placeholder, to }) {
             <Spinner color={"black"} size={"sm"} />
           )}
         </Button>
+        {to == "noticias" && <>
+        <SelectItem select={(e)=>setSelect(e)} title={"title"}/>
+        <Input onChange={(e)=>setCategory(e.currentTarget.value)}  placeholder="Category"/>
+        
+        </>
+        
+        
+        }
       </HStack>
 
       <QuillEditor

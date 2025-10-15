@@ -3,7 +3,6 @@ import {create} from "zustand"
 export const useAuthState = create((set,get)=>({
     Login:async(email,password)=>{
         try {
-          console.log(email,password)
             const auth = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/auth/Login",{
             method:"POST",
             headers:{
@@ -29,10 +28,8 @@ export const useAuthState = create((set,get)=>({
       }) 
       const res =  await auth;
       const data = await res.json()
-      console.log(data)
       return {res:data.res, user:data.user}
         } catch (error) {
-            console.log(error.message)
             return false
         }
         
@@ -43,7 +40,6 @@ export const useAuthState = create((set,get)=>({
         const data = await res.json()
         return {res:data.res}
         } catch (error) {
-            console.log(error.message)
             return false
         }
        

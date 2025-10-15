@@ -68,7 +68,6 @@ export default function FixedPlayer({audio, image, artistname, title, isplaying,
             setplaying={setPlayStop}
           />
             </HStack>
-       <Button bg={"transparent"} color='gray'><Icon.ThreeDotsVertical/></Button>
        
     </HStack>
   )

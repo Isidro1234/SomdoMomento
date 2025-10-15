@@ -3,6 +3,8 @@ import PostCard from './PostCard'
 import { Box, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import MusicBoxCard from './MusicBoxCard'
 import { useLogiState } from '../../states/useLogic'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 export default function RecentPosts() {
   const data = ["", "", ""]
@@ -14,6 +16,14 @@ export default function RecentPosts() {
       }
       getting()
   }, [])
+  useGSAP(()=>{
+      gsap.from('.destaquesection',{
+        opacity:0,
+        yPercent:100,
+        ease:"bounce.out",
+        duration:1,
+      })
+    },[])
   return (
     <Box className='destaquesection' width="100%" p={4}  display={"flex"} paddingTop={20} justifyContent={"center"} paddingBottom={20}>
      <VStack className='mediaSmallScreen' maxWidth={"70%"}  width={"100%"}>
@@ -21,7 +31,7 @@ export default function RecentPosts() {
                            <HStack>
                              <Text color={"red"} fontSize={10}> Top</Text>
                              <Text color={"gray"} fontSize={10}> | </Text>
-                             <Text color={"gray"} fontSize={10}>22 novas</Text>
+                             <Text color={"gray"} fontSize={10}>{musicas?.length} novas</Text>
                            </HStack>
                            
                            <HStack width={"100%"} display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(200px, 100%), 1fr))"}>

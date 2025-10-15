@@ -3,10 +3,12 @@ import React, { useState } from 'react'
 import * as Icon from "react-bootstrap-icons"
 import { downloadmusic } from '../../logic/downloadMusic'
 import { useLogiState } from '../../states/useLogic'
+import { useNavigate } from 'react-router'
 export default function MusicBoxCard({color, music , name,title, image}) {
     const [hidden, setHidden] = useState(true)
     const settingplayer = useLogiState((state)=>state.setplaysongbottom);
     const [isplaying, setPlaying] = useState(false)
+    const navigate = useNavigate()
     async function download(url){
         if(!music) return;
         await downloadmusic(url, title)
@@ -17,11 +19,11 @@ export default function MusicBoxCard({color, music , name,title, image}) {
   await settingplayer(music, image, name, title, newState); 
 }
   return (
-    <Box width={"100%"} position={"relative"}  onMouseLeave={()=>setHidden(true)} onMouseOver={()=>setHidden(false)} minHeight={0} borderRadius={10} padding={2} transition={{_hover:"all ease-in-out 300ms"}}  _hover={{backgroundColor:"#8989896d"}} display={"flex"} flexDirection={"column"} alignItems={"center"}>
-                        <Image borderRadius={10} minHeight={200} width={"100%"} height={120} src={image}/>
+    <Box width={"100%"} zIndex={1}  position={"relative"}  onMouseLeave={()=>setHidden(true)} onMouseOver={()=>setHidden(false)} minHeight={0} borderRadius={10} padding={2} transition={{_hover:"all ease-in-out 300ms"}}  _hover={{backgroundColor:"#8989896d"}} display={"flex"} flexDirection={"column"} alignItems={"center"}>
+                        <Image onClick={()=>{navigate(`/Music/Single/${title}`)}} borderRadius={10} minHeight={200} width={"100%"} height={120} src={image}/>
                         <Heading fontSize={".8rem"} color={color || "white"} fontWeight={400}>{name}</Heading>
                         <Text color={"gray"} fontSize={".5rem"}>8.9M Plays</Text>
-                        <Box onClick={setplayer} style={{bottom:57,right:17}} justifyContent={"center"} alignItems={"center"} padding={2} display={hidden ? "none" : "flex"} position={"absolute"} right={0} borderRadius={50} background={"#3f42e9ff"}>
+                        <Box zIndex={1000} onClick={setplayer} style={{bottom:57,right:17}} justifyContent={"center"} alignItems={"center"} padding={2} display={hidden ? "none" : "flex"} position={"absolute"} right={0} borderRadius={50} background={"#3f42e9ff"}>
                             {!isplaying ?
                             <Icon.PlayFill color='white'/>
                             :

@@ -3,10 +3,12 @@ import React, { useEffect } from 'react'
 import Aside from './Aside'
 import ArticleCard from './ArticleCard'
 import { useLogiState } from '../../states/useLogic'
+import gsap from 'gsap'
 
  function ArticleSection() {
      const getpost = useLogiState((state)=>state.getPosts)
      const posts = useLogiState((state)=>state.posts)
+   
  
   useEffect(()=>{
     async function getpst(){
@@ -15,14 +17,14 @@ import { useLogiState } from '../../states/useLogic'
     getpst()
   }, [])
   return (
-    <VStack  padding={0} gap={4} justifyContent={"flex-start"} alignItems={"center"} background={"#fefdfdff"}  width={"100%"}>
+    <VStack className='article'  padding={0} gap={4} justifyContent={"flex-start"} paddingBottom={10} alignItems={"center"} background={"#fefdfdff"}  width={"100%"}>
         <VStack className='mediaSmallScreen' alignItems={"flex-start"} justifyContent={"flex-start"} width={"100%"} maxWidth={"70%"}>
         <VStack alignSelf={"center"} padding={5}>
           <Heading >Artigos</Heading>
           <HStack>
             <Text color={"red"} fontSize={10}> Top </Text>
             <Text color={"gray"} fontSize={10}> | </Text>
-            <Text color={"gray"} fontSize={10}> 22 recentes</Text>
+            <Text color={"gray"} fontSize={10}> {posts?.length} recentes</Text>
           </HStack>
         </VStack>
         
@@ -36,6 +38,7 @@ import { useLogiState } from '../../states/useLogic'
                     date={item.date} 
                     author={item.userdata.username}
                     body={item.html}
+                    id={item?.id}
       />  
                 )
             })}

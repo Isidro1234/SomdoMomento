@@ -1,18 +1,34 @@
 import {create} from "zustand"
 import DOMPurify from "dompurify"
-import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore"
 import { db } from "./config/firebase"
 import { handlefeed } from "../logic/feed"
+import { storemedia } from "../logic/handleStorageData"
 export const useLogiState = create((set,get)=>({
     posts:[],
     noticias:[],
     destaques:[],
     musicas:[],
     slides:[],
+    comments:[],
     sections:[],
     audioplaying:null,
-    setPosts:async(title,imagecover, value, to, userdata)=>{
+    chats:[],
+    status:[],
+    statusComment:[],
+    chat:[],
+    about:[],
+    ChatMessages:[],
+    statusCommentreply:[],
+    musicPromo:[],
+    homePromo:[],
+    destaquePromo:[],
+    noticiasPromo:[],
+    seachPromo:[],
+    setPosts:async(title,imagecover, value, to, userdata, select, Category)=>{
         try {
+            const selecttest = select || false
+            const categorytest = Category || false
             const html = DOMPurify.sanitize(value, {
             ADD_TAGS: ["iframe"],
             ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling", "src"]})
@@ -21,15 +37,20 @@ export const useLogiState = create((set,get)=>({
             headers:{
                 "Content-type" : "application/json"
             },
-            body:JSON.stringify({title, imagecover, html, to, userdata})
+            body:JSON.stringify({title, imagecover, html, to, userdata, selecttest, categorytest})
         })
         const res = await addPost;
         const data = await res.json()
         if(data.success){
-            set((state)=>({
-                posts:[...state.prev, {title, imagecover, html, to, userdata}]
-            }))
-            return true
+            if(to == "postes"){
+                set((state)=>({
+                    posts:[...state.prev, {title, imagecover, html, to, userdata}]
+                }))
+                return true
+            }
+            if(to == "noticias"){
+                set({noticias:[{title, imagecover, html, to, userdata, selecttest}]})
+            }
         }
         return false
         } catch (error) {
@@ -39,6 +60,7 @@ export const useLogiState = create((set,get)=>({
         
     }, getPosts :async(to)=>{
          try {
+            console.log(to)
                 const doref = collection(db,to);
                 if(!doref.id){
                     return false
@@ -57,6 +79,7 @@ export const useLogiState = create((set,get)=>({
                         break;
                     case "noticias":
                         set({noticias:data})
+                        console.log(data)
                         break;
                 }
             } catch (error) {
@@ -107,7 +130,6 @@ export const useLogiState = create((set,get)=>({
     },slideconfig:async()=>{
 
     },getSlides:async()=>{
-        console.log("hello")
          try {
     const docref = collection(db,"slides");
     const getting = await getDocs(docref);
@@ -119,11 +141,11 @@ export const useLogiState = create((set,get)=>({
         set({slides:data.reverse()})
     }
     } catch (error) {
-        console.log(error)
+        return false
     }  
     },addmusic:async(artistname,artistSongTitle,artistpic, artistSong, genre)=>{
         try {
-             const news = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/musica/add",{
+             const news = fetch("http://localhost:7000/som_do_momento/api/musica/add",{
                 method:"POST",
                 headers:{
                     "Content-type":"application/json"
@@ -137,14 +159,13 @@ export const useLogiState = create((set,get)=>({
             }
             return false
         } catch (error) {
-            console.log(error.message)
             return false
             
         }
     },removemusic:async(id)=>{
         console.log(id)
         try {
-             const news = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/musica/remove",{
+             const news = fetch("http://localhost:7000/som_do_momento/api/musica/remove",{
                 method:"POST",
                 headers:{
                     "Content-type":"application/json"
@@ -158,7 +179,6 @@ export const useLogiState = create((set,get)=>({
             }
             return false
         } catch (error) {
-            console.log(error.message)
             return false
             
         }
@@ -232,5 +252,263 @@ export const useLogiState = create((set,get)=>({
             return false
         }
             
+    },setComment:async(id, comment)=>{
+        try {
+          const docref = collection(db,"postes", id , "comments");
+        await addDoc(docref,{
+            id,
+            comment,
+            date:new Date(),
+        })  
+        return true
+        } catch (error) {
+            console.log(error.message)
+            return false
+        }
+        
+    }, getComments : async(id)=>{
+        const docref = collection(db, "postes", id , "comments");
+        const q = query(docref,orderBy("date", "desc"))
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const commentsreplies = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            }));
+           set({comments:[...commentsreplies]})
+        });
+        return unsubscribe;    
+    },setChat :async(senderId, senderName)=>{
+        const docref = doc(collection(db,"Messages"));
+        await setDoc(docref, {
+          id:docref.id,
+          senderId,
+          senderName,
+          participants : [senderId , "8YeBW9kOomhFmJbBHS3fXxeBcJq2"],
+          lastMessage:"",
+          date:new Date(),
+        })
     }
+    ,setMessage:async(message, name , chatId , senderId)=>{
+             const docref = doc(collection(db,"Messages", chatId, "ChatMessages"));
+             const collectionref  = doc(db,"Messages", chatId)
+             await setDoc(docref,{
+                message,
+                date:new Date(),
+                id:senderId, 
+                name
+             })
+             await updateDoc(collectionref, {
+                lastMessage:message,
+                date:new Date(),
+             })
+    }, getChats:async()=>{
+        const chatref = collection(db,"Messages");
+        const getting = await getDocs(chatref);
+        const data= []
+        getting.forEach((doct)=>{
+            data.push(doct.data())
+        })
+        set({chats:data})
+    },getChatMessages:async(participantId)=>{
+        try {
+        const docref = collection(db,"Messages",participantId ,"ChatMessages")
+        const qref = query(docref, orderBy("date", "asc"))
+        onSnapshot(qref, (snap)=>{
+            const messages = []
+            snap.forEach((message)=>{
+                messages.push(message.data()) 
+            })
+            set({ChatMessages:messages})
+        })
+        return true
+        } catch (error) {
+            return false
+        }
+    },getSingleChat:async(participantId)=>{
+         const cacheduserChat = JSON.parse(localStorage.getItem("userChat"));
+         if(cacheduserChat?.data?.id){
+             set({chat:cacheduserChat?.data})
+             return;
+         }
+         const queryChats = query(collection(db,"Messages"),where("participants", "array-contains" , participantId));
+         const getChat = await getDocs(queryChats);
+         if(!getChat?.docs[0]?.exists()) return ;
+         const data = getChat?.docs[0]?.data()
+         localStorage.setItem("userChat", JSON.stringify({data}))
+         set({chat:data})
+    },updateUserPic:async(pic)=>{
+        const url = await storemedia(pic);
+        console.log(url)
+        const submit = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/auth/Update",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({media:url})
+        })
+        const res = await submit
+        const data = await res.json()
+    },setStatus:async(media, description ,artistName , instaLink, artistImage)=>{
+       const imageUrl = await storemedia(media);
+       const artistImageUrl = await storemedia(artistImage) 
+       const docref = doc(collection(db,"Status"));
+       await setDoc(docref, {
+            id:docref.id,
+            image:imageUrl,
+            description,
+            artistName,
+            instaLink,
+            artistImage:artistImageUrl
+       })
+    },setAboutPage:async(description)=>{
+        const docref = collection(db,"AboutPage")
+        const getting = await getDocs(docref)
+        if(!getting.empty){
+            console.log("good")
+            const ref = getting.docs[0].ref
+            await updateDoc(ref,{
+                description
+            })
+            return;
+        }
+        const ref2 = doc(docref)
+        await setDoc(ref2,{
+            id:ref2.id,
+            description,
+        })
+    },getAbout:async()=>{
+        const docref = collection(db,"AboutPage");
+        const getting = await getDocs(docref);
+        const data = []
+        getting.forEach((dt)=>{
+            data.push(dt.data())
+        })
+        set({about:data})
+    }
+    ,setPromotion:async(to , media , link, buttonText, music, artistinfo)=>{
+        const url = await storemedia(media);
+        const musicurl  = music ? await storemedia(music) : false
+        const docref = doc(collection(db,"Promotion"));
+        if(music && to == "Musicas"){
+             await setDoc(docref,{
+            id:docref.id,
+            media:url,
+            to,
+            link,
+            buttonText,
+            musicurl,
+            artistinfo
+        })
+        return;
+        }
+        await setDoc(docref,{
+            id:docref.id,
+            media:url,
+            to,
+            link,
+            buttonText
+        })
+        return;
+    },getStatus:async()=>{
+        const docref = collection(db,"Status");
+        const getting = await getDocs(docref);
+        const data = [];
+        getting.forEach((status)=>{
+            data.push(status.data())
+        })
+        console.log(data)
+        set({status:data})
+    },setStatusComments: async(id, comment, author)=>{
+        const docref = doc(collection(db,"Status",id , "Comments"));
+        await setDoc(docref,{
+            id:docref.id,
+            prevId: id,
+            comment,
+            date: new Date(),
+            likes:0,
+            author
+        })
+    },getStatusComments:async(id)=>{
+        const docref = collection(db,"Status", id , "Comments");
+        const qt = query(docref, orderBy("date","desc"))
+        
+        const unsubscribe = onSnapshot(qt, (snapshot) => {
+            const comments = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            }));
+
+           set((state) => ({
+            statusComment:
+                comments.length > 0 ? comments : state.statusComment,
+            }));
+        });
+        return unsubscribe;
+      },setCommentReply:async(prevId , id , comment , author)=>{
+        console.log(prevId, id , comment , author)
+        const docref = doc(collection(db,"Status",prevId ,"Comments", id, "comments"));
+        await setDoc(docref, {
+            id,
+            docId:docref.id,
+            comment,
+            date: new Date(),
+            like:0,
+            author,
+            prevId
+        })
+      },getReplies:async(prevId , id)=>{
+        const docref = collection(db,"Status",prevId ,"Comments", id, "comments");
+        const q = query(docref, orderBy("date", "desc"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const commentsreplies = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            }));
+
+           set((state) => ({
+            statusCommentreply:
+                commentsreplies.length > 0 ? commentsreplies : state.statusCommentreply,
+            }));
+        });
+        return unsubscribe;
+
+      }, // lista de musicas promocionais
+      setAleatorio: async()=>{
+
+      },getPromotion :async(from)=>{
+        const docref = collection(db,"Promotion");
+        const q = query(docref, where("to", "==", from));
+        const getelements = await getDocs(q);
+        if(getelements.empty) return;
+        const data = []
+        getelements.forEach((dc)=>{
+            data.push(dc.data())
+        });
+        switch(from){
+            case 'Musicas':
+                 set({musicPromo:data})
+                break;
+            case 'Home':
+                 set({homePromo:data})
+                break;
+            case 'Noticias':
+                 set({noticiasPromo:data})
+                break;
+            case 'Destaques':
+                 set({destaquePromo:data})
+                break;
+        }
+        return;
+       
+      }, setPostReaction: async(id, emojis, likes)=>{
+         const docref = doc(collection(db, "Postes", id));
+         await updateDoc(docref, {
+            likes,
+            emojis,
+         })
+
+      }, getPostReactions:async(id)=>{
+        const docref = doc(collection(db, "Postes", id));
+         const getting = await getDocs(docref);
+      }
 }))

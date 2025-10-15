@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Paginator from './Paginator'
 import Slide from "./Slide"
 import { useLogiState } from '../../states/useLogic'
-export default function Hero() {
+ function Hero() {
   const [width, setWidth] = useState(window.innerWidth)
   const [currentSlide, setCurrentSlide] = useState(0)
   const gettingSlides = useLogiState((state)=>state.getSlides)
@@ -31,7 +31,7 @@ export default function Hero() {
   }, [slides.length])
 
   return (
-    <HStack className='hero' position="relative" height="70vh" width="100%" overflow="hidden" backgroundColor="white">
+    <HStack className='hero' position="relative" height="85vh" width="100%" overflow="hidden" backgroundColor="white">
       
       <HStack
         gap={0}
@@ -56,3 +56,5 @@ export default function Hero() {
     </HStack>
   )
 }
+export default React.memo(Hero)
+

@@ -5,6 +5,7 @@ import AvatarCustom from './AvatarCustom';
 import AudioPlayerGraph from './AudioPlayerGraph';
 import ArtistCard from './ArtistCard';
 import { useLogiState } from '../../states/useLogic';
+import { useNavigate } from 'react-router';
 
 
 
@@ -13,6 +14,7 @@ export default function MusicCard({audio,editmode, image, artist,genre,date, tit
     const [playStop , setPlayStop] = useState(false)
     const [playtime, setPlayTime] = useState(0)
     const deletingmusic = useLogiState((state)=>state.removemusic)
+    const navigate = useNavigate()
     async function deleteMusic(){
       await deletingmusic(id)
     }
@@ -36,11 +38,11 @@ export default function MusicCard({audio,editmode, image, artist,genre,date, tit
   }
     }
   return (
-    <Card.Root borderWidth={noborder || 1.5} width={"100%"} borderRadius={20} minWidth={10}>
+    <Card.Root zIndex={1}  borderWidth={noborder || 1.5} width={"100%"} borderRadius={20} minWidth={10}>
         <Card.Body minWidth={10} >
           <HStack minWidth={10} height={padding  || 50} >
             <ArtistCard image={image} title={title} artist={artist}/>
-            <HStack minWidth={10} onClick={()=>playStop ? setPlayStop(false) : setPlayStop(true)}>
+            <HStack zIndex={1000} minWidth={10} onClick={()=>playStop ? setPlayStop(false) : setPlayStop(true)}>
               {playStop ?
               <Icon.PauseFill size={30}/>
               :

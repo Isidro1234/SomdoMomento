@@ -1,14 +1,11 @@
-import { Button, Card, Heading, HStack, Input, Textarea, VStack } from '@chakra-ui/react'
+import {HStack,VStack } from '@chakra-ui/react/stack'
 import React, { useEffect } from 'react'
-import MusicCard from '../../components/custom/MusicCard'
-import Article from '../General/Article'
-import ArticleCard from '../../components/custom/ArticleCard'
+import {Heading} from '@chakra-ui/react/heading'
 import PostCard from '../../components/custom/PostCard'
-import * as Icon from 'react-bootstrap-icons';
-import ArtistCard from '../../components/custom/ArtistCard'
 import TextEditor from '../../components/custom/TextEditor'
 import { useLogiState } from '../../states/useLogic'
-export default function NoticiasAdmin() {
+import MainNews from '../../components/custom/MainNews'
+function NoticiasAdmin() {
   const getNoticias = useLogiState((state)=>state.getPosts)
   const noticias = useLogiState((state)=>state.noticias)
   useEffect(()=>{
@@ -18,17 +15,20 @@ export default function NoticiasAdmin() {
       getpst()
     }, [])
   return (
-    <VStack padding={5} background={"white"} alignItems={"flex-start"} justifyContent={"flex-start"} width={"100%"} height={"100%"}>
+    <VStack padding={5} background={"white"}  alignItems={"flex-start"} justifyContent={"flex-start"} width={"100%"} height={"100%"}>
       <VStack alignItems={"flex-start"}>
         <Heading>Noticias</Heading>
-        <HStack>
+      </VStack>
+
+     <TextEditor placeholder={"digite o titulo da noticia"} to={"noticias"}/>
+     <HStack marginTop={10} flexWrap={"wrap"}>
           {noticias?.map((item,index)=>{
-                      return(<PostCard key={index} title={"sdfsdfsdf"} date={'12 Sept'} body={"sdfsfsdfsdfdsffdsf"}/>)
+                  return(<MainNews data={item?.userdata} category={item?.category} edit={true} key={index} image={item?.imagecover} title={item?.title}/>)
           })}
         </HStack>
-      </VStack>
-     <TextEditor placeholder={"digite uma noticia"} to={"noticias"}/>
 
     </VStack>
   )
 }
+
+export default React.memo(NoticiasAdmin)

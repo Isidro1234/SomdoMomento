@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import React from 'react'
 
-export default function SidebarNews({withbars}) {
+export default function SidebarNews({withbars , title, text , category, image}) {
     useGSAP(()=>{
         gsap.to('.news',{
             yoyo:true,
@@ -16,18 +16,17 @@ export default function SidebarNews({withbars}) {
   return (
     <HStack className='news' opacity={0} borderBottomWidth={withbars ? 1 : 0} paddingBottom={withbars ? 2 : 0} gap={4} display={"grid"} gridTemplateColumns={"repeat(auto-fit , minmax(min(200px, 100%), 1fr ))"}>
                     <VStack  flex={1} gap={2} alignItems={"flex-start"} >
-                        <Heading fontSize={14} lineHeight={1.3}>Boom, Boom :Snoop on break dance 2024</Heading>
-                        <Text fontSize={12} color={"gray"} >
-                            Snoop dogg appearance on the onlympics
-                            becomes the espectacle of the show
-                        </Text>
+                        <Heading fontSize={14} lineHeight={1.3}>{title}</Heading>
+                        <div dangerouslySetInnerHTML={{__html:text}}>
+
+                        </div>
                         <HStack alignItems={"center"}>
-                            <Text fontSize={12} color={"red"}>Sports</Text>
+                            <Text fontSize={12} color={"red"}>{category}</Text>
                             <Text fontSize={12} color={"gray"}> | </Text>
                             <Text fontSize={12} color={"gray"}>6 minutes</Text>
                         </HStack>
                     </VStack>
-                    <Image className='picstyle' float={"right"}  borderRadius={10} maxH={150} src='https://images.pexels.com/photos/3425993/pexels-photo-3425993.jpeg'/>
+                    <Image className='picstyle' float={"right"}  borderRadius={10} maxH={150} src={image}/>
                 </HStack>
   )
 }

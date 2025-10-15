@@ -1,7 +1,8 @@
-import { Box, Button, Card, Heading, HStack, Input, Textarea, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom';
-import {Editor, EditorState, RichUtils} from 'draft-js';
+import {EditorState, RichUtils} from 'draft-js';
+import {HStack, VStack } from '@chakra-ui/react/stack'
+import {Heading} from '@chakra-ui/react/heading'
 import 'draft-js/dist/Draft.css';
 import ArticleCard from '../../components/custom/ArticleCard'
 import TextEditor from '../../components/custom/TextEditor';
@@ -36,14 +37,15 @@ export default function Posts() {
   console.log("this is an wrray" ,post)
   return (
     <VStack height={"100%"} width={"100%"} overflowY={"auto"} padding={5} background={"white"} alignItems={"flex-start"} justifyContent={"flex-start"}>
-        <Heading>Postes</Heading>
-        <HStack style={{flexWrap:"wrap", width:"100%"}}>
+       <TextEditor placeholder={"Digite o titulo do seu Artigo"} to={"postes"}/> 
+       <Heading>Postes</Heading>
+        <HStack display={"grid"} width={"100%"} gridTemplateColumns={"repeat(auto-fit,minmax(min(400px,100%), 1fr))"}>
                 {post?.map((item,index)=>{
                     return(<ArticleCard to={"postes"} id={item?.id} edimode={true} title={item.title} date={item.date} author={item.userdata.username} key={index} body={item.html}/>)
                  })}
           
         </HStack> 
-         <TextEditor placeholder={"Digite o titulo do seu Artigo"} to={"postes"}/>
+         
     </VStack>
   )
 }

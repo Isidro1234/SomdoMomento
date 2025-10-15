@@ -1,12 +1,16 @@
-import { Button, HStack, Input, Switch, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Slide from '../../components/custom/Slide'
+import {Button} from '@chakra-ui/react/button'
+import {Input} from '@chakra-ui/react/input'
+import { HStack, VStack } from '@chakra-ui/react/stack'
 import FileUploadCustom2 from '../../components/custom/FileUploadCustom2'
 import {Toaster, toaster} from "../../components/ui/toaster"
 import { storemedia } from '../../logic/handleStorageData'
 import { useLogiState } from '../../states/useLogic'
 import Paginator from '../../components/custom/Paginator'
-export default function RankingAdmin() {
+
+
+function RankingAdmin() {
     const [nome, setNome] = useState("")
     const [musica, setMusica] = useState("")
     const [numeroPlays, setNumeroPlays] = useState("")
@@ -198,3 +202,7 @@ export default function RankingAdmin() {
     </VStack>
   )
 }
+
+export default  React.memo(RankingAdmin)
+
+

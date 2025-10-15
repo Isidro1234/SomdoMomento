@@ -1,7 +1,9 @@
 import { Box, Heading, VStack, HStack, Image, Text } from "@chakra-ui/react"
 import React from "react"
+import { useNavigate } from "react-router";
 
 export default function Aside({ posts }) {
+  const navigate = useNavigate()
   function handledate(date){
     const dats = date.seconds * 1000;
     const newdate = new Date(dats);
@@ -11,7 +13,7 @@ export default function Aside({ posts }) {
     return(formater.format(newdate))
   }
   return (
-    <Box
+    <Box 
       as="aside"
       borderWidth={1}
       width={{ base: "100%", md: "340px" }}
@@ -29,6 +31,7 @@ export default function Aside({ posts }) {
       <VStack spacing={4} align="stretch">
         {posts?.map((post, index) => (
           <HStack
+            onClick={()=>navigate(`/Article/Post/${String(post?.title)?.trim()}`)}
             key={index}
             spacing={3}
             align="flex-start"

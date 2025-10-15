@@ -1,10 +1,19 @@
 import { lazy, Suspense, useState} from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router'
-import { HStack, Spinner, VStack } from '@chakra-ui/react'
+import { Button, HStack, Spinner, VStack } from '@chakra-ui/react'
 import { useAuthcontext } from './Context/AuthContextProvider'
 import SideBar from './components/custom/SideBar'
-
+import DrawerTwo from './components/custom/DrawerTwo'
+import * as Icon from "react-bootstrap-icons"
+import Messages from './Pages/EditorsOnly/Messages'
+import SinglePost from './Pages/General/SinglePost'
+import SingleNews from './Pages/General/SingleNews'
+import SingleMusicPage from './Pages/General/SingleMusicPage'
+import NotFound from './Pages/General/NotFound'
+import Promotion from './Pages/EditorsOnly/Promotion'
+import SearchPage from './Pages/General/SearchPage'
+import MessageCard from './components/custom/MessageCard'
 
 
 const Home = lazy(()=>import("./Pages/General/Home")); 
@@ -25,11 +34,12 @@ const ProtectedRoute = lazy(()=>import("./secure/ProtectedRoute"));
 
 function App() {
   const {isAuthenticated} = useAuthcontext()
+  const [hide, setHide] = useState(true)
   const [sidebar, setSidebar] = useState(false)
   return (
-    <HStack  height={"100%"} alignItems={"flex-start"}  gap={0} padding={0} width={"100vw"}>
-      <VStack hidden={sidebar ? true : false} flex={.3}  height={"100%"} alignItems={"flex-start"} justifyContent={"flex-start"} gap={0} padding={0}>
-        {isAuthenticated  && <SideBar states={sidebar} onclicks={(e)=>{setSidebar(e)}}/>}
+    <VStack  height={"100%"} alignItems={"flex-start"}  gap={0} padding={0} width={"100vw"}>
+      <VStack hidden={sidebar ? true : false}  alignItems={"flex-start"} justifyContent={"flex-start"} gap={0} padding={0}>
+        {isAuthenticated  && <DrawerTwo icon={<Icon.List color='black'/>}  children={<SideBar states={sidebar} onclicks={(e)=>{setSidebar(e)}}/>}/> }
       </VStack>
     <Suspense fallback={<VStack alignItems={"center"} justifyContent={"center"} width={"100vw"} height={"100vh"}><Spinner size={"lg"} color={"black"}/></VStack>}>
         <Routes>
@@ -40,18 +50,32 @@ function App() {
           <Route path='/admin/NoticiasAdmin' element={<NoticiasAdmin/>}/>
           <Route path='/admin/musicas' element={<Musicas/>}/>
           <Route path='/admin/RankingAdmin' element={<RankingAdmin/>}/>
+          <Route path='/admin/Messages' element={<Messages/>}/>
+          <Route path='/admin/Promotion' element={<Promotion/>}/>
           <Route index element={<Posts/>}/>
         </Route>
         <Route path='/' element={<Home/>}/>
-        <Route path='/Article' element={<Article/>}/>
+        <Route path='/Article' element={<Article/>}>
+          <Route path='Post/:id' element={<SinglePost/>}/>
+          <Route path='News/:id' element={<SingleNews/>}/>
+        </Route>
         <Route path='/Destaque' element={<Destaques/>}/>
-        <Route path='/Music' element={<Music/>}/>
+        <Route path='/Music' element={<Music/>}>
+           <Route path='Single/:id' element={<SingleMusicPage/>}/>
+        </Route>
         <Route path='/Noticias' element={<Noticias/>}/>
+        <Route path='/Search/:id' element={<SearchPage/>}/>
         <Route path='/Sobre' element={<Sobre/>}/>
+        <Route  path='*' element={<NotFound/>}/>
       </Routes>
     </Suspense>
+    <MessageCard hide={hide}/>
+    <Button onClick={()=>hide ? setHide(false) : setHide(true)} 
+    bg={"blue"} height={50} w={50} padding={10} position={"fixed"} 
+    zIndex={150} borderRadius={50} bottom={87} right={5}><Icon.ChatFill size={30}/></Button>
+            
     
-    </HStack>
+    </VStack>
   )
 }
 

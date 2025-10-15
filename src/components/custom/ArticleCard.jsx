@@ -1,5 +1,5 @@
 import { Box, Heading, Text, HStack, VStack, Avatar, Button, Input } from "@chakra-ui/react"
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import DOMPurify from "dompurify"
 import * as Icon from "react-bootstrap-icons"
 import AvatarCustom from "./AvatarCustom";
@@ -9,6 +9,9 @@ import Modal from "./Modal";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import {FacebookMessengerIcon, FacebookShareButton, FacebookShareCount} from "react-share"
+import CommentBox from "./CommentBox";
+import { useNavigate } from "react-router";
+import SelectShare from "./SelectShare";
 
 export default function ArticleCard({
   id,
@@ -19,14 +22,26 @@ export default function ArticleCard({
   date,
   body,
   image,
+  isNotLink,
   button,
 }) {
   const convertSeconds = date?.seconds ? date.seconds * 1000 : 1000;
   const dates = new Date(convertSeconds);
   const [emoji, setemoji] = useState("")
   const deleteposts = useLogiState((state)=>state.delePost)
-  const [showcomment, setComment] = useState(false)
+  const [comment, setComment] = useState("")
+  const settingcomment = useLogiState((state)=>state.setComment)
+  const commentsd = useLogiState((state)=>state.comments)
+  const [showcomment, setComments] = useState(false)
   const [activeHeart, setHeart] = useState(false)
+  const getcomments = useLogiState((state)=>state.getComments);
+  const navigate = useNavigate();
+  useEffect(()=>{
+       async function gettingcomments(){
+           await getcomments(id)
+        }
+        gettingcomments()
+      }, [])
   const format = Intl.DateTimeFormat("pt-BR", {
     dateStyle: "medium",
   });
@@ -43,26 +58,6 @@ export default function ArticleCard({
       })
     }
   }
-  useGSAP(()=>{
-    if(activeHeart){
-      gsap.fromTo('.heart',{
-        scale: 0,
-      }, 
-      { scale: 1,
-        duration:.7,
-        ease:"elastic.inOut"
-      }
-    )
-    }else{
-      gsap.to('.heart',{
-        scale: 0,
-        duration:.7,
-        ease:"elastic.inOut"
-      }, 
-    )
-    }
-      
-  }, [activeHeart])
   useGSAP(()=>{
     if(emoji){
       gsap.fromTo('.emoji',{
@@ -83,19 +78,42 @@ export default function ArticleCard({
     }
       
   }, [emoji])
+  async function handleComment(){
+    const result = await settingcomment(id,comment);
+    setComment('');
+    if(result){
+            toaster.create({
+        type:"success",
+        title:'Comentario enviado',
+        description:"Comentario enviado com sucesso",
+        duration:2
+      })
+      return;
+    }
+     toaster.create({
+        type:"error",
+        title:'Comentario enviado nao enviado',
+        description:"algo correu mal, veja se ainda tem conecao a internet",
+        duration:2
+      })
+
+  }
+  async function handleinteraction(){
+    
+  }
   return (
-    <Box className="contpics"
-      width={edimode ? "fit-content" : "100%"}
+    <Box className="contpics" onClick={()=>!isNotLink && navigate(`/Article/Post/${String(title)?.trim()}`)}
+      width={edimode ? "100%" : "100%"}
       bg="#ffffffff"
       borderWidth={1}
       borderRadius="xl"
+      p={5}
+      flex={!isNotLink && 1}
       maxW={700}
-      p={{ base: 5, md: 6 }}
-      flex={1}
-      alignSelf="flex-start"
+      alignSelf={!isNotLink && "flex-start"}
     >
       {/* Title */}
-      <HStack flexWrap="wrap" justify="space-between" mb={4}>
+      <HStack >
         
         {edimode && (
           <HStack spacing={2} display={{ base: "none", sm: "flex" }}>
@@ -167,23 +185,25 @@ export default function ArticleCard({
       <HStack marginLeft={-3} marginTop={0} alignItems={"center"}>
         <Button bg={"transparent"} onClick={()=>{activeHeart ? setHeart(false) : setHeart(true)}}>{activeHeart ?<Icon.HeartFill className="heart" color="red"/>  : <Icon.Heart  color="black"/>}  </Button>
         <Modal emojiset={(e)=>{setemoji(e)}}/>
-        <Button bg={"transparent"}>
-          <Icon.Share color="black"/>
+        <Button  bg={"transparent"}>
+          <SelectShare icon={<Icon.Share color="black"/>}/>
         </Button>
       </HStack>
       <HStack marginTop={2}>
-        <Input onBlur={()=>setComment(false)} onFocus={()=>setComment(true)} borderRadius={30} placeholder="Comenta aqui"/>
-        <Button background={"transparent"} borderRadius={50}><Icon.Send color="black"/></Button>
+        <Input value={comment} onChange={(e)=>setComment(e.target.value)}  borderRadius={30} placeholder="Comenta aqui"/>
+        <Button onClick={handleComment} background={"transparent"} borderRadius={50}><Icon.Send color="black"/></Button>
       </HStack>
+      <Text marginTop={2} width={"fit-content"} fontSize={10} color={"gray"} _hover={{textDecoration:"underline"}} onClick={()=>showcomment ? setComments(false) : setComments(true)}>{showcomment ? "esconder comentarios" : "Ver comentarios"} {commentsd?.filter((item)=>item.id === id).length > 0 ? commentsd?.filter((item)=>item.id === id).length : "" }</Text>
       <VStack  marginTop={5} padding={0} paddingTop={0} alignItems={"flex-start"} display={showcomment ? "flex" : "none"}>
-        <Box  display={"flex"} alignItems={"center"} gap={2} padding={2} borderRadius={10}  borderWidth={1} >
-            <AvatarCustom name={"Anonymous"}/>
-            <VStack flex={1} gap={1} alignItems={"flex-start"} justifyContent={"center"}>
-              <Text fontWeight={500} lineHeight={1} fontSize={12} color={"black"}>Anonimo</Text>
-              <Text lineHeight={1} fontSize={10} color={"gray"}>dsdfsdf</Text>
-            </VStack>
-        </Box>
+        {commentsd?.map((item,index)=>{
+          return(
+            item?.id === id &&
+             <CommentBox date={item?.date} key={index} comment={item?.comment}/>
+          )
+        })}
+       
       </VStack>
+      <Toaster/>
     </Box>
   );
 }

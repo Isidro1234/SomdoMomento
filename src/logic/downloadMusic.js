@@ -14,6 +14,6 @@ export async function downloadmusic(url, title){
     // cleanup
     window.URL.revokeObjectURL(blobUrl);
   } catch (err) {
-    console.error("Download failed:", err);
+     return false
   }
 }
