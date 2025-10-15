@@ -56,7 +56,7 @@ function Destaques() {
             </HStack>
             <HStack justifyContent={"flex-start"} alignItems={"center"} margin={0} marginTop={0} borderRadius={10}  padding={0}>
              <Box  width={"100%"} height={220}>
-             <video loop  autoPlay muted style={{width:"100%", height:"100%", objectFit:"cover", borderRadius:30}}  src='https://www.pexels.com/download/video/2795749/'></video>
+             <video playsInline loop  autoPlay muted style={{width:"100%", height:"100%", objectFit:"cover", borderRadius:30}}  src='https://www.pexels.com/download/video/2795749/'></video>
              </Box> 
             </HStack>
             <VStack width={"100%"}>

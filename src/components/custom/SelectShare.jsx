@@ -2,7 +2,7 @@ import React from 'react'
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, InstapaperIcon, InstapaperShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share'
 import { Button, Menu, Portal } from "@chakra-ui/react"
 
-const SelectShare = ({select , url , icon}) => {
+const SelectShare = ({select , url , icon , title}) => {
   return (
     <Menu.Root>
           <Menu.Trigger asChild>
@@ -14,17 +14,18 @@ const SelectShare = ({select , url , icon}) => {
             <Menu.Positioner>
               <Menu.Content  display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(20px, 100%), 1fr))"}>
                 <Menu.Item>
-                    <FacebookShareButton url={url}>
+                    <FacebookShareButton 
+                    url={`https://somdomomento.netlify.app/Article/Post/${String(title)?.trim()}`}>
                         <FacebookIcon borderRadius={50}/>
                     </FacebookShareButton>
                 </Menu.Item>
                 <Menu.Item>
-                    <WhatsappShareButton url={url}>
+                    <WhatsappShareButton url={`https://somdomomento.netlify.app/Article/Post/${String(title)?.trim()}`}>
                         <WhatsappIcon borderRadius={50}/>
                     </WhatsappShareButton>
                 </Menu.Item>
                 <Menu.Item>
-                    <EmailShareButton url={url}>
+                    <EmailShareButton url={`https://somdomomento.netlify.app/Article/Post/${String(title)?.trim()}`}>
                         <EmailIcon borderRadius={50} bgStyle={{backgroundColor:"#f6f6f6"}}/>
                     </EmailShareButton>
                 </Menu.Item>

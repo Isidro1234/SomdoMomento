@@ -1,6 +1,6 @@
 import {create} from "zustand"
 import DOMPurify from "dompurify"
-import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore"
 import { db } from "./config/firebase"
 import { handlefeed } from "../logic/feed"
 import { storemedia } from "../logic/handleStorageData"
@@ -289,6 +289,7 @@ export const useLogiState = create((set,get)=>({
         })
     }
     ,setMessage:async(message, name , chatId , senderId)=>{
+        console.log(chatId)
              const docref = doc(collection(db,"Messages", chatId, "ChatMessages"));
              const collectionref  = doc(db,"Messages", chatId)
              await setDoc(docref,{
@@ -508,7 +509,22 @@ export const useLogiState = create((set,get)=>({
          })
 
       }, getPostReactions:async(id)=>{
-        const docref = doc(collection(db, "Postes", id));
+        const docref = doc(collection(db, "postes", id));
          const getting = await getDocs(docref);
+      },deleteNews:async(id)=>{
+        const docref = doc(db,"postes",id);
+        await deleteDoc(docref);
+      },deleteArticle:async(id)=>{
+        const docref = doc(db,"postes",id);
+        await deleteDoc(docref);
+      },deletePromo:async(id)=>{
+        const docref = doc(db,"Promotion",id);
+        await deleteDoc(docref);
+      },deleteStatus:async(id)=>{
+        const docref = doc(db,"Status",id);
+        await deleteDoc(docref);
+      },deleteRanking:async(id)=>{
+        const docref = doc(db,"slides",id);
+        await deleteDoc(docref);
       }
 }))

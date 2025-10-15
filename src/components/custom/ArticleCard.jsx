@@ -186,7 +186,7 @@ export default function ArticleCard({
         <Button bg={"transparent"} onClick={()=>{activeHeart ? setHeart(false) : setHeart(true)}}>{activeHeart ?<Icon.HeartFill className="heart" color="red"/>  : <Icon.Heart  color="black"/>}  </Button>
         <Modal emojiset={(e)=>{setemoji(e)}}/>
         <Button  bg={"transparent"}>
-          <SelectShare icon={<Icon.Share color="black"/>}/>
+          <SelectShare title={title} icon={<Icon.Share color="black"/>}/>
         </Button>
       </HStack>
       <HStack marginTop={2}>

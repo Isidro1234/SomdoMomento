@@ -36,6 +36,7 @@ export default function MessageCard({hide}) {
     }
     check()
   }, [])
+  console.log("getting", chatt)
   async function handleshowchat(){
     if(username &&  description){
       const userdata = {
@@ -45,7 +46,7 @@ export default function MessageCard({hide}) {
       const getuser = JSON.parse(localStorage.getItem("userinfo"));
       if(getuser?.userdata?.id) return;
       localStorage.setItem("userinfo" , JSON.stringify({userdata}))
-      await createchat(userdata.id , userdata.username)
+      await createchat(userdata?.id , userdata?.username)
       setshowChat(true)
       return;
     }
@@ -69,6 +70,8 @@ export default function MessageCard({hide}) {
 
   async function handleMessage(){
      const gettinguser = JSON.parse(localStorage.getItem("userinfo"));
+     console.log(chatt)
+     if(!chatt?.id)return;
      await sendMessage(message , gettinguser?.userdata?.username, chatt?.id , gettinguser?.userdata?.id)
      setMessage("")
   }
