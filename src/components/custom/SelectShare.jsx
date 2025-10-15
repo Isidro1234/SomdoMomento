@@ -15,17 +15,17 @@ const SelectShare = ({select , url , icon , title}) => {
               <Menu.Content  display={"grid"} gridTemplateColumns={"repeat(auto-fit, minmax(min(20px, 100%), 1fr))"}>
                 <Menu.Item>
                     <FacebookShareButton 
-                    url={`https://somdomomento.netlify.app/Article/Post/${String(title)?.trim()}`}>
+                    url={`https://somdomomento.netlify.app/Article/Post/${encodeURIComponent(String(title).trim())}`}>
                         <FacebookIcon borderRadius={50}/>
                     </FacebookShareButton>
                 </Menu.Item>
                 <Menu.Item>
-                    <WhatsappShareButton url={`https://somdomomento.netlify.app/Article/Post/${String(title)?.trim()}`}>
+                    <WhatsappShareButton url={`https://somdomomento.netlify.app/Article/Post/${encodeURIComponent(String(title).trim())}`}>
                         <WhatsappIcon borderRadius={50}/>
                     </WhatsappShareButton>
                 </Menu.Item>
                 <Menu.Item>
-                    <EmailShareButton url={`https://somdomomento.netlify.app/Article/Post/${String(title)?.trim()}`}>
+                    <EmailShareButton url={`https://somdomomento.netlify.app/Article/Post/${encodeURIComponent(String(title).trim())}`}>
                         <EmailIcon borderRadius={50} bgStyle={{backgroundColor:"#f6f6f6"}}/>
                     </EmailShareButton>
                 </Menu.Item>

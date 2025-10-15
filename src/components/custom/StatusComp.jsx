@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import { Button, Dialog, Heading, HStack, Image, Input, Portal, Text, VStack } from "@chakra-ui/react"
 import AvatarCustom from './AvatarCustom'
@@ -13,6 +13,7 @@ export default function StatusComp({id, icon, media , image, description, artist
   const setstatysreplycomment = useLogiState((state)=>state.setCommentReply)
   const commentreplies = useLogiState((state)=>state.statusCommentreply)
   const getStatusReply = useLogiState((state)=>state.getReplies)
+  const closeref = useRef(null)
   const [selectcomment, setSelectcomment] = useState(null)
   const [showcommentsreply , setShowcommentReply] = useState(false)
   useEffect(()=>{
@@ -52,22 +53,24 @@ export default function StatusComp({id, icon, media , image, description, artist
   console.log(commentreplies)
   return (
 <Dialog.Root   placement={"center"} size={"xl"} >
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger    asChild>
         <Button bg={"#f6f6f6"} padding={2} width={"fit-content"} height={"fit-content"} borderRadius={50} >{icon}</Button>
       </Dialog.Trigger>
+      <Dialog.CloseTrigger  display={"none"} ref={closeref}>
+      </Dialog.CloseTrigger>
       <Portal >
         <Dialog.Backdrop />
         <Dialog.Positioner className='Scrolling'  borderWidth={0} padding={2}>
           <Dialog.Content  height={"100%"}   borderRadius={10} p={0}>
             <Dialog.Body borderRadius={10} height={"100%"}  p={0}>
-                
-                <HStack overflowY={"auto"} maxHeight={"100%"} gap={0} display={"grid"} 
+               
+                <HStack position={"relative"} overflowY={"auto"} maxHeight={"100%"} gap={0} display={"grid"} 
                 gridTemplateColumns={"repeat(auto-fit,minmax(min(300px,100%),1fr))"}  height={"100%"} alignItems={"flex-start"}>
                     <VStack height={"100%"} flex={1}>
                         <Image borderRadius={10} borderRightRadius={0}  minH={100} height={"100%"}  
                         src={media} minW={200} width={"100%"} />
                     </VStack>
-
+                    <Button onClick={()=>{closeref.current.click()}} position={'absolute'} top={0} left={0} bg={"#f6f6f6"} borderRadius={50} >X</Button>
                     <VStack  paddingTop={5} paddingLeft={4} alignItems={"flex-start"} 
                     flex={1} height={"100%"} justifyContent={"flex-start"}>
                        

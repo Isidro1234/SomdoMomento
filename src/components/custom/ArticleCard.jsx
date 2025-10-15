@@ -102,7 +102,7 @@ export default function ArticleCard({
     
   }
   return (
-    <Box className="contpics" onClick={()=>!isNotLink && navigate(`/Article/Post/${String(title)?.trim()}`)}
+    <Box className="contpics" onClick={()=>!isNotLink && navigate(`/Article/Post/${encodeURIComponent(String(title).trim())}`)}
       width={edimode ? "100%" : "100%"}
       bg="#ffffffff"
       borderWidth={1}
@@ -185,9 +185,9 @@ export default function ArticleCard({
       <HStack marginLeft={-3} marginTop={0} alignItems={"center"}>
         <Button bg={"transparent"} onClick={()=>{activeHeart ? setHeart(false) : setHeart(true)}}>{activeHeart ?<Icon.HeartFill className="heart" color="red"/>  : <Icon.Heart  color="black"/>}  </Button>
         <Modal emojiset={(e)=>{setemoji(e)}}/>
-        <Button  bg={"transparent"}>
+        
           <SelectShare title={title} icon={<Icon.Share color="black"/>}/>
-        </Button>
+      
       </HStack>
       <HStack marginTop={2}>
         <Input value={comment} onChange={(e)=>setComment(e.target.value)}  borderRadius={30} placeholder="Comenta aqui"/>
