@@ -68,7 +68,7 @@ export default function StatusComp({id, icon, media , editmode, image,type, desc
                 gridTemplateColumns={"repeat(auto-fit,minmax(min(300px,100%),1fr))"}  height={"100%"} alignItems={"flex-start"}>
                     <VStack height={"100%"} flex={1}>
                         {String(type)?.startsWith("video") &&
-                        <video autoPlay controls src={media} style={{width:"100%", objectFit:"cover", height:"100%"}}/>
+                        <video playsInline={true} autoPlay controls src={media} style={{width:"100%", objectFit:"cover", height:"100%"}}/>
                         }
                         {!String(type)?.startsWith("video") &&
                         <Image borderRadius={50} src={image} width={10} height={10}/>
