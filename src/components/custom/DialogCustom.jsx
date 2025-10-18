@@ -11,7 +11,10 @@ export default function DialogCustom({icon}) {
   const [artistSongTitle, setArtistSongTitle] = useState("")
   const [artistpic, setartistipic] = useState(null)
   const submitsong = useLogiState((state)=>state.addmusic)
-  const [artistSong, setArtistSong] = useState(null)
+  const [artistSong, setArtistSong] = useState(null);
+  const [musiccover, setMusicCover] = useState(null);
+  const [descriptionartist, setDescription] = useState("");
+  const [artisttype, setartistype] = useState("")
   const [genre, setgenre]= useState("")
   async function handleArtistPic(f){
     const file = new FileReader()
@@ -98,6 +101,8 @@ export default function DialogCustom({icon}) {
                         <Input onChange={(e)=>setgenre(e.target.value)}  placeholder='Genre'/>
                         <Input value={artistname} onChange={(e)=>setArtistName(e.target.value)} placeholder='Nome do Artista'/>
                         <Input value={artistSongTitle} onChange={(e)=>setArtistSongTitle(e.target.value)} placeholder='Titulo da musica'/>
+                        <Input placeholder='descricao do artista'/>
+                        <Input display={"none"} type='file'/>
                         <Input  onChange={(ev)=>handleArtistPic(ev.target.files[0])} accept={"image/*"} ref={imageref} type='file' hidden/>
                         <Button onClick={()=>{imageref.current.click()}} bg={"transparent"} color={"black"} borderWidth={1} borderColor={"#e6e6e6"} borderRadius={10}><Text fontSize={10}>foto do artista</Text> <Icon.Image/></Button>
                     </HStack>

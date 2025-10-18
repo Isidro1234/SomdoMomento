@@ -30,6 +30,7 @@ export default function MessageCard({hide}) {
           } catch (error) {
            setshowChat(false) 
            console.log(error.message)
+           return;
           }
           
         }
@@ -40,7 +41,7 @@ export default function MessageCard({hide}) {
   async function handleshowchat(){
     if(username &&  description){
       const userdata = {
-        username,
+        username:username,
         id : uuidv4(),
       }
       const getuser = JSON.parse(localStorage.getItem("userinfo"));
@@ -106,6 +107,10 @@ export default function MessageCard({hide}) {
           <MessagesCont messages={Messages}/>
         </Box>
         <Box display={showchat ? "flex" : "none"} gap={2} alignItems={"center"} borderRadius={10} borderTopRightRadius={0} borderTopLeftRadius={0} p={5} bg={"white"} width={"100%"}>
+            <HStack marginTop={-2}>
+                <Button onClick={handlephone} borderRadius={50} _hover={{background:"#79f8a5ff"}} color={"white"} bg={"#10e159ff"}><Icon.Whatsapp/></Button>
+                <Button onClick={handlefacebook} borderRadius={50} _hover={{background:"#2080efff"}} color={"white"} bg={"#0d7dfdff"}><Icon.Facebook/></Button>
+              </HStack>
             <Input value={message} onChange={(e)=>{setMessage(e.target.value)}} flex={1} borderRadius={40} placeholder='Message'/>
             <Button onClick={handleMessage} bg={"blue"} borderRadius={50}>Enviar</Button>
         </Box>

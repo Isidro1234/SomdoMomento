@@ -1,9 +1,9 @@
 import { Avatar } from '@chakra-ui/react'
 import React from 'react'
 
-export default function AvatarCustom({image, name, size, fontSize}) {
+export default function AvatarCustom({image, name, size, fontSize, borderRadius}) {
   return (
-    <Avatar.Root borderRadius={10} size={!size ? "md" : size}>
+    <Avatar.Root borderRadius={borderRadius || 10} size={!size ? "md" : size}>
         {image &&
         <Avatar.Image borderRadius={10} alt='user avatar' src={image}/>
         }
