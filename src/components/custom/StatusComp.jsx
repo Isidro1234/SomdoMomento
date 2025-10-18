@@ -5,7 +5,7 @@ import AvatarCustom from './AvatarCustom'
 import { useLogiState } from '../../states/useLogic';
 import CommentBox from './CommentBox';
 import { randomname } from '../../logic/RandomName';
-export default function StatusComp({id, icon, media , image, description, artistname , link }) {
+export default function StatusComp({id, icon, media , editmode, image,type, description, artistname , link }) {
   const [comment , setComment] = useState("");
   const setStatusComment = useLogiState((state)=>state.setStatusComments)
   const getStatusComment = useLogiState((state)=>state.getStatusComments);
@@ -53,8 +53,8 @@ export default function StatusComp({id, icon, media , image, description, artist
   console.log(commentreplies)
   return (
 <Dialog.Root   placement={"center"} size={"xl"} >
-      <Dialog.Trigger    asChild>
-        <Button bg={"#f6f6f6"} padding={2} width={"fit-content"} height={"fit-content"} borderRadius={50} >{icon}</Button>
+      <Dialog.Trigger asChild>
+          <Button bg={"#f6f6f6"} padding={2} width={"fit-content"} height={"fit-content"} borderRadius={50}>{icon}</Button>
       </Dialog.Trigger>
       <Dialog.CloseTrigger  display={"none"} ref={closeref}>
       </Dialog.CloseTrigger>
@@ -67,15 +67,23 @@ export default function StatusComp({id, icon, media , image, description, artist
                 <HStack position={"relative"} overflowY={"auto"} maxHeight={"100%"} gap={0} display={"grid"} 
                 gridTemplateColumns={"repeat(auto-fit,minmax(min(300px,100%),1fr))"}  height={"100%"} alignItems={"flex-start"}>
                     <VStack height={"100%"} flex={1}>
-                        <Image borderRadius={10} borderRightRadius={0}  minH={100} height={"100%"}  
-                        src={media} minW={200} width={"100%"} />
+                        {String(type)?.startsWith("video") &&
+                        <video autoPlay controls src={media} style={{width:"100%", objectFit:"cover", height:"100%"}}/>
+                        }
+                        {!String(type)?.startsWith("video") &&
+                        <Image borderRadius={50} src={image} width={10} height={10}/>
+                        }
                     </VStack>
-                    <Button onClick={()=>{closeref.current.click()}} position={'absolute'} top={0} left={0} bg={"#f6f6f6"} borderRadius={50} >X</Button>
+
+                  
+                    <Button onClick={()=>{closeref.current.click()}} position={'absolute'} top={4} left={5} bg={"#e35050ff"} borderRadius={50} >X</Button>
                     <VStack  paddingTop={5} paddingLeft={4} alignItems={"flex-start"} 
                     flex={1} height={"100%"} justifyContent={"flex-start"}>
                        
                        <HStack width={"100%"} gap={2} paddingRight={4} alignItems={"flex-start"}>
-                        <Image borderRadius={50} src={image || media} width={10} height={10}/>
+                       
+                        <Image borderRadius={50} src={image} width={10} height={10}/>
+                        
                         <VStack flex={1}  gap={0} alignItems={'flex-start'} justifyContent={"flex-start"}>
                           <HStack gap={1} alignItems={"center"}>
                             <Text fontWeight={500}>{artistname || ""}</Text>

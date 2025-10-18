@@ -12,6 +12,7 @@ import {FacebookMessengerIcon, FacebookShareButton, FacebookShareCount} from "re
 import CommentBox from "./CommentBox";
 import { useNavigate } from "react-router";
 import SelectShare from "./SelectShare";
+import { Helmet } from "react-helmet-async";
 
 export default function ArticleCard({
   id,
@@ -114,7 +115,20 @@ export default function ArticleCard({
     >
       {/* Title */}
       <HStack >
-        
+        <Helmet>
+                        <meta property="og:title" content={` Poste - ${title}`} />
+                        <meta property="og:description" content={`O Som do Momento é um blog dedicado
+                           à música angolana e aos seus talentos. Aqui destacamos artistas locais, 
+                           novos lançamentos, estilos como kizomba, kuduro, semba e afrohouse, 
+                           além de entrevistas e críticas musicais. Celebramos a cultura de 
+                           Angola e o som vibrante que define a nossa identidade.`} />
+                        <meta property="og:keywords" content={`musicas, soms, angola, portugal, brazil, musicas do meomento, musicas da banda, melhores soms de angola,
+                          baixar musicas angolanas, baixar sons, som do momento, sm, som momento, danca com momento, som`} />
+                        <meta property="og:url" content={`https://somdomomento.netlify.app/Article/Post/${encodeURIComponent(String(title).trim())}`} />
+                        <meta property="og:type" content="homepage" />
+                        <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+                        <title>Poste - {title}</title>
+                      </Helmet>
         {edimode && (
           <HStack spacing={2} display={{ base: "none", sm: "flex" }}>
             <Button onClick={deletep} variant="ghost" color="red.500">

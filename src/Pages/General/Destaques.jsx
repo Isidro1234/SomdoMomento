@@ -46,18 +46,22 @@ function Destaques() {
             <HStack justifyContent={"flex-start"} alignItems={"center"} margin={0}  borderRadius={10}  padding={0}>
              {stats?.map((item,index)=>{
               return (<StatusComp id={item?.id} 
+                type={item?.type}
                 key={index} artistname={item?.artistName} 
                 link={item?.instaLink}
                 image={item?.artistImage}
+                
                 media={item?.image} description={item?.description}  
                 icon={<Image width={20} height={20} borderRadius={50} 
-                src={item?.image}/>}/>
+                src={item?.artistImage}/>}/>
              )})}
             </HStack>
             <HStack justifyContent={"flex-start"} alignItems={"center"} margin={0} marginTop={0} borderRadius={10}  padding={0}>
+             
              <Box  width={"100%"} height={220}>
              <video playsInline loop  autoPlay muted style={{width:"100%", height:"100%", objectFit:"cover", borderRadius:30}}  src='https://www.pexels.com/download/video/2795749/'></video>
              </Box> 
+
             </HStack>
             <VStack width={"100%"}>
               <VStack  width={"100%"}>

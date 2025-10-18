@@ -4,11 +4,13 @@ import {Heading} from "@chakra-ui/react/heading"
 import * as Icon from "react-bootstrap-icons"
 import { useLogiState } from '../../states/useLogic'
 import { Box, Button, Image, Input, Text, Textarea } from '@chakra-ui/react'
+import {toaster, Toaster} from "../../components/ui/toaster"
 import StatusComp from '../../components/custom/StatusComp'
  function DestaquesAdmin() {
   const getDestaques = useLogiState((state)=>state.getPosts)
   const destaques = useLogiState((state)=>state.destaques)
   const setStats = useLogiState((state)=>state.setStatus);
+  const setdeletestatus = useLogiState((state)=>state.deleteStatus)
   const statusget = useLogiState((state)=>state.getStatus)
   const stats = useLogiState((state)=>state.status)
   const [description, setDescription] = useState("");
@@ -16,7 +18,8 @@ import StatusComp from '../../components/custom/StatusComp'
   const [artistName, setArtistName] = useState("");
   const [artistImage, setArtisImage] = useState(null)
   const [preview, setPreview] = useState(null)
-  const [media, setMedia] = useState(null)
+  const [media, setMedia] = useState(null);
+  const [loading, setLoading] = useState(false)
   const inputref1 = useRef(null);
   const inputref2 = useRef(null);
   const inputref3 = useRef(null);
@@ -45,14 +48,52 @@ import StatusComp from '../../components/custom/StatusComp'
       setArtisImage(file2)
     }
     async function submit(){
+      setLoading(true)
       if(!media || !description || !artistName || !instaLink || !artistImage) return;
-      await setStats(media , description , artistName , instaLink , artistImage)
-      setMedia(null);
+      const result = await setStats(media , description , artistName , instaLink , artistImage)
+      if(result){
+        setLoading(false)
+        toaster.create({
+          title:"Status enviado com sucesso",
+          type:"success",
+          description:"parabens seu status foi enviado",
+          duration:2000
+        })
+        setMedia(null);
       inputref1.current.value = null
       inputref2.current.value = null
       inputref3.current.value = null
       setDescription("")
+      return;
+      }
+      toaster.create({
+          title:"Ocorreu um erro com o seu envio",
+          description:"porfavor verifique sua conexcao",
+          type:"error",
+          duration:2000
+        })
+      setLoading(false)
     }
+    async function handledelete(id){
+    const result = await setdeletestatus(id)
+    if(result){
+        setLoading(false)
+        toaster.create({
+          title:"Status eliminado com sucesso",
+          type:"success",
+          description:"parabens seu status foi eliminado",
+          duration:2000
+        })
+        return;
+      }
+      setLoading(false)
+        toaster.create({
+          title:"Ocoreu um erro com seu status",
+          type:"error",
+          description:"nao podemos eliminar seu status de momento, verifique sua conecao",
+          duration:2000
+        })
+  }
   return (
     <VStack padding={5} background={"white"} alignItems={"flex-start"} justifyContent={"flex-start"} width={"100%"} height={"100%"}>
       <VStack width={"100%"} alignItems={"flex-start"}>
@@ -60,13 +101,19 @@ import StatusComp from '../../components/custom/StatusComp'
         <HStack>
         {stats?.map((item,index)=>{
         return(
-          <StatusComp id={item?.id} 
+          <VStack position={"relative"}>
+          <Button left={0} top={0} zIndex={100} position={"absolute"} borderRadius={50} bg={"red"} 
+          onClick={()=>{handledelete(item?.id)}}><Icon.Trash/></Button>
+          <StatusComp id={item?.id} editmode={true}
+          type={item?.type}
                           key={index} artistname={item?.artistName} 
                           link={item?.instaLink}
                           image={item?.artistImage}
                           media={item?.image} description={item?.description}  
                           icon={<Image width={20} height={20} borderRadius={50} 
-                          src={item?.image}/>}/>
+                          src={item?.artistImage}/>}/>
+          </VStack>
+          
         )
       })}
       </HStack>
@@ -99,6 +146,7 @@ import StatusComp from '../../components/custom/StatusComp'
           <Input value={instaLink} onChange={(e)=>setInsta(e.target.value)} placeholder='Link do Insta'/>
       </VStack>
       <Button onClick={submit} width={"100%"}>Postar</Button>    
+      <Toaster/>
     </VStack>
   )
 }

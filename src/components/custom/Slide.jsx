@@ -2,9 +2,10 @@ import { Button, Heading, HStack, Image, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import * as Icon from 'react-bootstrap-icons';
 import AnimateNumber from './AnimateNumber';
-export default function Slide({ width, currentSlide , rank ,category, artistname, streams, musictitle, videourl, artistpic, socialLinks, publishedate }) {
+export default function Slide({ width,iframevid, currentSlide , rank ,category, artistname,
+   streams, musictitle, videourl, artistpic, socialLinks, publishedate }) {
   const videoRef = useRef(null)
-  const convdata = publishedate.seconds * 1000;
+  const convdata = publishedate?.seconds * 1000 || 1000;
   function timeSince(dateString) {
   const now = new Date();
   const past = new Date(dateString);
@@ -40,7 +41,7 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
   }, [currentSlide])
 
   return (
-    <div
+    <div className='video-background'
       style={{
         position: 'relative',
         width,
@@ -48,8 +49,9 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
         display: 'flex',
       }}
     >
+      
       {/* Overlay */}
-      <VStack width={"100%"} >
+      <VStack width={"100%"} zIndex={1000}>
         <VStack  
             className='mediaSmallScreenHero'
             maxWidth={"70%"}
@@ -74,9 +76,22 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
             <Heading className='contenthero' lineHeight={.5} color={'white'}>{artistname}</Heading>
             <Text className='contenthero' color={"white"} zIndex={100} fontWeight={300}>{musictitle}</Text>
             <AnimateNumber target={streams || 0} currentSlide={currentSlide}/>
-            <HStack className='contenthero' alignItems={"center"} gap={2} zIndex={100}>
-                <Icon.Spotify color='white'/>
-                <Icon.AppleMusic color='white'/>
+            <HStack className='contenthero' alignItems={"center"} gap={2} zIndex={1000}>
+              {[socialLinks]?.map((item,index)=>{
+                  
+                return(
+                  <HStack zIndex={100} key={index}>
+                  { item?.youtube &&
+                  <Icon.Youtube style={{zIndex:100, cursor:"pointer"}} onClick={()=>{window.location.href=item?.youtube}} color='white'/>}
+                 { item?.spotify &&
+                  <Icon.Spotify style={{zIndex:100}} onClick={()=>{window.location.href=item?.spotify}} color='white'/>}
+                  { item?.applemusic &&
+                  <Icon.AppleMusic style={{zIndex:100}} onClick={()=>{window.location.href=item?.applemusic}} color='white'/>}
+                  </HStack>
+                 
+                )
+              })}
+                
             </HStack>
           </VStack>
       </VStack>
@@ -94,11 +109,28 @@ export default function Slide({ width, currentSlide , rank ,category, artistname
           height: '100%',
           objectFit: 'cover',
           position: 'absolute',
+          left:0,
           borderRadius: 0,
         }}
         src={videourl}
       /> }
-      {!videourl && <Image src={artistpic} style={{
+      {iframevid && (
+          <VStack justifyContent={"center"} position={"absolute"} left={0} top={0} width={"100%"} height={"100%"}>
+       
+            <iframe 
+              allowFullScreen={true} 
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+             style={{ zIndex:11, backgroundColor:"tranparent",
+     width:"fit-content", zoom:10, display:"flex", alignSelf:"center",
+     height:"fit-content",
+
+    }}
+            src={`https://www.youtube.com/embed/${iframevid}&autoplay=1&mute=1&controls=0&fullscreen=1&loop=1`}
+            />
+           <Image zIndex={10} src={artistpic} width={"100%"} height={"100%"} position={"absolute"} left={0} 
+           top={0}/>    </VStack>
+)}
+      {(!videourl &&  !iframevid) && <Image src={artistpic} style={{
           width: width,
           height: '100%',
           objectFit: 'cover',

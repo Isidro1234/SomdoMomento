@@ -33,7 +33,7 @@ export default function Nav({position, background, searchbarColor, serchiconColo
           gettings()
       }, [])
       function handleRec(e){
-          setSearch(e.target.value)
+          setSearch(String(e.target.value).toLowerCase().trim())
           setRecomendation(null)
           const filterPosts = 
           posts?.filter((p)=>String(p?.title)
@@ -47,7 +47,7 @@ export default function Nav({position, background, searchbarColor, serchiconColo
 
           const filterMusicas = 
           musicas?.filter((m)=>String(m?.artistSongTitle).toLowerCase().trim() == String(search)
-          .toLowerCase().trim() || String(m?.artistname).toLowerCase().trim() == String(search)
+          .toLowerCase().trim() || String(m?.artistname).toLowerCase().trim() == String(search).toLowerCase().trim()
           || String(m?.title).toLowerCase().trim().includes(String(search).toLowerCase().trim()))
           
           const filterStatus = 
@@ -84,7 +84,6 @@ export default function Nav({position, background, searchbarColor, serchiconColo
     function handleSubmit(){
         navigate(`/Search/${search}`)
     }
-    console.log(search , recomendation)
   return (
     <HStack className='nav' left={0} zIndex={100} justifyContent={"center"} background={background} position={ position == "noticias" ? "fixed" : position } width={"100%"}>
       <HStack className='mediaSmallScreenHero'  maxW={"70%"}  zIndex={74} alignItems={"center"} position={"relative"}  padding={7} borderRadius={0}  width={"100%"} left={0}  justifyContent={"space-between"}>
@@ -102,7 +101,9 @@ export default function Nav({position, background, searchbarColor, serchiconColo
                 
                 {recomendation?.map((item,index)=>{
                   return(
-                  <Box onClick={()=>{navigate(`/Search/${item?.title || item?.artistname || item?.artistName || item?.artistSongTitle}`)}}
+                  <Box 
+                  onClick={()=>{navigate(`/Search/${encodeURIComponent(String( item?.title || item?.artistname 
+                    || item?.artistName || item?.artistSongTitle).trim())}`)}}
                    borderRadius={10} key={index} width={"100%"} padding={2} _hover={{background:"#f6f6f6"}}>
                     <Text width={"100%"} height={"100%"}  fontSize={12} color={"gray"}>
                       {item?.title || item?.artistname || item?.artistName || item?.artistSongTitle}</Text>

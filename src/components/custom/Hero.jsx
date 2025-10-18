@@ -41,7 +41,11 @@ import { useLogiState } from '../../states/useLogic'
         height="100%"
       >
            {slides.map((item, index) => (
-        <Slide category={item.Category} key={index} rank={item.rank} socialLinks={item.socialLinks} streams={item.numeroPlays} publishedate={item.date} id={item.id} musictitle={item.musica} videourl={item.video} artistpic={item?.image} artistname={item?.nome} width={width} currentSlide={currentSlide === index}/>
+        <Slide iframevid={item?.iframe} category={item.Category} key={index} rank={item.rank} 
+        socialLinks={item?.socialLinks} 
+        streams={item.numeroPlays} publishedate={item.date} id={item.id} musictitle={item.musica} 
+        videourl={item?.video} artistpic={item?.image} 
+        artistname={item?.nome} width={width} currentSlide={currentSlide === index}/>
         ))}
       
       </HStack>

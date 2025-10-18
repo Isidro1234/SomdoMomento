@@ -2,6 +2,8 @@ import { lazy, Suspense, useState} from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router'
 import { Button, HStack, Spinner, VStack } from '@chakra-ui/react'
+import { Helmet, HelmetProvider, HelmetData } from 'react-helmet-async';
+import { renderToString } from 'react-dom/server';
 import { useAuthcontext } from './Context/AuthContextProvider'
 import SideBar from './components/custom/SideBar'
 import DrawerTwo from './components/custom/DrawerTwo'
@@ -15,6 +17,7 @@ import Promotion from './Pages/EditorsOnly/Promotion'
 import SearchPage from './Pages/General/SearchPage'
 import MessageCard from './components/custom/MessageCard'
 
+const helmetData = new HelmetData({});
 
 const Home = lazy(()=>import("./Pages/General/Home")); 
 const Article = lazy(()=>import("./Pages/General/Article")); 
@@ -37,10 +40,12 @@ function App() {
   const [hide, setHide] = useState(true)
   const [sidebar, setSidebar] = useState(false)
   return (
+    <HelmetProvider>
     <VStack  height={"100%"} alignItems={"flex-start"}  gap={0} padding={0} width={"100vw"}>
       <VStack hidden={sidebar ? true : false}  alignItems={"flex-start"} justifyContent={"flex-start"} gap={0} padding={0}>
         {isAuthenticated  && <DrawerTwo icon={<Icon.List color='black'/>}  children={<SideBar states={sidebar} onclicks={(e)=>{setSidebar(e)}}/>}/> }
       </VStack>
+      
     <Suspense fallback={<VStack alignItems={"center"} justifyContent={"center"} width={"100vw"} height={"100vh"}><Spinner size={"lg"} color={"black"}/></VStack>}>
         <Routes>
         <Route path='/admin' element={<ProtectedRoute/>}>
@@ -76,7 +81,9 @@ function App() {
             
     
     </VStack>
+    </HelmetProvider>
   )
 }
 
 export default App
+

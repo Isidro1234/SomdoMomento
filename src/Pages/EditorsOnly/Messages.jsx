@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box } from '@chakra-ui/react/box'
 import { Text } from '@chakra-ui/react/text'
-import { HStack } from '@chakra-ui/react/stack'
+import { HStack, VStack } from '@chakra-ui/react/stack'
 import { useLogiState } from '../../states/useLogic';
 import { useAuthcontext } from '../../Context/AuthContextProvider';
 import MessageBoxConteiner from '../../components/custom/MessageBoxConteiner';
@@ -38,9 +38,12 @@ function Messages() {
     console.log(selectedChat , Messages)
   return (
     <HStack justifyContent={"flex-start"} background={"#ffffffff"} padding={2} width={"100%"} flex={1} borderRadius={0}>
-      {chats.map((item,index)=>{
+      <VStack>
+        {chats.map((item,index)=>{
         return(<MessageBoxConteiner selectBox={(e)=>handleSelected(e)} rest={item} key={index} lastmessage={item?.lastMessage} time={item?.date} username={item?.senderName}/>)
       })}
+      </VStack>
+      
 
       {selectedChat ?  
       <Box display={"flex"} flexDirection={"column"} flex={1} height={"100%"}>

@@ -9,7 +9,7 @@ import AvatarCustom from './AvatarCustom'
 export default function MainNews({data, isNotLink, title, image, author, name, category, userimage, edit, html}) {
     const navigate = useNavigate()
   return (
-    <VStack className='animate' flex={1} onClick={()=>{!isNotLink && navigate(`/Article/News/${title}`)}} alignItems={"flex-start"}  padding={0}  height={edit ?"fit-content" :  "100%"}>
+    <VStack className='animate' flex={1} onClick={()=>{!isNotLink && navigate(`/Article/News/${encodeURIComponent(String(title).trim())}`)}} alignItems={"flex-start"}  padding={0}  height={edit ?"fit-content" :  "100%"}>
                     <HStack alignItems={"center"} justifyContent={"flex-start"}>
                         <AvatarCustom name={data?.username}/>
                         <VStack gap={1} alignItems={"flex-start"}>

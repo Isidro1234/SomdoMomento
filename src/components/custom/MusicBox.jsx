@@ -14,7 +14,7 @@ export default function MusicBox({image, artistname, title , audio}) {
     }
   return (
     <Box className='musicbox' position={"relative"} display={"flex"}  minWidth={150} flexDirection={"column"}>
-                <Image onClick={()=>{navigate(`/Music/Single/${title}`)}} borderRadius={10} width={150} height={140} src={image} alt='Cover'/>
+                <Image onClick={()=>{navigate(`/Music/Single/${encodeURIComponent(String(title).trim())}`)}} borderRadius={10} width={150} height={140} src={image} alt='Cover'/>
                 <Box>
                     <Heading>{artistname}</Heading>
                     <Text fontSize={12}>{title}</Text>

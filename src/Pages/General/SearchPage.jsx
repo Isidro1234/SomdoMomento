@@ -22,6 +22,7 @@ export default function SearchPage() {
   const musicas = useLogiState((state)=>state.musicas);
   const [found, setFound] = useState(0);
   const [loading, setLoading] = useState(false)
+  const decodedId = decodeURIComponent(id);
   useEffect(()=>{
     setLoading(true)
       async function getting(){
@@ -35,22 +36,22 @@ export default function SearchPage() {
   }, [])
   const filterPosts = 
   posts?.filter((p)=>String(p?.title)
-  .toLowerCase().trim() == String(id)
-  .toLowerCase().trim() || String(p?.title).toLowerCase().trim().includes(String(id).toLowerCase().trim()))
+  .toLowerCase().trim() == String(decodedId)
+  .toLowerCase().trim() || String(p?.title).toLowerCase().trim().includes(String(decodedId).toLowerCase().trim()))
   
   const filterNoticias = 
   Noticias?.filter((n)=>String(n?.title).
-  toLowerCase().trim()  == String(id).
-  toLowerCase().trim() || String(n?.title).toLowerCase().trim().includes(String(id).toLowerCase().trim()))
+  toLowerCase().trim()  == String(decodedId).
+  toLowerCase().trim() || String(n?.title).toLowerCase().trim().includes(String(decodedId).toLowerCase().trim()))
 
   const filterMusicas = 
-  musicas?.filter((m)=>String(m?.artistSongTitle).toLowerCase().trim() == String(id)
-  .toLowerCase().trim() || String(m?.artistname).toLowerCase().trim() == String(id)
+  musicas?.filter((m)=>String(m?.artistSongTitle).toLowerCase().trim() == String(decodedId).toLowerCase().trim() || 
+  String(m?.artistname).toLowerCase().trim() == String(decodedId).toLowerCase().trim()
    || String(m?.title).toLowerCase().trim().includes(String(id).toLowerCase().trim()))
   
   const filterStatus = 
-  stats?.filter((s)=>String(s?.artistName).toLowerCase().trim() == String(id)
-  .toLowerCase().trim() || String(s?.artistName).toLowerCase().trim().includes(String(id).toLowerCase().trim()))
+  stats?.filter((s)=>String(s?.artistName).toLowerCase().trim() == String(decodedId)
+  .toLowerCase().trim() || String(s?.artistName).toLowerCase().trim().includes(String(decodedId).toLowerCase().trim()))
   
   useEffect(()=>{
     setFound(0)

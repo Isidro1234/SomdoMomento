@@ -12,6 +12,7 @@ export default function PromotionPost({title}) {
     const [buttonText, setButtonText] = useState("Visite-nos")
     const [fileres, setFile] = useState(null)
     const setPromotion = useLogiState((state)=>state.setPromotion)
+    const [videolink, setLinkvideo] = useState("")
     const inputref3 = useRef(null)
     const [artistinfo, setArtistInfo] = useState(()=>({
       artistname:"",
@@ -23,6 +24,7 @@ export default function PromotionPost({title}) {
         reader.onload = (e)=>{
             setPreverImage(e.target.result)
         }
+        console.log(file)
         reader.readAsDataURL(file);
         setFile(file)
     }
@@ -30,13 +32,26 @@ export default function PromotionPost({title}) {
         !buttonText && setButtonText("Visite-nos")
         if(!select || !fileres || !link ) return;
         const check = music || false
-        await setPromotion(select ,fileres, link, buttonText,music, artistinfo)
+        const checkvid2 = videolink || false
+        await setPromotion(select ,fileres, link, buttonText,music, artistinfo, checkvid2)
     }
 
     async function handleMusic(file2){
         const reader = new FileReader();
         reader.readAsDataURL(file2);
         setMusic(file2)
+    } 
+    function handlevideolink(e){
+        const linkvd = e.target.value;
+        console.log(linkvd)
+        const checkplaylist = String(linkvd).includes("?list");
+        const pross = checkplaylist ? (String(linkvd)?.split("/")[3]?.split("?list") || "") :
+        (String(linkvd)?.split("/")[3]);
+        const checkifarry = Array.isArray(pross);
+        const finalvideocode = checkifarry ? pross?.[0] + "?si" + pross?.[1] : pross;
+        const checov = finalvideocode || false
+        setLinkvideo(checov);
+        console.log(checov)
     }
   return (
     <VStack  alignItems={"flex-start"}>
@@ -46,13 +61,21 @@ export default function PromotionPost({title}) {
               justifyContent={"center"} 
               alignItems={"center"}  
               borderWidth={1} height={200} borderRadius={10}>
-                <Icon.InfoCircle style={{position:"absolute", right:10, top:10, color:"white"}}/>
-                {preverImage ?
-                <Image src={preverImage} objectFit={"cover"} borderRadius={10} width={"100%"} height={"100%"}/>
+                <Icon.InfoCircle style={{position:"absolute", right:10, zIndex:100, top:10, color:"white"}}/>
+                {preverImage &&
+                 preverImage.startsWith("data:video") ?(
+                <video autoPlay={true} loop={true} playsInline={true} muted={true} src={preverImage} style={{width:"100%", height:"100%",borderRadius:10, objectFit:"cover", position:"absolute"}}/>)
                 :
-                <Text color={"gray"} fontSize={10}>Prever Promoção</Text>
+                (<Image src={preverImage} objectFit={"cover"} borderRadius={10}
+                   width={"100%"} height={"100%"}/>
+                )
                 }
-
+                {(videolink && !preverImage) && 
+                <iframe style={{objectFit:"cover",width:"100%",height:"100%" ,top:0, left:0, 
+                  position:"absolute", borderRadius:10}} 
+               allowFullScreen = {true}
+                src={`https://www.youtube.com/embed/${videolink}&autoplay=1&mute=1&loop=1`}></iframe>
+                }
                 {link &&
                 <Button onClick={()=>window.location.href = link} 
                 borderRadius={50} position={"absolute"} left={2} bottom={2}  
@@ -74,8 +97,9 @@ export default function PromotionPost({title}) {
                 </HStack>
                 
                 }
-                <Input onChange={(e)=>{setLink(e.target.value)}} placeholder='Adicionar Link'/>
-                <Input onChange={(e)=>{setButtonText(e.target.value)}} placeholder='Texto para o link'/>
+                <Input  onChange={handlevideolink} placeholder='Youtube Video Link'/>
+                <Input value={link} onChange={(e)=>{setLink(e.target.value)}} placeholder='Adicionar Link'/>
+                <Input value={buttonText} onChange={(e)=>{setButtonText(e.target.value)}} placeholder='Texto para o link'/>
               </HStack>
               
               <HStack width={"100%"}  justifyContent={"space-between"}>

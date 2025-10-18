@@ -27,7 +27,13 @@ export default function MusicNav({musicdata}) {
     <VStack className='first'  position={"relative"} minHeight={500} padding={1}  gap={5} flex={1.5} justifyContent={"flex-start"} width={"100%"}>
                <Nav position={"nothing"} color={"white"} serchiconColor={"gray"}  searchbarColor={"#242424b9"} background={"transparent"}/>
                <HStack left={0} borderRadius={10} position={"absolute"}  width={"100%"} height={"100%"}>
+                {String(musicdata?.[0]?.media).endsWith("mp4") &&
+                <video style={{width:"100%", height:"100%", minWidth:100}} src={musicdata?.[0]?.media}/>
+                }
+                {!String(musicdata?.[0]?.media).endsWith("mp4") &&
                   <Image  minW={100} borderRadius={10} height={"100%"} width={"100%"} objectFit={"cover"} src={musicdata?.[0]?.media}/>
+                }
+
                   <VStack alignItems={"flex-start"} position={"absolute"} gap={4} padding={5} left={0} bottom={0}>
                       <Heading lineHeight={.5} color={"white"} fontSize={25}>{musicdata?.[0]?.artistinfo?.artistname}</Heading>
                       <Text lineHeight={.5} fontSize={10} color={"#f6f6f6"}>{musicdata?.[0]?.artistinfo?.title}</Text>

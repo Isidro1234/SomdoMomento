@@ -12,9 +12,9 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <ProgressPage/>
         <Provider>
-          <App />
+            <App />          
         </Provider>
       </BrowserRouter>  
     </AuthContextProvider>
-  </StrictMode>,
+  </StrictMode>
 )

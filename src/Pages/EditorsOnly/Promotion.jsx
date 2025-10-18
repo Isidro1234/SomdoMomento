@@ -13,6 +13,7 @@ export default function Promotion() {
       gridTemplateColumns={"repeat(auto-fit,minmax(min(400px, 100%),1fr))"} 
       alignItems={"flex-start"}>
       <PromotionPost/>
+      
     </VStack>  
     </VStack>
     

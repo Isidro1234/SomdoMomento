@@ -31,7 +31,7 @@ export default function Aside({ posts }) {
       <VStack spacing={4} align="stretch">
         {posts?.map((post, index) => (
           <HStack
-            onClick={()=>navigate(`/Article/Post/${String(post?.title)?.trim()}`)}
+            onClick={()=>navigate(`/Article/Post/${encodeURIComponent(String(post?.title)?.trim())}`)}
             key={index}
             spacing={3}
             align="flex-start"

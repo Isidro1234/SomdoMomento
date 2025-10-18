@@ -107,25 +107,27 @@ export const useLogiState = create((set,get)=>({
             return false
             
         }
-    },setSlide:async(nome,rank, image, numeroPlays, video, musica, Category, socialLinks)=>{
+    },setSlide:async(nome,rank, image, numeroPlays, video, musica, Category, socialLinks, iframe)=>{
         try {
-             const news = fetch("https://somdomomento-backend.onrender.com/som_do_momento/api/pages/addslide",{
-                method:"POST",
-                headers:{
-                    "Content-type":"application/json"
-                },
-                body:JSON.stringify({nome,rank, image, numeroPlays, video, musica, Category, socialLinks})
-            }) 
-            const res =  await news;
-            const data = await res.json()
-            if(data.success){
-              return true
-            }
-            return false
+            console.log(iframe)
+            const docref = doc(collection(db,"slides"));
+             await setDoc(docref,{
+                     id:docref.id,
+                     nome, 
+                     rank,
+                     image, 
+                     numeroPlays, 
+                     video, 
+                     musica, 
+                     Category, 
+                     socialLinks,
+                     date:new Date(),
+                     iframe
+                 })  
+                 return true  
         } catch (error) {
             console.log(error.message)
             return false
-            
         }
     },slideconfig:async()=>{
 
@@ -350,7 +352,8 @@ export const useLogiState = create((set,get)=>({
         const res = await submit
         const data = await res.json()
     },setStatus:async(media, description ,artistName , instaLink, artistImage)=>{
-       const imageUrl = await storemedia(media);
+        try {
+             const imageUrl = await storemedia(media);
        const artistImageUrl = await storemedia(artistImage) 
        const docref = doc(collection(db,"Status"));
        await setDoc(docref, {
@@ -358,9 +361,15 @@ export const useLogiState = create((set,get)=>({
             image:imageUrl,
             description,
             artistName,
+            type:media?.type,
             instaLink,
             artistImage:artistImageUrl
        })
+        return true
+        } catch (error) {
+            return false
+        }
+      
     },setAboutPage:async(description)=>{
         const docref = collection(db,"AboutPage")
         const getting = await getDocs(docref)
@@ -386,7 +395,7 @@ export const useLogiState = create((set,get)=>({
         })
         set({about:data})
     }
-    ,setPromotion:async(to , media , link, buttonText, music, artistinfo)=>{
+    ,setPromotion:async(to , media , link, buttonText, music, artistinfo, videocode)=>{
         const url = await storemedia(media);
         const musicurl  = music ? await storemedia(music) : false
         const docref = doc(collection(db,"Promotion"));
@@ -395,10 +404,12 @@ export const useLogiState = create((set,get)=>({
             id:docref.id,
             media:url,
             to,
+            type:media?.type,
             link,
             buttonText,
             musicurl,
-            artistinfo
+            artistinfo,
+            videocode
         })
         return;
         }
@@ -407,18 +418,25 @@ export const useLogiState = create((set,get)=>({
             media:url,
             to,
             link,
-            buttonText
+            buttonText,
+            videocode
         })
         return;
     },getStatus:async()=>{
-        const docref = collection(db,"Status");
+        try {
+          const docref = collection(db,"Status");
         const getting = await getDocs(docref);
         const data = [];
         getting.forEach((status)=>{
             data.push(status.data())
         })
         console.log(data)
-        set({status:data})
+        set({status:data})  
+        return true
+        } catch (error) {
+            return false
+        }
+        
     },setStatusComments: async(id, comment, author)=>{
         const docref = doc(collection(db,"Status",id , "Comments"));
         await setDoc(docref,{
@@ -521,10 +539,22 @@ export const useLogiState = create((set,get)=>({
         const docref = doc(db,"Promotion",id);
         await deleteDoc(docref);
       },deleteStatus:async(id)=>{
-        const docref = doc(db,"Status",id);
-        await deleteDoc(docref);
+        try {
+            const docref = doc(db,"Status",id);
+            await deleteDoc(docref);
+            return true 
+        } catch (error) {
+            return false
+        }
+        
       },deleteRanking:async(id)=>{
-        const docref = doc(db,"slides",id);
-        await deleteDoc(docref);
-      }
+        try {
+           const docref = doc(db,"slides",id);
+           await deleteDoc(docref); 
+           return true
+        } catch (error) {
+           return false
+        }
+        
+      },
 }))
