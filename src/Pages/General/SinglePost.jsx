@@ -21,10 +21,13 @@ function SinglePost() {
   }, [])
   const findPost = posts?.filter((post)=>post?.title === decodedId);
   useEffect(() => {
-  if (findPost.length <= 0) {
-    navigate("/")
-  }
-}, [findPost, navigate])
+    const findPost = posts?.filter((post)=>post?.title == id);
+    if(posts.length > 0){
+      if(findPost.length <= 0) {
+        navigate("/")
+      }
+    }
+}, [findPost])
   return (
     <HStack justifyContent={"center"} flexWrap={"wrap"} gap={4} paddingTop={15} alignItems={"flex-start"} width={"100%"} h={"100vh"} >
       <Helmet>
