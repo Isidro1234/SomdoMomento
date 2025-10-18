@@ -124,10 +124,11 @@ export default function ArticleCard({
                            Angola e o som vibrante que define a nossa identidade.`} />
                         <meta property="og:keywords" content={`musicas, soms, angola, portugal, brazil, musicas do meomento, musicas da banda, melhores soms de angola,
                           baixar musicas angolanas, baixar sons, som do momento, sm, som momento, danca com momento, som`} />
-                        <meta property="og:url" content={`https://somdomomento.netlify.app/Article/Post/${encodeURIComponent(String(title).trim())}`} />
+                        <meta property="og:url" 
+                        content={`https://somdomomento.netlify.app/Article/Post/${encodeURIComponent(String(title).toLowerCase().trim())}`} />
                         <meta property="og:type" content="homepage" />
                         <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
-                        <title>Poste - {title}</title>
+                        <title>Poste - {`${title}`}</title>
                       </Helmet>
         {edimode && (
           <HStack spacing={2} display={{ base: "none", sm: "flex" }}>

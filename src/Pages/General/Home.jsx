@@ -52,7 +52,8 @@ function Home() {
           <Footer/>
         </Suspense>
         <SearchResults/>
-        <FixedPlayer isplaying={!playaudio?.[4]} audio={playaudio?.[0]} artistname={playaudio?.[2]}
+        <FixedPlayer isplaying={!playaudio?.[4]} audio={playaudio?.[0]} 
+        artistname={playaudio?.[2]}
          title={playaudio?.[3]} image={playaudio?.[1]}  hide={!playaudio?.[4]} position={"fixed"}/>
       </VStack>
   )

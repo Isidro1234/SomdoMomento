@@ -121,11 +121,11 @@ export default function Slide({ width,iframevid, currentSlide , rank ,category, 
               allowFullScreen={true} 
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
              style={{ zIndex:11, backgroundColor:"tranparent",
-     width:"fit-content", zoom:10, display:"flex", alignSelf:"center",
-     height:"fit-content",
+     width:"100%", display:"flex", alignSelf:"center",
+     height:"100%",
 
     }}
-            src={`https://www.youtube.com/embed/${iframevid}&autoplay=1&mute=1&controls=0&fullscreen=1&loop=1`}
+            src={`https://www.youtube.com/embed/${iframevid}&controls=0`}
             />
            <Image zIndex={10} src={artistpic} width={"100%"} height={"100%"} position={"absolute"} left={0} 
            top={0}/>    </VStack>

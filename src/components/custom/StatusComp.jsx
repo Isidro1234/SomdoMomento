@@ -76,7 +76,8 @@ export default function StatusComp({id, icon, media , editmode, image,type, desc
                     </VStack>
 
                   
-                    <Button onClick={()=>{closeref.current.click()}} position={'absolute'} top={4} left={5} bg={"#e35050ff"} borderRadius={50} >X</Button>
+                    <Button onClick={()=>{closeref.current.click()}} position={'absolute'} top={2} left={2} bg={"#ff272711"} borderRadius={50} >
+                      <Icon.X color='white'/></Button>
                     <VStack  paddingTop={5} paddingLeft={4} alignItems={"flex-start"} 
                     flex={1} height={"100%"} justifyContent={"flex-start"}>
                        

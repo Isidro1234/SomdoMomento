@@ -75,10 +75,11 @@ function RankingAdmin() {
     async function handleVideo(fs){
         const filereader = new FileReader()
         filereader.readAsDataURL(fs)
-        if(fs.size > 20000000){
+        if(fs.size > 80000000){
             toaster.create({
                 title:"Aviso tamanho da imagem ",
-                description:`A imagem enviada tem ${fs.size / 1000} kilobytes que e mais do que os 5 Megabytes permitidos `,
+                description:`A imagem enviada tem ${fs.size / 1000} kilobytes que e mais 
+                do que os 5 Megabytes permitidos `,
                 duration:5000,
                 type:"error"
             })
@@ -194,9 +195,7 @@ function RankingAdmin() {
             duration:2000
         })
     }
-    function previewRank(){
 
-    }
   return (
     <VStack  width={"100%"} overflowX={"hidden"} alignItems={"flex-start"}>
          <HStack
