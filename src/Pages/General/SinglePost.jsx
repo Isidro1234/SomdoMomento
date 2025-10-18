@@ -15,19 +15,19 @@ function SinglePost() {
 
   useEffect(()=>{
     async function getPostsData(){
-      await getpost
+      await getpost()
     }
     getPostsData()
   }, [])
   const findPost = posts?.filter((post)=>post?.title === decodedId);
   useEffect(() => {
-    const findPost = posts?.filter((post)=>post?.title == id);
+    const findPost = posts?.filter((post)=>post?.title === decodedId);
     if(posts.length > 0){
       if(findPost.length <= 0) {
         navigate("/")
       }
     }
-}, [findPost])
+}, [findPost, decodedId, navigate])
   return (
     <HStack justifyContent={"center"} flexWrap={"wrap"} gap={4} paddingTop={15} alignItems={"flex-start"} width={"100%"} h={"100vh"} >
       <Helmet>
@@ -45,7 +45,7 @@ function SinglePost() {
                 <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
       
               </Helmet>
-      <ArticleCard key={id} title={findPost[0]?.title} 
+      <ArticleCard key={decodedId} title={findPost[0]?.title} 
                     date={findPost[0]?.date} 
                     author={findPost[0]?.userdata.username}
                     body={findPost[0]?.html}

@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Image, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, Image, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import Nav from '../../components/custom/Nav'
 import { useNavigate, useParams } from 'react-router'
@@ -7,6 +7,7 @@ import FixedPlayer from '../../components/custom/FixedPlayer'
 
 import * as Icon from "react-bootstrap-icons"
 import MusicCardPlaylist from '../../components/custom/MusicCardPlaylist';
+import AvatarCustom from '../../components/custom/AvatarCustom';
 
  function SingleMusicPage() {
   const {id} = useParams();
@@ -31,7 +32,7 @@ String(music?.artistSongTitle).toLowerCase().trim().includes(id));
     <VStack width={"100%"} alignItems={"flex-start"}   background={"#00000030"}>
       <Nav/>
       <HStack  padding={1} margin={5} width={"100%"} 
-      maxWidth={" min(500px, 100%)"} flexWrap={"wrap"} overflowY={"auto"}  borderRadius={20} >
+     flexWrap={"wrap"} overflowY={"auto"} alignItems={"flex-start"}  borderRadius={20} >
    
 
             <Box padding={5} paddingTop={0}>
@@ -44,6 +45,18 @@ String(music?.artistSongTitle).toLowerCase().trim().includes(id));
               </HStack>
               
             </Box>
+            <Box>
+              <Heading color={"white"}>Artista</Heading>
+              <AvatarCustom size={"2xl"}/>
+            </Box>
+            <Box maxHeight={300} flex={1} padding={10}>
+              {musicas?.map((item,index)=>{
+              return(
+                <MusicCardPlaylist key={index}/>
+              )
+            })}
+            </Box>
+            
             <FixedPlayer position={"fixed"}/>
         
       </HStack>

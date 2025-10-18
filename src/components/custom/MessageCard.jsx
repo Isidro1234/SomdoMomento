@@ -75,6 +75,13 @@ export default function MessageCard({hide}) {
      await sendMessage(message , gettinguser?.userdata?.username, chatt?.id , gettinguser?.userdata?.id)
      setMessage("")
   }
+  async function handlephone(){
+    window.open(`https://wa.me/+244928790295/?text=${encodeURIComponent("Ola queria obter mais informacoes sobre a vossa pagina")}`)
+  }
+  async function handlefacebook(){
+    window.location.href = `https://m.facebook.com/61581100384705/`
+  }
+  
   return (
     <VStack gap={0} className={hide ? "hide" : "show"}  width={"min(400px, 90%)"}  position={"fixed"} zIndex={100}  right={5}  bottom={40} height={470} backgroundColor={"#4a82fcff"} borderRadius={10}>
         <Box borderRadius={10} borderBottomRightRadius={0} borderBottomLeftRadius={0}  p={4} width={"100%"} bg={"blue"}>
@@ -85,8 +92,8 @@ export default function MessageCard({hide}) {
             <VStack flex={1} gap={2} alignItems={"flex-start"} width={"100%"}>
               <Heading color={"gray"} fontWeight={400} fontSize={12}>Contacte-nos pelas nossas redes sociais</Heading>
               <HStack marginTop={-2}>
-                <Button borderRadius={50} _hover={{background:"#79f8a5ff"}} color={"white"} bg={"#10e159ff"}><Icon.Whatsapp/></Button>
-                <Button borderRadius={50} _hover={{background:"#2080efff"}} color={"white"} bg={"#0d7dfdff"}><Icon.Facebook/></Button>
+                <Button onClick={handlephone} borderRadius={50} _hover={{background:"#79f8a5ff"}} color={"white"} bg={"#10e159ff"}><Icon.Whatsapp/></Button>
+                <Button onClick={handlefacebook} borderRadius={50} _hover={{background:"#2080efff"}} color={"white"} bg={"#0d7dfdff"}><Icon.Facebook/></Button>
               </HStack>
               <Text color={"gray"} fontSize={10}>ou continue com o chat</Text>
             <Text fontSize={12} >Nome *</Text>
