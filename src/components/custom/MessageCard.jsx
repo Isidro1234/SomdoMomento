@@ -17,58 +17,48 @@ export default function MessageCard({hide}) {
   const getsingleCht = useLogiState((state)=>state.getSingleChat);
   const Messages =  useLogiState((state)=>state.ChatMessages)
   const chatt = useLogiState((state)=>state.chat) 
-  useEffect(()=>{
-    async function check(){
-        const gettinguser = JSON.parse(localStorage.getItem("userinfo"));
-        const gettingChat = JSON.parse(localStorage.getItem("userChat"))
-        if(gettinguser?.userdata?.id){
-          try {
-            await getsingleCht(gettinguser?.userdata?.id);
-             const result = await getChatMessage(gettingChat?.data?.id)
-              setshowChat(true)
-             if(!result) return; 
-          } catch (error) {
-           setshowChat(false) 
-           console.log(error.message)
-           return;
-          }
-          
-        }
-    }
-    check()
-  }, [])
-  console.log("getting", chatt)
-  async function handleshowchat(){
-    if(username &&  description){
-      const userdata = {
-        username:username,
-        id : uuidv4(),
+  useEffect(() => {
+  async function check() {
+    const gettinguser = JSON.parse(localStorage.getItem("userinfo"));
+    if (!gettinguser?.userdata?.id) return;
+    await getsingleCht(gettinguser?.userdata?.id);
+    setTimeout(async () => {
+      const userChat = JSON.parse(localStorage.getItem("userChat"));
+      if (userChat?.data?.id) {
+        await getChatMessage(userChat.data.id);
+        setshowChat(true);
       }
-      const getuser = JSON.parse(localStorage.getItem("userinfo"));
-      if(getuser?.userdata?.id) return;
-      localStorage.setItem("userinfo" , JSON.stringify({userdata}))
-      await createchat(userdata?.id , userdata?.username)
-      setshowChat(true)
-      return;
-    }
-    !username &&
-    toaster.create({
-      title:"Porfavor adicione seu nome",
-      description:"porfavor coloque seu nome no formulario",
-      type:"warning",
-      duration:5000,
-      
-    })
-    !description && 
-     toaster.create({
-      title:"porfavor adicione o motivo de nos contactar",
-      description:`Porfavor descreva a razao pela qual o senhor quer nos contactar. Isso nos ajuda 
-      a prestar um servico mais eficiente`,
-      type:"warning",
-      duration:5000,
-    })
+    }, 500);
   }
 
+  check();
+}, []);
+  console.log("getting", chatt)
+  async function handleshowchat() {
+  if (username && description) {
+    const userdata = {
+      username,
+      id: uuidv4(),
+    };
+
+    const getuser = JSON.parse(localStorage.getItem("userinfo"));
+    if (getuser?.userdata?.id) return;
+
+    localStorage.setItem("userinfo", JSON.stringify({ userdata }));
+
+    await createchat(userdata.id, userdata.username);
+    setTimeout(async () => {
+      await getsingleCht(userdata.id);
+      const userChat = JSON.parse(localStorage.getItem("userChat"));
+      if (userChat?.data?.id) {
+        await getChatMessage(userChat.data.id);
+      }
+    }, 800);
+
+    setshowChat(true);
+    return;
+  }
+}
   async function handleMessage(){
      const gettinguser = JSON.parse(localStorage.getItem("userinfo"));
      console.log(chatt)
